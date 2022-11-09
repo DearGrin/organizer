@@ -5,37 +5,79 @@ from . import models as m
 class UsersSerializer(ModelSerializer):
     class Meta:
         model = m.User
-        fields = '__all__'
+        fields = ['first_name', 'last_name']
+
+
+class UsersRegistrationSerializer(ModelSerializer):
+    class Meta:
+        model = m.User
+        fields = ['username', 'password']
+
+
+class ExperimentObjectSerializer(ModelSerializer):
+    class Meta:
+        model = m.ExperimentObject
+        fields = "__all__"
+        depth = 0
+
+
+class ExperimentMethodSerializer(ModelSerializer):
+    class Meta:
+        model = m.ExperimentMethod
+        fields = "__all__"
+        depth = 0
+
+
+class EntitySerializer(ModelSerializer):
+    class Meta:
+        model = m.Entity
+        exclude = ('id',)
+        depth = 0
 
 
 class ExperimentsSerializer(ModelSerializer):
     class Meta:
         model = m.Experiment
-        fields = '__all__'
+        exclude = ('id', 'user_id')
+        depth = 0
+
+
+class ExperimentsInputSerializer(ModelSerializer):
+    class Meta:
+        model = m.Experiment
+        exclude = ('id',)
+        depth = 0
 
 
 class ExperimentMeasuresSerializer(ModelSerializer):
     class Meta:
         model = m.ExperimentMeasure
-        fields = '__all__'
-        depth = 0
+        exclude = ('id', 'sample_id')
+        depth = 1
 
 
 class ExperimentSamplesSerializer(ModelSerializer):
     class Meta:
         model = m.ExperimentSample
-        fields = '__all__'
-        depth = 0
+        exclude = ('id', 'group_id')
+        depth = 1
 
 
 class ExperimentGroupsSerializer(ModelSerializer):
     class Meta:
         model = m.ExperimentGroup
-        fields = '__all__'
+        exclude = ('id',)
         depth = 0
 
 
-class ExperimentsInputSerializer(ExperimentsSerializer):
+class FilesSerializer(ModelSerializer):
+    class Meta:
+        model = m.File
+        fields = ['url', 'hash']
 
-    def create(self, validated_data):
-        return m.Experiment.objects.create(**validated_data)
+
+class FilesUploadSerializer(ModelSerializer):
+    class Meta:
+        model = m.File
+        # fields = '__all__'
+        exclude = ('hash', )

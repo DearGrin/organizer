@@ -84,12 +84,11 @@ class Experiment(models.Model):
         ExperimentObject, on_delete=models.CASCADE,
         db_column='object_id'
         )
-    influence = models.TextField()
-    conditions = models.TextField()
+    purpose = models.TextField()
     device = models.TextField()
     soft = models.TextField()
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
+    start_date = models.DateField()
+    end_date = models.DateField()
 
     class Meta:
         db_table = 'experiments'
@@ -160,3 +159,16 @@ class ExperimentMeasure(models.Model):
 
     class Meta:
         db_table = 'experiment_measures'
+
+
+class File(models.Model):
+    user_id = models.ForeignKey(
+        'User',
+        on_delete=models.CASCADE,
+        db_column='user_id'
+    )
+    url = models.FileField()
+    hash = models.TextField(null=True)
+
+    class Meta:
+        db_table = 'files'
