@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin, UserManager)
 from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.hashers import make_password
 from django.apps import apps
 
@@ -12,6 +13,7 @@ class MyUserManager(UserManager):
         GlobalUserModel = apps.get_model('users', 'User')
         username = GlobalUserModel.normalize_username(username)
         user = self.model(username=username, **extra_fields)
+        validate_password(password)
         user.password = make_password(password)
         user.save(using=self._db)
         return user
