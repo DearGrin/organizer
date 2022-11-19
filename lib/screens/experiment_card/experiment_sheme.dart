@@ -1,14 +1,19 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:first_approval_app/bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/custom_widgets/utils.dart';
+import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ExperimentScheme extends StatelessWidget {
-  final VoidCallback? onTap;
-
-  const ExperimentScheme({super.key, this.onTap});
+  final Widget child;
+  const ExperimentScheme({
+    super.key,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,6 @@ class ExperimentScheme extends StatelessWidget {
         right: 40,
         bottom: 30,
       ),
-      height: 360,
       color: Colors.white,
       child: Column(
         children: [
@@ -52,457 +56,294 @@ class ExperimentScheme extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          Expanded(
-            child: DottedBorder(
-              dashPattern: const [30, 10],
-              strokeCap: StrokeCap.butt,
-              borderType: BorderType.RRect,
-              color: const Color.fromRGBO(153, 153, 153, 0.6),
-              child: Container(
+          child
+        ],
+      ),
+    );
+  }
+}
+
+class DottedAreaWidget extends StatelessWidget {
+  final VoidCallback? onTap;
+  const DottedAreaWidget({super.key, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return DottedBorder(
+      dashPattern: const [30, 10],
+      strokeCap: StrokeCap.butt,
+      borderType: BorderType.RRect,
+      color: const Color.fromRGBO(153, 153, 153, 0.6),
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromRGBO(153, 153, 153, 0.6),
+            style: BorderStyle.none,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: onTap,
+              child: Stack(
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: const Color.fromRGBO(153, 153, 153, 0.6),
-                    style: BorderStyle.none,
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: onTap,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          SvgPicture.asset(IconsSvg.ellipse),
-                          SvgPicture.asset(IconsSvg.bigPlus),
-                        ],
-                      ),
-                    ),
-                    const CustomText(
-                      'Добавить карточку\nэксперимента',
-                      16,
-                      FontWeight.w700,
-                      color: Color.fromRGBO(153, 153, 153, 0.6),
-                    ),
-                  ],
-                ),
+                children: [
+                  SvgPicture.asset(IconsSvg.ellipse),
+                  SvgPicture.asset(IconsSvg.bigPlus),
+                ],
               ),
             ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class Page extends StatelessWidget {
-  const Page({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
+            const CustomText(
+              'Добавить новый\nобразец',
+              16,
+              FontWeight.w700,
+              color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const CustomText('Группа_1', 16, FontWeight.w700),
-                    Row(
-                      children: [
-                        CustomNoBordersButton(
-                          IconsSvg.edit,
-                          () {},
-                        ),
-                        CustomNoBordersButton(
-                          IconsSvg.downArrow,
-                          () {},
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const Text("Текст внутри группы 1"),
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Container(child: const Text('obrazec 11 ')),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(child: const Text('obrazec 12 ')),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(child: const Text('obrazec 13 ')),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(child: const Text('obrazec 14 ')),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(child: const Text('obrazec 15 ')),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Группа_2'),
-                Row(
-                  children: [
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(child: const Text('obrazec 21 ')),
-                        const Text('obrazec 21 text '),
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                MyFile(
-                                  key: key,
-                                ),
-                                MyFile(
-                                  key: key,
-                                ),
-                                MyFile(
-                                  key: key,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                MyFile(
-                                  key: key,
-                                ),
-                                MyFile(
-                                  key: key,
-                                ),
-                                MyFile(
-                                  key: key,
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                MyFile(
-                                  key: key,
-                                ),
-                                MyFile(
-                                  key: key,
-                                ),
-                                MyFile(
-                                  key: key,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(child: const Text('obrazec 22 ')),
-                      ],
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(child: const Text('obrazec 23 ')),
-                      ],
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(child: const Text('obrazec 24 ')),
-                      ],
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(child: const Text('obrazec 25 ')),
-                      ],
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.edit,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.archive,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.attachedFiles,
-                      () {},
-                    ),
-                    CustomNoBordersButton(
-                      IconsSvg.downArrow,
-                      () {},
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class MyFile extends StatelessWidget {
-  const MyFile({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Text('file 21 '),
-        CustomNoBordersButton(
-          IconsSvg.file,
-          () {},
+          ],
         ),
-      ],
+      ),
     );
   }
 }
 
-class NewSample extends StatelessWidget {
-  final Sample data;
-  final VoidCallback? onPressed;
-  const NewSample({super.key, this.onPressed, required this.data});
+class DottedAreaWithSamples extends StatelessWidget {
+  final VoidCallback? onTap;
+  const DottedAreaWithSamples({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          CustomText(data.tittle, 14, FontWeight.w700),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CustomNoBordersButton(IconsSvg.edit, () {}),
-              CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
-              CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
-            ],
-          ),
-        ],
-      ),
-      children: [
-        const TextField(
-          decoration: InputDecoration(
-            label: Text('Введите текст'),
+    return DottedBorder(
+      dashPattern: const [30, 10],
+      strokeCap: StrokeCap.butt,
+      borderType: BorderType.RRect,
+      color: const Color.fromRGBO(153, 153, 153, 0.6),
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromRGBO(153, 153, 153, 0.6),
+            style: BorderStyle.none,
           ),
         ),
-        ElevatedButton(
-            onPressed: onPressed, child: const Text('новый образец')),
-      ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: onTap,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SvgPicture.asset(IconsSvg.schemeLittleEllipse),
+                  SvgPicture.asset(IconsSvg.schemeLittlePLus),
+                ],
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const CustomText(
+              'Объединить в группу',
+              12,
+              FontWeight.w700,
+              color: Color.fromRGBO(153, 153, 153, 0.6),
+            ),
+          ],
+        ),
+      ),
+    );
+    // Flexible(
+    //   flex: 3,
+    //   child: Container(
+    //     decoration: BoxDecoration(
+    //       border: Border.all(
+    //         width: 3.0,
+    //         color: const Color.fromRGBO(153, 153, 153, 0.6),
+    //         style: BorderStyle.solid,
+    //       ),
+    //     ),
+    //     child: Column(
+    //       children: children,
+    //     ),
+    //   );
+  }
+}
+
+// class GroupUpSamplesWidget extends StatelessWidget {
+//   final VoidCallback? onTap;
+//   final List<Sample> children;
+//   const GroupUpSamplesWidget({
+//     super.key,
+//     this.onTap,
+//     required this.children,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Expanded(
+//       child: DottedBorder(
+//         dashPattern: const [30, 10],
+//         strokeCap: StrokeCap.butt,
+//         borderType: BorderType.RRect,
+//         color: const Color.fromRGBO(153, 153, 153, 0.6),
+//         child: Container(
+//           alignment: Alignment.center,
+//           decoration: BoxDecoration(
+//             border: Border.all(
+//               color: const Color.fromRGBO(153, 153, 153, 0.6),
+//               style: BorderStyle.none,
+//             ),
+//           ),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               InkWell(
+//                 onTap: onTap,
+//                 child: Stack(
+//                   alignment: Alignment.center,
+//                   children: [
+//                     SvgPicture.asset(IconsSvg.schemeLittleEllipse),
+//                     SvgPicture.asset(IconsSvg.schemeLittlePLus),
+//                   ],
+//                 ),
+//               ),
+//               const CustomText(
+//                 'Объединить в группу',
+//                 16,
+//                 FontWeight.w700,
+//                 color: Color.fromRGBO(153, 153, 153, 0.6),
+//               ),
+//               NewSample(),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+// class NewSample extends StatelessWidget {
+//   final VoidCallback? onTap;
+//   const NewSample({
+//     super.key,
+//     this.onTap,
+//     required this.group,
+//   }) : super();
+
+//   final Group group;
+//   @override
+//   Widget build(BuildContext context) {
+//     return ExpansionTile(
+//       title: Row(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           CustomText(group.name, 14, FontWeight.w700),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: [
+//               CustomNoBordersButton(IconsSvg.edit, () {}),
+//               CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
+//               CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
+//             ],
+//           ),
+//         ],
+//       ),
+//       children: const [
+//         TextField(
+//           style: TextStyle(),
+//           decoration: InputDecoration(
+//             hintText: "Введите описание",
+//           ),
+//           maxLines: 3,
+//         ),
+//       ],
+//     );
+//   }
+// }
+
+class NewSample extends StatefulWidget {
+  const NewSample({super.key});
+
+  @override
+  State<NewSample> createState() => _NewSampleState();
+}
+
+class _NewSampleState extends State<NewSample> {
+  late TextEditingController title;
+  late TextEditingController descriptionText;
+
+  @override
+  void initState() {
+    title = TextEditingController();
+    descriptionText = TextEditingController();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 100,
+      height: 100,
+      child: ExpansionTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            TextField(
+              controller: title,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomNoBordersButton(IconsSvg.edit, () {}),
+                CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
+                CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
+              ],
+            ),
+          ],
+        ),
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              context.read<ExperimentSchemeBloc>().add(
+                    ExperimentSchemeEvent.addNewSample(
+                      text: descriptionText.text,
+                      title: title.text,
+                    ),
+                  );
+
+              descriptionText.clear();
+              title.clear();
+            },
+            child: const Text('Добавить образец'),
+          )
+        ],
+        // children: [
+        //   TextField(
+        //     controller: descriptionText,
+        //     style: const TextStyle(),
+        //     decoration: const InputDecoration(
+        //       hintText: "Введите описание",
+        //     ),
+        //     maxLines: 3,
+        //   ),
+        //   ElevatedButton(
+        //     onPressed: () {
+        //       context.read<ExperimentSchemeBloc>().add(
+        //             ExperimentSchemeEvent.addNewSample(
+        //               text: descriptionText.text,
+        //               title: title.text,
+        //             ),
+        //           );
+
+        //       descriptionText.clear();
+        //       title.clear();
+        //     },
+        //     child: const Text('Добавить образец'),
+        //   )
+        // ],
+      ),
     );
   }
 }

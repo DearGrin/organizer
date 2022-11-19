@@ -20,9 +20,14 @@ Sample _$SampleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Sample {
+  int get id => throw _privateConstructorUsedError;
+  set id(int value) => throw _privateConstructorUsedError;
   String get tittle => throw _privateConstructorUsedError;
+  set tittle(String value) => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
+  set text(String value) => throw _privateConstructorUsedError;
   List<String> get attachments => throw _privateConstructorUsedError;
+  set attachments(List<String> value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +39,7 @@ abstract class $SampleCopyWith<$Res> {
   factory $SampleCopyWith(Sample value, $Res Function(Sample) then) =
       _$SampleCopyWithImpl<$Res, Sample>;
   @useResult
-  $Res call({String tittle, String text, List<String> attachments});
+  $Res call({int id, String tittle, String text, List<String> attachments});
 }
 
 /// @nodoc
@@ -50,11 +55,16 @@ class _$SampleCopyWithImpl<$Res, $Val extends Sample>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? tittle = null,
     Object? text = null,
     Object? attachments = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       tittle: null == tittle
           ? _value.tittle
           : tittle // ignore: cast_nullable_to_non_nullable
@@ -77,7 +87,7 @@ abstract class _$$_SampleCopyWith<$Res> implements $SampleCopyWith<$Res> {
       __$$_SampleCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String tittle, String text, List<String> attachments});
+  $Res call({int id, String tittle, String text, List<String> attachments});
 }
 
 /// @nodoc
@@ -90,11 +100,16 @@ class __$$_SampleCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? tittle = null,
     Object? text = null,
     Object? attachments = null,
   }) {
     return _then(_$_Sample(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       tittle: null == tittle
           ? _value.tittle
           : tittle // ignore: cast_nullable_to_non_nullable
@@ -104,7 +119,7 @@ class __$$_SampleCopyWithImpl<$Res>
           : text // ignore: cast_nullable_to_non_nullable
               as String,
       attachments: null == attachments
-          ? _value._attachments
+          ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
@@ -114,46 +129,28 @@ class __$$_SampleCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Sample implements _Sample {
-  const _$_Sample(
-      {required this.tittle,
+  _$_Sample(
+      {required this.id,
+      required this.tittle,
       required this.text,
-      required final List<String> attachments})
-      : _attachments = attachments;
+      required this.attachments});
 
   factory _$_Sample.fromJson(Map<String, dynamic> json) =>
       _$$_SampleFromJson(json);
 
   @override
-  final String tittle;
+  int id;
   @override
-  final String text;
-  final List<String> _attachments;
+  String tittle;
   @override
-  List<String> get attachments {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_attachments);
-  }
+  String text;
+  @override
+  List<String> attachments;
 
   @override
   String toString() {
-    return 'Sample(tittle: $tittle, text: $text, attachments: $attachments)';
+    return 'Sample(id: $id, tittle: $tittle, text: $text, attachments: $attachments)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Sample &&
-            (identical(other.tittle, tittle) || other.tittle == tittle) &&
-            (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality()
-                .equals(other._attachments, _attachments));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, tittle, text,
-      const DeepCollectionEquality().hash(_attachments));
 
   @JsonKey(ignore: true)
   @override
@@ -170,19 +167,26 @@ class _$_Sample implements _Sample {
 }
 
 abstract class _Sample implements Sample {
-  const factory _Sample(
-      {required final String tittle,
-      required final String text,
-      required final List<String> attachments}) = _$_Sample;
+  factory _Sample(
+      {required int id,
+      required String tittle,
+      required String text,
+      required List<String> attachments}) = _$_Sample;
 
   factory _Sample.fromJson(Map<String, dynamic> json) = _$_Sample.fromJson;
 
   @override
+  int get id;
+  set id(int value);
+  @override
   String get tittle;
+  set tittle(String value);
   @override
   String get text;
+  set text(String value);
   @override
   List<String> get attachments;
+  set attachments(List<String> value);
   @override
   @JsonKey(ignore: true)
   _$$_SampleCopyWith<_$_Sample> get copyWith =>

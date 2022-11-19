@@ -18,22 +18,26 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ExperimentSchemeEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() addNewSample,
-    required TResult Function(int id) addSampleToGroup,
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
     required TResult Function(int id) groupSamplesById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? addNewSample,
-    TResult? Function(int id)? addSampleToGroup,
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
     TResult? Function(int id)? groupSamplesById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? addNewSample,
-    TResult Function(int id)? addSampleToGroup,
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
     TResult Function(int id)? groupSamplesById,
     required TResult orElse(),
   }) =>
@@ -41,21 +45,24 @@ mixin _$ExperimentSchemeEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_AddNewSample value) addNewSample,
-    required TResult Function(_AddSampleToGroup value) addSampleToGroup,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
     required TResult Function(_GroupSamplesById value) groupSamplesById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddNewSample value)? addNewSample,
-    TResult? Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
     TResult? Function(_GroupSamplesById value)? groupSamplesById,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddNewSample value)? addNewSample,
-    TResult Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
     TResult Function(_GroupSamplesById value)? groupSamplesById,
     required TResult orElse(),
   }) =>
@@ -86,6 +93,8 @@ abstract class _$$_AddNewSampleCopyWith<$Res> {
   factory _$$_AddNewSampleCopyWith(
           _$_AddNewSample value, $Res Function(_$_AddNewSample) then) =
       __$$_AddNewSampleCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String text, String title});
 }
 
 /// @nodoc
@@ -95,57 +104,93 @@ class __$$_AddNewSampleCopyWithImpl<$Res>
   __$$_AddNewSampleCopyWithImpl(
       _$_AddNewSample _value, $Res Function(_$_AddNewSample) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? text = null,
+    Object? title = null,
+  }) {
+    return _then(_$_AddNewSample(
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_AddNewSample implements _AddNewSample {
-  const _$_AddNewSample();
+  const _$_AddNewSample({required this.text, required this.title});
+
+  @override
+  final String text;
+  @override
+  final String title;
 
   @override
   String toString() {
-    return 'ExperimentSchemeEvent.addNewSample()';
+    return 'ExperimentSchemeEvent.addNewSample(text: $text, title: $title)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_AddNewSample);
+        (other.runtimeType == runtimeType &&
+            other is _$_AddNewSample &&
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.title, title) || other.title == title));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, text, title);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AddNewSampleCopyWith<_$_AddNewSample> get copyWith =>
+      __$$_AddNewSampleCopyWithImpl<_$_AddNewSample>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() addNewSample,
-    required TResult Function(int id) addSampleToGroup,
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
     required TResult Function(int id) groupSamplesById,
   }) {
-    return addNewSample();
+    return addNewSample(text, title);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? addNewSample,
-    TResult? Function(int id)? addSampleToGroup,
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
     TResult? Function(int id)? groupSamplesById,
   }) {
-    return addNewSample?.call();
+    return addNewSample?.call(text, title);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? addNewSample,
-    TResult Function(int id)? addSampleToGroup,
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
     TResult Function(int id)? groupSamplesById,
     required TResult orElse(),
   }) {
     if (addNewSample != null) {
-      return addNewSample();
+      return addNewSample(text, title);
     }
     return orElse();
   }
@@ -154,7 +199,8 @@ class _$_AddNewSample implements _AddNewSample {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_AddNewSample value) addNewSample,
-    required TResult Function(_AddSampleToGroup value) addSampleToGroup,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
     required TResult Function(_GroupSamplesById value) groupSamplesById,
   }) {
     return addNewSample(this);
@@ -164,7 +210,8 @@ class _$_AddNewSample implements _AddNewSample {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddNewSample value)? addNewSample,
-    TResult? Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
     TResult? Function(_GroupSamplesById value)? groupSamplesById,
   }) {
     return addNewSample?.call(this);
@@ -174,7 +221,8 @@ class _$_AddNewSample implements _AddNewSample {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddNewSample value)? addNewSample,
-    TResult Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
     TResult Function(_GroupSamplesById value)? groupSamplesById,
     required TResult orElse(),
   }) {
@@ -186,32 +234,50 @@ class _$_AddNewSample implements _AddNewSample {
 }
 
 abstract class _AddNewSample implements ExperimentSchemeEvent {
-  const factory _AddNewSample() = _$_AddNewSample;
+  const factory _AddNewSample(
+      {required final String text,
+      required final String title}) = _$_AddNewSample;
+
+  String get text;
+  String get title;
+  @JsonKey(ignore: true)
+  _$$_AddNewSampleCopyWith<_$_AddNewSample> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_AddSampleToGroupCopyWith<$Res> {
-  factory _$$_AddSampleToGroupCopyWith(
-          _$_AddSampleToGroup value, $Res Function(_$_AddSampleToGroup) then) =
-      __$$_AddSampleToGroupCopyWithImpl<$Res>;
+abstract class _$$_AddSampleCopyWith<$Res> {
+  factory _$$_AddSampleCopyWith(
+          _$_AddSample value, $Res Function(_$_AddSample) then) =
+      __$$_AddSampleCopyWithImpl<$Res>;
   @useResult
-  $Res call({int id});
+  $Res call({String text, String title, int id});
 }
 
 /// @nodoc
-class __$$_AddSampleToGroupCopyWithImpl<$Res>
-    extends _$ExperimentSchemeEventCopyWithImpl<$Res, _$_AddSampleToGroup>
-    implements _$$_AddSampleToGroupCopyWith<$Res> {
-  __$$_AddSampleToGroupCopyWithImpl(
-      _$_AddSampleToGroup _value, $Res Function(_$_AddSampleToGroup) _then)
+class __$$_AddSampleCopyWithImpl<$Res>
+    extends _$ExperimentSchemeEventCopyWithImpl<$Res, _$_AddSample>
+    implements _$$_AddSampleCopyWith<$Res> {
+  __$$_AddSampleCopyWithImpl(
+      _$_AddSample _value, $Res Function(_$_AddSample) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? text = null,
+    Object? title = null,
     Object? id = null,
   }) {
-    return _then(_$_AddSampleToGroup(
+    return _then(_$_AddSample(
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -222,64 +288,75 @@ class __$$_AddSampleToGroupCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddSampleToGroup implements _AddSampleToGroup {
-  const _$_AddSampleToGroup({required this.id});
+class _$_AddSample implements _AddSample {
+  const _$_AddSample(
+      {required this.text, required this.title, required this.id});
 
+  @override
+  final String text;
+  @override
+  final String title;
   @override
   final int id;
 
   @override
   String toString() {
-    return 'ExperimentSchemeEvent.addSampleToGroup(id: $id)';
+    return 'ExperimentSchemeEvent.addSampleToGroup(text: $text, title: $title, id: $id)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddSampleToGroup &&
+            other is _$_AddSample &&
+            (identical(other.text, text) || other.text == text) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, text, title, id);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddSampleToGroupCopyWith<_$_AddSampleToGroup> get copyWith =>
-      __$$_AddSampleToGroupCopyWithImpl<_$_AddSampleToGroup>(this, _$identity);
+  _$$_AddSampleCopyWith<_$_AddSample> get copyWith =>
+      __$$_AddSampleCopyWithImpl<_$_AddSample>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() addNewSample,
-    required TResult Function(int id) addSampleToGroup,
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
     required TResult Function(int id) groupSamplesById,
   }) {
-    return addSampleToGroup(id);
+    return addSampleToGroup(text, title, id);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? addNewSample,
-    TResult? Function(int id)? addSampleToGroup,
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
     TResult? Function(int id)? groupSamplesById,
   }) {
-    return addSampleToGroup?.call(id);
+    return addSampleToGroup?.call(text, title, id);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? addNewSample,
-    TResult Function(int id)? addSampleToGroup,
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
     TResult Function(int id)? groupSamplesById,
     required TResult orElse(),
   }) {
     if (addSampleToGroup != null) {
-      return addSampleToGroup(id);
+      return addSampleToGroup(text, title, id);
     }
     return orElse();
   }
@@ -288,7 +365,8 @@ class _$_AddSampleToGroup implements _AddSampleToGroup {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_AddNewSample value) addNewSample,
-    required TResult Function(_AddSampleToGroup value) addSampleToGroup,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
     required TResult Function(_GroupSamplesById value) groupSamplesById,
   }) {
     return addSampleToGroup(this);
@@ -298,7 +376,8 @@ class _$_AddSampleToGroup implements _AddSampleToGroup {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddNewSample value)? addNewSample,
-    TResult? Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
     TResult? Function(_GroupSamplesById value)? groupSamplesById,
   }) {
     return addSampleToGroup?.call(this);
@@ -308,7 +387,8 @@ class _$_AddSampleToGroup implements _AddSampleToGroup {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddNewSample value)? addNewSample,
-    TResult Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
     TResult Function(_GroupSamplesById value)? groupSamplesById,
     required TResult orElse(),
   }) {
@@ -319,13 +399,184 @@ class _$_AddSampleToGroup implements _AddSampleToGroup {
   }
 }
 
-abstract class _AddSampleToGroup implements ExperimentSchemeEvent {
-  const factory _AddSampleToGroup({required final int id}) =
-      _$_AddSampleToGroup;
+abstract class _AddSample implements ExperimentSchemeEvent {
+  const factory _AddSample(
+      {required final String text,
+      required final String title,
+      required final int id}) = _$_AddSample;
 
+  String get text;
+  String get title;
   int get id;
   @JsonKey(ignore: true)
-  _$$_AddSampleToGroupCopyWith<_$_AddSampleToGroup> get copyWith =>
+  _$$_AddSampleCopyWith<_$_AddSample> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EditSampleCopyWith<$Res> {
+  factory _$$_EditSampleCopyWith(
+          _$_EditSample value, $Res Function(_$_EditSample) then) =
+      __$$_EditSampleCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Sample sample, int idGroup});
+
+  $SampleCopyWith<$Res> get sample;
+}
+
+/// @nodoc
+class __$$_EditSampleCopyWithImpl<$Res>
+    extends _$ExperimentSchemeEventCopyWithImpl<$Res, _$_EditSample>
+    implements _$$_EditSampleCopyWith<$Res> {
+  __$$_EditSampleCopyWithImpl(
+      _$_EditSample _value, $Res Function(_$_EditSample) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? sample = null,
+    Object? idGroup = null,
+  }) {
+    return _then(_$_EditSample(
+      sample: null == sample
+          ? _value.sample
+          : sample // ignore: cast_nullable_to_non_nullable
+              as Sample,
+      idGroup: null == idGroup
+          ? _value.idGroup
+          : idGroup // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SampleCopyWith<$Res> get sample {
+    return $SampleCopyWith<$Res>(_value.sample, (value) {
+      return _then(_value.copyWith(sample: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_EditSample implements _EditSample {
+  const _$_EditSample({required this.sample, required this.idGroup});
+
+  @override
+  final Sample sample;
+  @override
+  final int idGroup;
+
+  @override
+  String toString() {
+    return 'ExperimentSchemeEvent.editSample(sample: $sample, idGroup: $idGroup)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EditSample &&
+            (identical(other.sample, sample) || other.sample == sample) &&
+            (identical(other.idGroup, idGroup) || other.idGroup == idGroup));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, sample, idGroup);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EditSampleCopyWith<_$_EditSample> get copyWith =>
+      __$$_EditSampleCopyWithImpl<_$_EditSample>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
+    required TResult Function(int id) groupSamplesById,
+  }) {
+    return editSample(sample, idGroup);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
+    TResult? Function(int id)? groupSamplesById,
+  }) {
+    return editSample?.call(sample, idGroup);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
+    TResult Function(int id)? groupSamplesById,
+    required TResult orElse(),
+  }) {
+    if (editSample != null) {
+      return editSample(sample, idGroup);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AddNewSample value) addNewSample,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
+    required TResult Function(_GroupSamplesById value) groupSamplesById,
+  }) {
+    return editSample(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AddNewSample value)? addNewSample,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
+    TResult? Function(_GroupSamplesById value)? groupSamplesById,
+  }) {
+    return editSample?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AddNewSample value)? addNewSample,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
+    TResult Function(_GroupSamplesById value)? groupSamplesById,
+    required TResult orElse(),
+  }) {
+    if (editSample != null) {
+      return editSample(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EditSample implements ExperimentSchemeEvent {
+  const factory _EditSample(
+      {required final Sample sample,
+      required final int idGroup}) = _$_EditSample;
+
+  Sample get sample;
+  int get idGroup;
+  @JsonKey(ignore: true)
+  _$$_EditSampleCopyWith<_$_EditSample> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -393,8 +644,10 @@ class _$_GroupSamplesById implements _GroupSamplesById {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() addNewSample,
-    required TResult Function(int id) addSampleToGroup,
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
     required TResult Function(int id) groupSamplesById,
   }) {
     return groupSamplesById(id);
@@ -403,8 +656,9 @@ class _$_GroupSamplesById implements _GroupSamplesById {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? addNewSample,
-    TResult? Function(int id)? addSampleToGroup,
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
     TResult? Function(int id)? groupSamplesById,
   }) {
     return groupSamplesById?.call(id);
@@ -413,8 +667,9 @@ class _$_GroupSamplesById implements _GroupSamplesById {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? addNewSample,
-    TResult Function(int id)? addSampleToGroup,
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
     TResult Function(int id)? groupSamplesById,
     required TResult orElse(),
   }) {
@@ -428,7 +683,8 @@ class _$_GroupSamplesById implements _GroupSamplesById {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_AddNewSample value) addNewSample,
-    required TResult Function(_AddSampleToGroup value) addSampleToGroup,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
     required TResult Function(_GroupSamplesById value) groupSamplesById,
   }) {
     return groupSamplesById(this);
@@ -438,7 +694,8 @@ class _$_GroupSamplesById implements _GroupSamplesById {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_AddNewSample value)? addNewSample,
-    TResult? Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
     TResult? Function(_GroupSamplesById value)? groupSamplesById,
   }) {
     return groupSamplesById?.call(this);
@@ -448,7 +705,8 @@ class _$_GroupSamplesById implements _GroupSamplesById {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AddNewSample value)? addNewSample,
-    TResult Function(_AddSampleToGroup value)? addSampleToGroup,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
     TResult Function(_GroupSamplesById value)? groupSamplesById,
     required TResult orElse(),
   }) {
@@ -474,22 +732,28 @@ mixin _$ExperimentSchemeState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() emptyState,
-    required TResult Function(List<Sample> data) loadedState,
+    required TResult Function(List<Group> data, List<Sample> ungroupedSamples)
+        loadedState,
     required TResult Function() errorState,
+    required TResult Function() loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? emptyState,
-    TResult? Function(List<Sample> data)? loadedState,
+    TResult? Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult? Function()? errorState,
+    TResult? Function()? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? emptyState,
-    TResult Function(List<Sample> data)? loadedState,
+    TResult Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult Function()? errorState,
+    TResult Function()? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -498,6 +762,7 @@ mixin _$ExperimentSchemeState {
     required TResult Function(_EmptyState value) emptyState,
     required TResult Function(_LoadedState value) loadedState,
     required TResult Function(_ErrorState value) errorState,
+    required TResult Function(_Loading value) loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -505,6 +770,7 @@ mixin _$ExperimentSchemeState {
     TResult? Function(_EmptyState value)? emptyState,
     TResult? Function(_LoadedState value)? loadedState,
     TResult? Function(_ErrorState value)? errorState,
+    TResult? Function(_Loading value)? loading,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -512,6 +778,7 @@ mixin _$ExperimentSchemeState {
     TResult Function(_EmptyState value)? emptyState,
     TResult Function(_LoadedState value)? loadedState,
     TResult Function(_ErrorState value)? errorState,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -575,8 +842,10 @@ class _$_EmptyState implements _EmptyState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() emptyState,
-    required TResult Function(List<Sample> data) loadedState,
+    required TResult Function(List<Group> data, List<Sample> ungroupedSamples)
+        loadedState,
     required TResult Function() errorState,
+    required TResult Function() loading,
   }) {
     return emptyState();
   }
@@ -585,8 +854,10 @@ class _$_EmptyState implements _EmptyState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? emptyState,
-    TResult? Function(List<Sample> data)? loadedState,
+    TResult? Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult? Function()? errorState,
+    TResult? Function()? loading,
   }) {
     return emptyState?.call();
   }
@@ -595,8 +866,10 @@ class _$_EmptyState implements _EmptyState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? emptyState,
-    TResult Function(List<Sample> data)? loadedState,
+    TResult Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult Function()? errorState,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (emptyState != null) {
@@ -611,6 +884,7 @@ class _$_EmptyState implements _EmptyState {
     required TResult Function(_EmptyState value) emptyState,
     required TResult Function(_LoadedState value) loadedState,
     required TResult Function(_ErrorState value) errorState,
+    required TResult Function(_Loading value) loading,
   }) {
     return emptyState(this);
   }
@@ -621,6 +895,7 @@ class _$_EmptyState implements _EmptyState {
     TResult? Function(_EmptyState value)? emptyState,
     TResult? Function(_LoadedState value)? loadedState,
     TResult? Function(_ErrorState value)? errorState,
+    TResult? Function(_Loading value)? loading,
   }) {
     return emptyState?.call(this);
   }
@@ -631,6 +906,7 @@ class _$_EmptyState implements _EmptyState {
     TResult Function(_EmptyState value)? emptyState,
     TResult Function(_LoadedState value)? loadedState,
     TResult Function(_ErrorState value)? errorState,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (emptyState != null) {
@@ -650,7 +926,7 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<Sample> data});
+  $Res call({List<Group> data, List<Sample> ungroupedSamples});
 }
 
 /// @nodoc
@@ -665,11 +941,16 @@ class __$$_LoadedStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? data = null,
+    Object? ungroupedSamples = null,
   }) {
     return _then(_$_LoadedState(
       data: null == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
+              as List<Group>,
+      ungroupedSamples: null == ungroupedSamples
+          ? _value._ungroupedSamples
+          : ungroupedSamples // ignore: cast_nullable_to_non_nullable
               as List<Sample>,
     ));
   }
@@ -678,18 +959,29 @@ class __$$_LoadedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState({required final List<Sample> data}) : _data = data;
+  const _$_LoadedState(
+      {required final List<Group> data,
+      required final List<Sample> ungroupedSamples})
+      : _data = data,
+        _ungroupedSamples = ungroupedSamples;
 
-  final List<Sample> _data;
+  final List<Group> _data;
   @override
-  List<Sample> get data {
+  List<Group> get data {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_data);
   }
 
+  final List<Sample> _ungroupedSamples;
+  @override
+  List<Sample> get ungroupedSamples {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ungroupedSamples);
+  }
+
   @override
   String toString() {
-    return 'ExperimentSchemeState.loadedState(data: $data)';
+    return 'ExperimentSchemeState.loadedState(data: $data, ungroupedSamples: $ungroupedSamples)';
   }
 
   @override
@@ -697,12 +989,16 @@ class _$_LoadedState implements _LoadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoadedState &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            const DeepCollectionEquality().equals(other._data, _data) &&
+            const DeepCollectionEquality()
+                .equals(other._ungroupedSamples, _ungroupedSamples));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_data));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_data),
+      const DeepCollectionEquality().hash(_ungroupedSamples));
 
   @JsonKey(ignore: true)
   @override
@@ -714,32 +1010,38 @@ class _$_LoadedState implements _LoadedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() emptyState,
-    required TResult Function(List<Sample> data) loadedState,
+    required TResult Function(List<Group> data, List<Sample> ungroupedSamples)
+        loadedState,
     required TResult Function() errorState,
+    required TResult Function() loading,
   }) {
-    return loadedState(data);
+    return loadedState(data, ungroupedSamples);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? emptyState,
-    TResult? Function(List<Sample> data)? loadedState,
+    TResult? Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult? Function()? errorState,
+    TResult? Function()? loading,
   }) {
-    return loadedState?.call(data);
+    return loadedState?.call(data, ungroupedSamples);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? emptyState,
-    TResult Function(List<Sample> data)? loadedState,
+    TResult Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult Function()? errorState,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (loadedState != null) {
-      return loadedState(data);
+      return loadedState(data, ungroupedSamples);
     }
     return orElse();
   }
@@ -750,6 +1052,7 @@ class _$_LoadedState implements _LoadedState {
     required TResult Function(_EmptyState value) emptyState,
     required TResult Function(_LoadedState value) loadedState,
     required TResult Function(_ErrorState value) errorState,
+    required TResult Function(_Loading value) loading,
   }) {
     return loadedState(this);
   }
@@ -760,6 +1063,7 @@ class _$_LoadedState implements _LoadedState {
     TResult? Function(_EmptyState value)? emptyState,
     TResult? Function(_LoadedState value)? loadedState,
     TResult? Function(_ErrorState value)? errorState,
+    TResult? Function(_Loading value)? loading,
   }) {
     return loadedState?.call(this);
   }
@@ -770,6 +1074,7 @@ class _$_LoadedState implements _LoadedState {
     TResult Function(_EmptyState value)? emptyState,
     TResult Function(_LoadedState value)? loadedState,
     TResult Function(_ErrorState value)? errorState,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (loadedState != null) {
@@ -780,10 +1085,12 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements ExperimentSchemeState {
-  const factory _LoadedState({required final List<Sample> data}) =
-      _$_LoadedState;
+  const factory _LoadedState(
+      {required final List<Group> data,
+      required final List<Sample> ungroupedSamples}) = _$_LoadedState;
 
-  List<Sample> get data;
+  List<Group> get data;
+  List<Sample> get ungroupedSamples;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -828,8 +1135,10 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() emptyState,
-    required TResult Function(List<Sample> data) loadedState,
+    required TResult Function(List<Group> data, List<Sample> ungroupedSamples)
+        loadedState,
     required TResult Function() errorState,
+    required TResult Function() loading,
   }) {
     return errorState();
   }
@@ -838,8 +1147,10 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? emptyState,
-    TResult? Function(List<Sample> data)? loadedState,
+    TResult? Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult? Function()? errorState,
+    TResult? Function()? loading,
   }) {
     return errorState?.call();
   }
@@ -848,8 +1159,10 @@ class _$_ErrorState implements _ErrorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? emptyState,
-    TResult Function(List<Sample> data)? loadedState,
+    TResult Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
     TResult Function()? errorState,
+    TResult Function()? loading,
     required TResult orElse(),
   }) {
     if (errorState != null) {
@@ -864,6 +1177,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function(_EmptyState value) emptyState,
     required TResult Function(_LoadedState value) loadedState,
     required TResult Function(_ErrorState value) errorState,
+    required TResult Function(_Loading value) loading,
   }) {
     return errorState(this);
   }
@@ -874,6 +1188,7 @@ class _$_ErrorState implements _ErrorState {
     TResult? Function(_EmptyState value)? emptyState,
     TResult? Function(_LoadedState value)? loadedState,
     TResult? Function(_ErrorState value)? errorState,
+    TResult? Function(_Loading value)? loading,
   }) {
     return errorState?.call(this);
   }
@@ -884,6 +1199,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_EmptyState value)? emptyState,
     TResult Function(_LoadedState value)? loadedState,
     TResult Function(_ErrorState value)? errorState,
+    TResult Function(_Loading value)? loading,
     required TResult orElse(),
   }) {
     if (errorState != null) {
@@ -895,4 +1211,120 @@ class _$_ErrorState implements _ErrorState {
 
 abstract class _ErrorState implements ExperimentSchemeState {
   const factory _ErrorState() = _$_ErrorState;
+}
+
+/// @nodoc
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$ExperimentSchemeStateCopyWithImpl<$Res, _$_Loading>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Loading implements _Loading {
+  const _$_Loading();
+
+  @override
+  String toString() {
+    return 'ExperimentSchemeState.loading()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Loading);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() emptyState,
+    required TResult Function(List<Group> data, List<Sample> ungroupedSamples)
+        loadedState,
+    required TResult Function() errorState,
+    required TResult Function() loading,
+  }) {
+    return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? emptyState,
+    TResult? Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
+    TResult? Function()? errorState,
+    TResult? Function()? loading,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? emptyState,
+    TResult Function(List<Group> data, List<Sample> ungroupedSamples)?
+        loadedState,
+    TResult Function()? errorState,
+    TResult Function()? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_EmptyState value) emptyState,
+    required TResult Function(_LoadedState value) loadedState,
+    required TResult Function(_ErrorState value) errorState,
+    required TResult Function(_Loading value) loading,
+  }) {
+    return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_EmptyState value)? emptyState,
+    TResult? Function(_LoadedState value)? loadedState,
+    TResult? Function(_ErrorState value)? errorState,
+    TResult? Function(_Loading value)? loading,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_EmptyState value)? emptyState,
+    TResult Function(_LoadedState value)? loadedState,
+    TResult Function(_ErrorState value)? errorState,
+    TResult Function(_Loading value)? loading,
+    required TResult orElse(),
+  }) {
+    if (loading != null) {
+      return loading(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Loading implements ExperimentSchemeState {
+  const factory _Loading() = _$_Loading;
 }
