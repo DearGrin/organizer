@@ -143,7 +143,15 @@ class MyApp extends StatelessWidget {
                                       ),
                                       Flexible(
                                         child: AddSampleWidget(
-                                          onTap: () {},
+                                          onTap: () => context
+                                              .read<ExperimentSchemeBloc>()
+                                              .add(
+                                                const ExperimentSchemeEvent
+                                                    .addNewSample(
+                                                  text: 'Введите описание',
+                                                  title: 'Образец',
+                                                ),
+                                              ),
                                         ),
                                       )
                                     ],
@@ -296,15 +304,18 @@ class _SampleState extends State<_Sample> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-            width: 150,
-            child: TextField(
-              maxLength: 20,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                counterText: '',
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: SizedBox(
+              width: 150,
+              child: TextField(
+                maxLength: 20,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  counterText: '',
+                ),
+                controller: fieldTittle,
               ),
-              controller: fieldTittle,
             ),
           ),
           Row(
@@ -318,14 +329,17 @@ class _SampleState extends State<_Sample> {
         ],
       ),
       children: [
-        SizedBox(
-          height: 100,
-          child: TextField(
-            maxLines: 2,
-            decoration: const InputDecoration(
-              border: InputBorder.none,
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 26),
+          child: SizedBox(
+            height: 100,
+            child: TextField(
+              maxLines: 2,
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+              ),
+              controller: fieldText,
             ),
-            controller: fieldText,
           ),
         ),
       ],
