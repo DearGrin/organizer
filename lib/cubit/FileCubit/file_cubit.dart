@@ -20,6 +20,7 @@ class FileCubit extends Cubit<FileState> {
     for (PlatformFile file in results.files) {
       files.add(file.name);
     }
+    print('files $files');
     emit(FileState(files: files));
   }
 

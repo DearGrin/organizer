@@ -17,6 +17,7 @@ class SampleRepository {
 
   void addFirstSample(Sample sample) {
     data.add(Group(name: 'Безымянная группа ', id: 0, samples: [sample]));
+    ungroupedSamples.add(sample);
   }
 
   void addSampleUngrouped(Sample sample) {

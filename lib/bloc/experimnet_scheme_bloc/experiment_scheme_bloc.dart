@@ -13,7 +13,6 @@ part 'experiment_scheme_bloc.freezed.dart';
 class ExperimentSchemeBloc
     extends Bloc<ExperimentSchemeEvent, ExperimentSchemeState> {
   SampleRepository repository;
-
   ExperimentSchemeBloc(this.repository) : super(const _EmptyState()) {
     on<ExperimentSchemeEvent>((event, emit) {
       event.map(

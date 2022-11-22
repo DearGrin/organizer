@@ -108,10 +108,6 @@ class _TextCardState extends State<TextCard> {
   Widget build(BuildContext context) {
     return TextField(
       controller: myController,
-      // onChanged: (value) {
-      //   BlocProvider.of<ExperimentCardCubit>(context)
-      //       .experimentGoalNote(getText());
-      // },
       onSubmitted: (value) {
         BlocProvider.of<ExperimentCardCubit>(context)
             .experimentGoalNote(getText());

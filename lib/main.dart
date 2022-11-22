@@ -123,6 +123,7 @@ class MyApp extends StatelessWidget {
                                         child: Column(
                                           children: [
                                             Expanded(
+                                              flex: 1,
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
@@ -131,10 +132,17 @@ class MyApp extends StatelessWidget {
                                                         153, 153, 153, 0.6),
                                                   ),
                                                 ),
-                                                child: _Sample(
-                                                  sample:
-                                                      state.data[0].samples[0],
-                                                  idGroup: 0,
+                                                child: Row(
+                                                  children: state.data
+                                                      .map(
+                                                        (e) => Expanded(
+                                                          flex: 1,
+                                                          child: _GroupWidget(
+                                                            group: e,
+                                                          ),
+                                                        ),
+                                                      )
+                                                      .toList(),
                                                 ),
                                               ),
                                             ),
@@ -147,13 +155,14 @@ class MyApp extends StatelessWidget {
                                               .read<ExperimentSchemeBloc>()
                                               .add(
                                                 const ExperimentSchemeEvent
-                                                    .addNewSample(
-                                                  text: 'Введите описание',
+                                                    .addSampleToGroup(
+                                                  text: 'Ведите текст',
                                                   title: 'Образец',
+                                                  id: 0,
                                                 ),
                                               ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -231,31 +240,21 @@ class _GroupWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        Column(
-          children: [
-            Row(
-              children: group.samples
-                  .map(
-                    (e) => _Sample(
-                      sample: e,
-                      idGroup: group.id,
-                    ),
-                  )
-                  .toList(),
-            ),
-          ],
-        ),
-        ElevatedButton(
-          onPressed: () => context.read<ExperimentSchemeBloc>().add(
-                ExperimentSchemeEvent.addSampleToGroup(
-                  text: 'Ведите текст',
-                  title: 'Образец',
-                  id: group.id,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: group.samples
+              .map(
+                (e) => Expanded(
+                  flex: 1,
+                  child: _Sample(
+                    sample: e,
+                    idGroup: group.id,
+                  ),
                 ),
-              ),
-          child: const Icon(Icons.add),
+              )
+              .toList(),
         ),
       ],
     );
@@ -285,64 +284,78 @@ class _SampleState extends State<_Sample> {
     fieldText = TextEditingController()..text = widget.sample.text;
 
     fieldText.addListener(() {
-      context.read<ExperimentSchemeBloc>().add(ExperimentSchemeEvent.editSample(
-          sample: widget.sample.copyWith(text: fieldText.text),
-          idGroup: widget.idGroup));
+      context.read<ExperimentSchemeBloc>().add(
+            ExperimentSchemeEvent.editSample(
+                sample: widget.sample.copyWith(text: fieldText.text),
+                idGroup: widget.idGroup),
+          );
     });
     fieldTittle.addListener(() {
-      context.read<ExperimentSchemeBloc>().add(ExperimentSchemeEvent.editSample(
-          sample: widget.sample.copyWith(tittle: fieldTittle.text),
-          idGroup: widget.idGroup));
+      context.read<ExperimentSchemeBloc>().add(
+            ExperimentSchemeEvent.editSample(
+                sample: widget.sample.copyWith(tittle: fieldTittle.text),
+                idGroup: widget.idGroup),
+          );
     });
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: SizedBox(
-              width: 150,
-              child: TextField(
-                maxLength: 20,
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  counterText: '',
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: const Color.fromRGBO(153, 153, 153, 0.6),
+        ),
+      ),
+      child: ExpansionTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: SizedBox(
+                width: 150,
+                child: TextField(
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  maxLength: 20,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    counterText: '',
+                  ),
+                  controller: fieldTittle,
                 ),
-                controller: fieldTittle,
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CustomNoBordersButton(IconsSvg.edit, () {}),
-              CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
-              CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
-            ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomNoBordersButton(IconsSvg.edit, () {}),
+                CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
+                CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
+              ],
+            ),
+          ],
+        ),
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 26),
+            child: SizedBox(
+              height: 100,
+              child: TextField(
+                maxLines: 2,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                ),
+                controller: fieldText,
+              ),
+            ),
           ),
         ],
       ),
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 20, right: 26),
-          child: SizedBox(
-            height: 100,
-            child: TextField(
-              maxLines: 2,
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-              ),
-              controller: fieldText,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
