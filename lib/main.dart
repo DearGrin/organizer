@@ -1,11 +1,14 @@
 import 'dart:math';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
 import 'package:first_approval_app/bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/cubit/cubit/experiment_card_cubit.dart';
+import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
+import 'package:first_approval_app/repositorys/experiment_card_repository.dart';
 import 'package:first_approval_app/screens/experiment_card/experiment_card.dart';
 import 'package:first_approval_app/screens/experiment_card/experiment_sheme.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
@@ -46,30 +49,35 @@ class MyApp extends StatelessWidget {
               ),
               child: ListView(
                 children: [
-                  BlocProvider<ExperimentCardCubit>(
-                    create: (context) => ExperimentCardCubit(),
-                    child: Column(
-                      children: [
-                        const ExperimentNameWidget(),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: const [
-                            Flexible(
-                              flex: 3,
-                              child: ExperimentInfoCard(),
-                            ),
-                            SizedBox(
-                              width: 50,
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: FilesCard(),
-                            ),
-                          ],
-                        ),
-                      ],
+                  Provider<ExperimentCardRepository>(
+                    create: (context) => ExperimentCardRepository(),
+                    child: BlocProvider<ExperimentCardBloc>(
+                      create: (context) => ExperimentCardBloc(
+                        Provider.of(context, listen: false),
+                      ),
+                      child: Column(
+                        children: [
+                          const ExperimentNameWidget(),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: const [
+                              Flexible(
+                                flex: 3,
+                                child: ExperimentInfoCard(),
+                              ),
+                              SizedBox(
+                                width: 50,
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: FilesCard(),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(

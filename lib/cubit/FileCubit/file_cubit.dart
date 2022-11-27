@@ -40,3 +40,37 @@ class FileCubit extends Cubit<FileState> {
     file.writeAsString(info);
   }
 }
+
+class FileManager {
+  List<String> files = [];
+
+  void pickFiles() async {
+    FilePickerResult? results = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      // type: FileType.custom,
+      // allowedExtensions: ['list of files'],
+    );
+    if (results == null) return;
+
+    List<String> files = [];
+    for (PlatformFile file in results.files) {
+      files.add(file.name);
+    }
+    print('files $files');
+  }
+
+  Future<String> get _localPath async {
+    final directory = await getDownloadsDirectory();
+    return directory!.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/FA.json');
+  }
+
+  Future<void> writeToFile(String info) async {
+    final file = await _localFile;
+    file.writeAsString(info);
+  }
+}

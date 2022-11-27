@@ -1,3 +1,4 @@
+import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/custom_widgets/utils.dart';
@@ -8,7 +9,6 @@ import '../../cubit/cubit/experiment_card_cubit.dart';
 
 class ExperimentNameWidget extends StatelessWidget {
   const ExperimentNameWidget({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -109,8 +109,12 @@ class _TextCardState extends State<TextCard> {
     return TextField(
       controller: myController,
       onSubmitted: (value) {
-        BlocProvider.of<ExperimentCardCubit>(context)
-            .experimentGoalNote(getText());
+        context.read<ExperimentCardBloc>().add(
+              ExperimentCardEvent.fieldFilled(
+                widget.name,
+                getText(),
+              ),
+            );
       },
       maxLines: widget.lines,
       decoration: InputDecoration(
@@ -138,14 +142,18 @@ class TextFieldsArea extends StatelessWidget {
             children: const [
               Expanded(
                 flex: 3,
-                child: TextCard('Цель'),
+                child: TextCard(
+                  'Цель',
+                ),
               ),
               SizedBox(
                 width: 30,
               ),
               Expanded(
                 flex: 1,
-                child: TextCard('Дата проведения'),
+                child: TextCard(
+                  'Дата проведения',
+                ),
               )
             ],
           ),
@@ -172,19 +180,27 @@ class TextFieldsArea extends StatelessWidget {
                 flex: 1,
                 child: Column(
                   children: const [
-                    TextCard('Метод'),
+                    TextCard(
+                      'Метод',
+                    ),
                     SizedBox(
                       height: 10,
                     ),
-                    TextCard('Объект'),
+                    TextCard(
+                      'Объект',
+                    ),
                     SizedBox(
                       height: 10,
                     ),
-                    TextCard('Прибор'),
+                    TextCard(
+                      'Прибор',
+                    ),
                     SizedBox(
                       height: 10,
                     ),
-                    TextCard('Софт'),
+                    TextCard(
+                      'Софт',
+                    ),
                   ],
                 ),
               ),
@@ -206,28 +222,19 @@ class ExperimentPageButtons extends StatelessWidget {
       children: [
         CustomButtonsWithBorders(IconsSvg.back, () {}),
         const SizedBox(width: 20),
-        BlocBuilder<FileCubit, FileState>(
-          builder: (context, state) {
-            return BlocBuilder<ExperimentCardCubit, ExperimentCardState>(
-              builder: (context, state) {
-                return CustomButtonsWithBorders(
-                  IconsSvg.saved,
-                  () {
-                    print(state.experimentGoal);
-                    BlocProvider.of<FileCubit>(context)
-                        .writeToFile(state.experimentGoal);
-                    // showDialog(
-                    //   context: context,
-                    //   builder: (context) {
-                    //     return Center(child: Text(state.experimentGoal));
-                    //   },
-                    // );
-                  },
-                  withText: true,
-                );
+        BlocBuilder<ExperimentCardBloc, ExperimentCardState>(
+          builder: (context, state) => state.map(
+            saved: (state) => CustomButtonsWithBorders(
+              IconsSvg.saved,
+              () {
+                context.read<ExperimentCardBloc>().add(
+                      ExperimentCardEvent.saveCard(state.card),
+                    );
+                print(state.card);
               },
-            );
-          },
+              withText: true,
+            ),
+          ),
         ),
         const SizedBox(width: 10),
         CustomButtonsWithBorders(IconsSvg.archive, () {}),

@@ -3,11 +3,11 @@ import 'dart:io';
 
 part 'experiment_card_state.dart';
 
-class ExperimentCardCubit extends Cubit<ExperimentCardState> {
-  ExperimentCardCubit() : super(ExperimentCardState());
-  ExperimentCardState expState = ExperimentCardState();
+class ExperimentCardCubit extends Cubit<ExperimentState> {
+  ExperimentCardCubit() : super(ExperimentState());
+  ExperimentState expState = ExperimentState();
 
   void experimentGoalNote(String experimentGoal) {
-    emit(ExperimentCardState());
+    emit(ExperimentState());
   }
 }

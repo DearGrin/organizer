@@ -22,7 +22,7 @@ class SampleRepository {
 
   void addSampleUngrouped(Sample sample) {
     ungroupedSamples.add(sample);
-  }
+  } 
 
   void addSampleToGroup(Sample sample, int i) {
     data[i] = data[i].copyWith(samples: [...data[i].samples, sample]);

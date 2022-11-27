@@ -1,9 +1,9 @@
 part of 'experiment_card_cubit.dart';
 
-class ExperimentCardState {
+class ExperimentState {
   String experimentGoal = '';
   String description = '';
 
-  ExperimentCardState();
+  ExperimentState();
 
 }

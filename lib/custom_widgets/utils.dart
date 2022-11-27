@@ -3,19 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class HeaderText extends StatelessWidget {
   final String text;
-  const HeaderText(this.text ,{Key? key}) : super(key: key);
+  const HeaderText(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
-            text,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontFamily: "Inter",
-              fontWeight: FontWeight.w700,
-            ),
-          );
+      text,
+      style: const TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontFamily: "Inter",
+        fontWeight: FontWeight.w700,
+      ),
+    );
   }
 }
 
