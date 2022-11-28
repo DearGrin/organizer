@@ -4,6 +4,7 @@ import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/custom_widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../cubit/cubit/experiment_card_cubit.dart';
 
@@ -24,7 +25,7 @@ class ExperimentNameWidget extends StatelessWidget {
                 const CustomText(
                   'Название эксперимента',
                   20,
-                  FontWeight.w700,
+                  weight: FontWeight.w700,
                 ),
               ],
             ),
@@ -56,7 +57,7 @@ class ExperimentInfoCard extends StatelessWidget {
               const CustomText(
                 'Информация об эксперименте',
                 20,
-                FontWeight.w700,
+                weight: FontWeight.w700,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -253,63 +254,94 @@ class FilesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       padding: const EdgeInsets.only(
         top: 25,
-        left: 40,
-        right: 40,
+        bottom: 30,
       ),
       height: 410,
-      color: Colors.white,
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const CustomText('Файлы', 20, FontWeight.w700),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CustomNoBordersButton(
-                    IconsSvg.import,
-                    () {},
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  CustomNoBordersButton(
-                    IconsSvg.export,
-                    () {},
-                  ),
-                ],
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 40, right: 40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const CustomText('Файлы', 20, weight: FontWeight.w700,),
+                CustomNoBordersButton(
+                  IconsSvg.moreHorizontal,
+                      () {
+                    context.read<FileCubit>().pickFiles();
+                  },
+                ),
+              ],
+            ),
           ),
-          SizedBox(
-            height: 30,
+          const SizedBox(height: 15,),
+          Expanded(
+            child: BlocBuilder<FileCubit, FileState>(
+              builder: (context, state) {
+                if (state.files.isNotEmpty) {
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.files.length,
+                      itemBuilder: (context, index) {
+                        return MyFiles(state.files[index]);
+                      });
+                } else {
+                  return const SizedBox.shrink();
+                }
+
+              },
+            ),
           ),
-          const MyFiles('Файл_1', 10),
-          const MyFiles('Файл_2', 10),
+
         ],
       ),
     );
   }
 }
 
-class MyFiles extends StatelessWidget {
-  const MyFiles(this.fileName, this.spaceBetween, {super.key});
+class MyFiles extends StatefulWidget {
+  const MyFiles(this.fileName, {super.key});
+
   final String fileName;
-  final double spaceBetween;
+
+  @override
+  State<MyFiles> createState() => _MyFilesState();
+}
+
+class _MyFilesState extends State<MyFiles> {
+
+  bool mouseInArea = false;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CustomNoBordersButton(IconsSvg.file, () {}),
-        SizedBox(
-          width: spaceBetween,
+    return SizedBox(
+      height: 47,
+      child: MouseRegion(
+        onEnter: (PointerEvent event) {
+          mouseInArea = true;
+          setState(() {});
+        },
+        onExit: (PointerEvent event) {
+          mouseInArea = false;
+          setState(() {});
+        },
+        child: Container(
+          color: mouseInArea ? const Color(0xffF5F5F5) : Colors.white,
+          child: ListTile(
+            contentPadding: const EdgeInsets.only(left: 40, right: 40),
+            dense: true,
+            minLeadingWidth: 16,
+            trailing: CustomNoBordersButton(IconsSvg.trashIcon, () {
+              context.read<FileCubit>().deleteFileName(widget.fileName);
+            }),
+            leading: SvgPicture.asset(IconsSvg.file),
+            title: CustomText(widget.fileName, 12, textAlign: TextAlign.start, textOverflow: TextOverflow.ellipsis,),
+          ),
         ),
-        CustomText(fileName, 12, FontWeight.w400),
-      ],
+      ),
     );
   }
 }

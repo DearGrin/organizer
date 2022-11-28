@@ -59,4 +59,7 @@ class IconsSvg {
       'assets/images/experiment_scheme/scheme-little-ellipse.svg';
   static const String schemeLittlePLus =
       'assets/images/experiment_scheme/scheme-little-plus.svg';
+  static const String moreHorizontal =
+      'assets/images/icons_svg/more-horizontal.svg';
+  static const String trashIcon = 'assets/images/icons_svg/trash.svg';
 }

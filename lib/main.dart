@@ -228,7 +228,7 @@ class AddSampleWidget extends StatelessWidget {
             const CustomText(
               'Добавить\nобразец',
               12,
-              FontWeight.w700,
+              weight: FontWeight.w700,
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],

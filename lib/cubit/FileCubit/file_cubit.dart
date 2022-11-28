@@ -7,7 +7,7 @@ part 'file_state.dart';
 
 class FileCubit extends Cubit<FileState> {
   FileCubit() : super(FileState(files: []));
-
+  List<String> files = [];
   void pickFiles() async {
     FilePickerResult? results = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -16,7 +16,7 @@ class FileCubit extends Cubit<FileState> {
     );
     if (results == null) return;
 
-    List<String> files = [];
+
     for (PlatformFile file in results.files) {
       files.add(file.name);
     }
@@ -38,6 +38,11 @@ class FileCubit extends Cubit<FileState> {
   Future<void> writeToFile(String info) async {
     final file = await _localFile;
     file.writeAsString(info);
+  }
+
+  void deleteFileName(String filename) {
+    files.removeWhere((element) => element == filename);
+    emit(FileState(files: files));
   }
 }
 

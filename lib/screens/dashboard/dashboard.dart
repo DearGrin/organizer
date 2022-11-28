@@ -111,7 +111,7 @@ class AddCard extends StatelessWidget {
                 CustomText(
                   text,
                   16,
-                  FontWeight.w700,
+                  weight: FontWeight.w700,
                   color: const Color.fromRGBO(153, 153, 153, 0.6),
                 ),
               ],
@@ -163,7 +163,7 @@ class ChooseOptionPopUp extends StatelessWidget {
               child: CustomText(
                 'Выберите способ:',
                 20,
-                FontWeight.w700,
+                weight: FontWeight.w700,
               ),
             ),
             Row(
@@ -273,7 +273,7 @@ class RecentExperimentCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const CustomText('01.08.2022', 10, FontWeight.w400),
+              const CustomText('01.08.2022', 10, weight: FontWeight.w400,),
               IconButton(
                 onPressed: () {},
                 splashRadius: 10,
@@ -281,11 +281,11 @@ class RecentExperimentCard extends StatelessWidget {
               )
             ],
           ),
-          const CustomText('Название эксперимента', 14, FontWeight.w700),
+          const CustomText('Название эксперимента', 14, weight: FontWeight.w700,),
           const SizedBox(
             height: 15,
           ),
-          const CustomText('Цель эксперимента', 12, FontWeight.w400),
+          const CustomText('Цель эксперимента', 12, weight: FontWeight.w400,),
           const SizedBox(
             height: 80,
           ),
@@ -388,7 +388,7 @@ class PublicButton extends StatelessWidget {
             child: const CustomText(
               'Публиковать',
               10,
-              FontWeight.w700,
+              weight: FontWeight.w700,
               color: Colors.white,
             ),
           ),

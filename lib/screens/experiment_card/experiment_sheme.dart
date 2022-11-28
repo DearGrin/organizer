@@ -33,7 +33,7 @@ class ExperimentScheme extends StatelessWidget {
               const CustomText(
                 'Схема эксперимента',
                 20,
-                FontWeight.w700,
+                weight: FontWeight.w700,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -98,7 +98,7 @@ class DottedAreaWidget extends StatelessWidget {
             const CustomText(
               'Добавить новый\nобразец',
               16,
-              FontWeight.w700,
+              weight: FontWeight.w700,
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
@@ -146,7 +146,7 @@ class DottedAreaWithSamples extends StatelessWidget {
             const CustomText(
               'Объединить в группу',
               12,
-              FontWeight.w700,
+              weight: FontWeight.w700,
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],

@@ -21,21 +21,24 @@ class HeaderText extends StatelessWidget {
 
 class CustomText extends StatelessWidget {
   final String text;
-  final double? fontsize;
+  final double? fontSize;
   final FontWeight weight;
   final Color? color;
-  const CustomText(this.text, this.fontsize, this.weight,
-      {Key? key, this.color = Colors.black})
+  final TextOverflow? textOverflow;
+  final TextAlign textAlign;
+  const CustomText(this.text, this.fontSize,
+      {Key? key, this.color = Colors.black, this.textOverflow = TextOverflow.ellipsis, this.weight = FontWeight.normal, this.textAlign = TextAlign.center})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      textAlign: TextAlign.center,
+      textAlign: textAlign,
       style: TextStyle(
+        overflow: textOverflow,
         color: color,
-        fontSize: fontsize,
+        fontSize: fontSize,
         fontFamily: "Inter",
         fontWeight: weight,
       ),
@@ -65,7 +68,7 @@ class CustomButtonsWithBorders extends StatelessWidget {
                   const CustomText(
                     'Сохранить',
                     10,
-                    FontWeight.w400,
+                    weight: FontWeight.w400,
                   )
                 ],
               )
