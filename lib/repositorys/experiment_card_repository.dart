@@ -10,7 +10,7 @@ class ExperimentCardRepository {
   }
 
   void saveToFile(ExperimentCardTextFields card) {
-    fileManager.writeToFile(card.toJson().toString());
+    fileManager.writeToFile(card.toString());
   }
 
   void setDesription(String description) {

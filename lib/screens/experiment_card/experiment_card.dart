@@ -117,6 +117,15 @@ class _TextCardState extends State<TextCard> {
               ),
             );
       },
+      onChanged: (value) {
+        context.read<ExperimentCardBloc>().add(
+              ExperimentCardEvent.fieldFilled(
+                widget.name,
+                getText(),
+              ),
+            );
+      },
+      onEditingComplete: () {},
       maxLines: widget.lines,
       decoration: InputDecoration(
         filled: true,

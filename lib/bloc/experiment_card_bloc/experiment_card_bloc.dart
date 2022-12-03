@@ -40,13 +40,13 @@ class ExperimentCardBloc
       repository.setGoal(event.text);
     } else if (event.fieldName == 'Описание') {
       repository.setDesription(event.text);
-    } else if (event.fieldName == 'Дата') {
+    } else if (event.fieldName == 'Дата проведения') {
       repository.setDate(event.text);
     } else if (event.fieldName == 'Метод') {
       repository.setMethod(event.text);
     } else if (event.fieldName == 'Объект') {
       repository.setObject(event.text);
-    } else if (event.fieldName == 'Девайс') {
+    } else if (event.fieldName == 'Прибор') {
       repository.setDevice(event.text);
     } else if (event.fieldName == 'Софт') {
       repository.setSoft(event.text);

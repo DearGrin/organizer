@@ -4,8 +4,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
 import 'package:first_approval_app/bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
-import 'package:first_approval_app/cubit/cubit/experiment_card_cubit.dart';
-import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
 import 'package:first_approval_app/repositorys/experiment_card_repository.dart';
@@ -250,19 +248,44 @@ class _GroupWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: group.samples
-              .map(
-                (e) => Expanded(
-                  flex: 1,
-                  child: _Sample(
-                    sample: e,
-                    idGroup: group.id,
-                  ),
-                ),
-              )
-              .toList(),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: group.samples.length < 6
+                ? group.samples
+                    .map(
+                      (e) => Expanded(
+                        flex: 1,
+                        child: _Sample(
+                          sample: e,
+                          idGroup: group.id,
+                        ),
+                      ),
+                    )
+                    .toList()
+                : [
+                    ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 10,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: group.samples
+                              .map(
+                                (e) => Expanded(
+                                  flex: 1,
+                                  child: _Sample(
+                                    sample: e,
+                                    idGroup: group.id,
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        );
+                      },
+                    ),
+                  ],
+          ),
         ),
       ],
     );
