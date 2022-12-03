@@ -276,17 +276,23 @@ class FilesCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CustomText('Файлы', 20, weight: FontWeight.w700,),
+                const CustomText(
+                  'Файлы',
+                  20,
+                  weight: FontWeight.w700,
+                ),
                 CustomNoBordersButton(
                   IconsSvg.moreHorizontal,
-                      () {
+                  () {
                     context.read<FileCubit>().pickFiles();
                   },
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(
+            height: 15,
+          ),
           Expanded(
             child: BlocBuilder<FileCubit, FileState>(
               builder: (context, state) {
@@ -300,11 +306,9 @@ class FilesCard extends StatelessWidget {
                 } else {
                   return const SizedBox.shrink();
                 }
-
               },
             ),
           ),
-
         ],
       ),
     );
@@ -321,7 +325,6 @@ class MyFiles extends StatefulWidget {
 }
 
 class _MyFilesState extends State<MyFiles> {
-
   bool mouseInArea = false;
 
   @override
@@ -347,7 +350,12 @@ class _MyFilesState extends State<MyFiles> {
               context.read<FileCubit>().deleteFileName(widget.fileName);
             }),
             leading: SvgPicture.asset(IconsSvg.file),
-            title: CustomText(widget.fileName, 12, textAlign: TextAlign.start, textOverflow: TextOverflow.ellipsis,),
+            title: CustomText(
+              widget.fileName,
+              12,
+              textAlign: TextAlign.start,
+              textOverflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       ),

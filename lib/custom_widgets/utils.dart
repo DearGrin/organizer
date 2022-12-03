@@ -27,7 +27,11 @@ class CustomText extends StatelessWidget {
   final TextOverflow? textOverflow;
   final TextAlign textAlign;
   const CustomText(this.text, this.fontSize,
-      {Key? key, this.color = Colors.black, this.textOverflow = TextOverflow.ellipsis, this.weight = FontWeight.normal, this.textAlign = TextAlign.center})
+      {Key? key,
+      this.color = Colors.black,
+      this.textOverflow = TextOverflow.ellipsis,
+      this.weight = FontWeight.normal,
+      this.textAlign = TextAlign.center})
       : super(key: key);
 
   @override
@@ -79,7 +83,8 @@ class CustomButtonsWithBorders extends StatelessWidget {
 }
 
 class CustomNoBordersButton extends StatelessWidget {
-  const CustomNoBordersButton(this.icon, this.onPressed, {super.key});
+  const CustomNoBordersButton(this.icon, this.onPressed,
+      {super.key});
   final String icon;
   final VoidCallback? onPressed;
 

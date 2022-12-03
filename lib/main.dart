@@ -237,55 +237,64 @@ class AddSampleWidget extends StatelessWidget {
 }
 
 class _GroupWidget extends StatelessWidget {
-  const _GroupWidget({
+  _GroupWidget({
     super.key,
     required this.group,
   });
 
   final Group group;
+  var controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Expanded(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: group.samples.length < 6
-                ? group.samples
-                    .map(
-                      (e) => Expanded(
-                        flex: 1,
-                        child: _Sample(
-                          sample: e,
-                          idGroup: group.id,
+          child: group.samples.length < 6
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: group.samples
+                      .map(
+                        (e) => Expanded(
+                          flex: 1,
+                          child: _Sample(
+                            sample: e,
+                            idGroup: group.id,
+                          ),
+                        ),
+                      )
+                      .toList())
+              : Row(
+                  children: [
+                    Expanded(
+                      child: Scrollbar(
+                        controller: controller,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          // shrinkWrap: true,
+                          controller: controller,
+                          itemCount: group.samples.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: group.samples
+                                  .map(
+                                    (e) => SizedBox(
+                                      width: 300,
+                                      child: _Sample(
+                                        sample: e,
+                                        idGroup: group.id,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            );
+                          },
                         ),
                       ),
-                    )
-                    .toList()
-                : [
-                    ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 10,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: group.samples
-                              .map(
-                                (e) => Expanded(
-                                  flex: 1,
-                                  child: _Sample(
-                                    sample: e,
-                                    idGroup: group.id,
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        );
-                      },
                     ),
                   ],
-          ),
+                ),
         ),
       ],
     );
