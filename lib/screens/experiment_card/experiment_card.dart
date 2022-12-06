@@ -1,12 +1,11 @@
 import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
+import 'package:first_approval_app/bloc/save_card_bloc/save_card_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/custom_widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-
-import '../../cubit/cubit/experiment_card_cubit.dart';
 
 class ExperimentNameWidget extends StatelessWidget {
   const ExperimentNameWidget({super.key});
@@ -21,8 +20,8 @@ class ExperimentNameWidget extends StatelessWidget {
             flex: 3,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const CustomText(
+              children: const [
+                CustomText(
                   'Название эксперимента',
                   20,
                   weight: FontWeight.w700,
@@ -30,7 +29,7 @@ class ExperimentNameWidget extends StatelessWidget {
               ],
             ),
           ),
-          Flexible(
+          const Flexible(
             flex: 1,
             child: ExperimentPageButtons(),
           ),
@@ -232,15 +231,14 @@ class ExperimentPageButtons extends StatelessWidget {
       children: [
         CustomButtonsWithBorders(IconsSvg.back, () {}),
         const SizedBox(width: 20),
-        BlocBuilder<ExperimentCardBloc, ExperimentCardState>(
+        BlocBuilder<SaveCardBloc, SaveCardState>(
           builder: (context, state) => state.map(
-            saved: (state) => CustomButtonsWithBorders(
+            initial: (state) => CustomButtonsWithBorders(
               IconsSvg.saved,
               () {
-                context.read<ExperimentCardBloc>().add(
-                      ExperimentCardEvent.saveCard(state.card),
+                context.read<SaveCardBloc>().add(
+                      const SaveCardEvent.save(),
                     );
-                print(state.card);
               },
               withText: true,
             ),

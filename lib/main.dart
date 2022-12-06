@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
 import 'package:first_approval_app/bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
+import 'package:first_approval_app/bloc/save_card_bloc/save_card_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
@@ -53,28 +54,36 @@ class MyApp extends StatelessWidget {
                       create: (context) => ExperimentCardBloc(
                         Provider.of(context, listen: false),
                       ),
-                      child: Column(
-                        children: [
-                          const ExperimentNameWidget(),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          Row(
-                            children: const [
-                              Flexible(
-                                flex: 3,
-                                child: ExperimentInfoCard(),
-                              ),
-                              SizedBox(
-                                width: 50,
-                              ),
-                              Flexible(
-                                flex: 1,
-                                child: FilesCard(),
-                              ),
-                            ],
-                          ),
-                        ],
+                      child: BlocProvider<SaveCardBloc>(
+                        create: (context) => SaveCardBloc(
+                          cardRepo: Provider.of(context, listen: false),
+                          schemeRepo: Provider.of(context, listen: false),
+                          fileCubit: Provider.of(context, listen: false),
+                          fileManager: FileManager(),
+                        ),
+                        child: Column(
+                          children: [
+                            const ExperimentNameWidget(),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            Row(
+                              children: const [
+                                Flexible(
+                                  flex: 3,
+                                  child: ExperimentInfoCard(),
+                                ),
+                                SizedBox(
+                                  width: 50,
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: FilesCard(),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

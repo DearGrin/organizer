@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:meta/meta.dart';
+import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
+import 'package:first_approval_app/repositorys/samples_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 part 'file_state.dart';
@@ -15,7 +16,6 @@ class FileCubit extends Cubit<FileState> {
       // allowedExtensions: ['list of files'],
     );
     if (results == null) return;
-
 
     for (PlatformFile file in results.files) {
       files.add(file.name);
@@ -77,5 +77,29 @@ class FileManager {
   Future<void> writeToFile(String info) async {
     final file = await _localFile;
     file.writeAsString(info);
+  }
+
+  File cardFile(String? dirPath) {
+    final path = dirPath;
+    return File('$path/FA.txt');
+  }
+
+  Future<void> writeCardToFile(ExperimentCardTextFields card, String? dir) async {
+    final file = cardFile(dir);
+    file.writeAsString(card.toString());
+  }
+
+  Future<String?> getDirectory() async {
+    String? selectedDirectory = await FilePicker.platform.getDirectoryPath();
+
+    if (selectedDirectory == null) {}
+    return selectedDirectory;
+  }
+
+  Future<void> writeSchemeToFile(SampleRepository groupsAndSamples, String? dir) async {
+    final path = dir;
+    File file = File('$path/Scheme.txt');
+    file.writeAsString(groupsAndSamples.getData().toString());
+    file.writeAsString(groupsAndSamples.getUngroupedSamples().toString());
   }
 }
