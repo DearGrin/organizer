@@ -7,6 +7,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+class ExperimentCard extends StatelessWidget {
+  const ExperimentCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const ExperimentNameWidget(),
+        const SizedBox(
+          height: 30,
+        ),
+        Row(
+          children: const [
+            Flexible(
+              flex: 3,
+              child: ExperimentInfoCard(),
+            ),
+            SizedBox(
+              width: 50,
+            ),
+            Flexible(
+              flex: 1,
+              child: FilesCard(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 class ExperimentNameWidget extends StatelessWidget {
   const ExperimentNameWidget({super.key});
   @override
@@ -58,21 +89,9 @@ class ExperimentInfoCard extends StatelessWidget {
                 20,
                 weight: FontWeight.w700,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CustomNoBordersButton(
-                    IconsSvg.import,
-                    () {},
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  CustomNoBordersButton(
-                    IconsSvg.export,
-                    () {},
-                  ),
-                ],
+              CustomNoBordersButton(
+                IconsSvg.moreHorizontal,
+                () {},
               ),
             ],
           ),
@@ -102,6 +121,12 @@ class _TextCardState extends State<TextCard> {
   void dispose() {
     myController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    myController = TextEditingController(text: '');
   }
 
   @override

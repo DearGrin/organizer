@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
-import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
-import 'package:first_approval_app/bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/repositorys/experiment_card_repository.dart';
 import 'package:first_approval_app/repositorys/samples_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:archive/archive_io.dart';
 
 part 'save_card_event.dart';
 part 'save_card_state.dart';
@@ -32,7 +33,16 @@ class SaveCardBloc extends Bloc<SaveCardEvent, SaveCardState> {
     String? path = await fileManager.getDirectory();
     fileManager.writeCardToFile(cardRepo.fields.first, path);
     fileManager.writeSchemeToFile(schemeRepo, path);
+    await fileManager.saveFiles(fileCubit.files, path);
+    // _acrhive(path!);
   }
 
-  void _acrhive() {}
+  void _acrhive(String path) {
+    var encoder = ZipFileEncoder();
+    encoder.create('$path.zip');
+    encoder.addDirectory(Directory(path));
+    encoder.addFile(File('$path/FA.txt'));
+    encoder.addFile(File('$path/Scheme.txt'));
+    encoder.close();
+  }
 }

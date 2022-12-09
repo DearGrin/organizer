@@ -22,9 +22,12 @@ class SampleRepository {
 
   void addSampleUngrouped(Sample sample) {
     ungroupedSamples.add(sample);
-  } 
+  }
 
   void addSampleToGroup(Sample sample, int i) {
+    if (i == 0) {
+      ungroupedSamples.add(sample);
+    }
     data[i] = data[i].copyWith(samples: [...data[i].samples, sample]);
   }
 
@@ -52,7 +55,9 @@ class SampleRepository {
     }
   }
 
-  void deleteSampleToGroup(String sampleName, int i) {}
+  void deleteSampleToGroup(String sampleName, int i) {
+    
+  }
 
   void clearData() => data.clear();
   List<Group> getData() => data;

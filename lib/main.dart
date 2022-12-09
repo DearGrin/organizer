@@ -61,29 +61,7 @@ class MyApp extends StatelessWidget {
                           fileCubit: Provider.of(context, listen: false),
                           fileManager: FileManager(),
                         ),
-                        child: Column(
-                          children: [
-                            const ExperimentNameWidget(),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              children: const [
-                                Flexible(
-                                  flex: 3,
-                                  child: ExperimentInfoCard(),
-                                ),
-                                SizedBox(
-                                  width: 50,
-                                ),
-                                Flexible(
-                                  flex: 1,
-                                  child: FilesCard(),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                        child: const ExperimentCard(),
                       ),
                     ),
                   ),
@@ -200,51 +178,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AddSampleWidget extends StatelessWidget {
-  const AddSampleWidget({super.key, required this.onTap});
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return DottedBorder(
-      dashPattern: const [30, 10],
-      strokeCap: StrokeCap.butt,
-      borderType: BorderType.RRect,
-      color: const Color.fromRGBO(153, 153, 153, 0.6),
-      child: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: const Color.fromRGBO(153, 153, 153, 0.6),
-            style: BorderStyle.none,
-          ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: onTap,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  SvgPicture.asset(IconsSvg.schemeLittleEllipse),
-                  SvgPicture.asset(IconsSvg.schemeLittlePLus),
-                ],
-              ),
-            ),
-            const CustomText(
-              'Добавить\nобразец',
-              12,
-              weight: FontWeight.w700,
-              color: Color.fromRGBO(153, 153, 153, 0.6),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class _GroupWidget extends StatelessWidget {
   _GroupWidget({
     super.key,
@@ -258,52 +191,35 @@ class _GroupWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        //BoxConstrains(пересчитывать размеры элементов)
         Expanded(
-          child: group.samples.length < 6
-              ? Row(
+          child: Scrollbar(
+            // thumbVisibility: true,
+            controller: controller,
+            //здесь указывать размеры(LayoutBuilder)
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              // shrinkWrap: true,
+              controller: controller,
+              itemCount: group.samples.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: group.samples
                       .map(
-                        (e) => Expanded(
-                          flex: 1,
+                        (e) => SizedBox(
+                          width: 300,
                           child: _Sample(
                             sample: e,
                             idGroup: group.id,
                           ),
                         ),
                       )
-                      .toList())
-              : Row(
-                  children: [
-                    Expanded(
-                      child: Scrollbar(
-                        controller: controller,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          // shrinkWrap: true,
-                          controller: controller,
-                          itemCount: group.samples.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: group.samples
-                                  .map(
-                                    (e) => SizedBox(
-                                      width: 300,
-                                      child: _Sample(
-                                        sample: e,
-                                        idGroup: group.id,
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                      .toList(),
+                );
+              },
+            ),
+          ),
         ),
       ],
     );
@@ -452,7 +368,7 @@ class _CreateSampleState extends State<_CreateSample> {
               fieldText.clear();
               fieldTittle.clear();
             },
-            child: Text("Создать образец"),
+            child: const Text("Создать образец"),
           )
         ],
       ),

@@ -47,7 +47,7 @@ class FileCubit extends Cubit<FileState> {
 }
 
 class FileManager {
-  List<String> files = [];
+  // List<String> files = [];
 
   void pickFiles() async {
     FilePickerResult? results = await FilePicker.platform.pickFiles(
@@ -84,7 +84,8 @@ class FileManager {
     return File('$path/FA.txt');
   }
 
-  Future<void> writeCardToFile(ExperimentCardTextFields card, String? dir) async {
+  Future<void> writeCardToFile(
+      ExperimentCardTextFields card, String? dir) async {
     final file = cardFile(dir);
     file.writeAsString(card.toString());
   }
@@ -96,10 +97,23 @@ class FileManager {
     return selectedDirectory;
   }
 
-  Future<void> writeSchemeToFile(SampleRepository groupsAndSamples, String? dir) async {
+  void writeSchemeToFile(SampleRepository groupsAndSamples, String? dir) {
     final path = dir;
     File file = File('$path/Scheme.txt');
-    file.writeAsString(groupsAndSamples.getData().toString());
+    // file.writeAsString(groupsAndSamples.getData().toString());
     file.writeAsString(groupsAndSamples.getUngroupedSamples().toString());
+  }
+
+  Future<void> saveFiles(List<String> files, String? path) async {
+    if (files.isEmpty) {
+      return;
+    }
+    List<String> file = [];
+    for (int i = 0; i < files.length; i++) {
+      file.add(File(files[i]).path);
+    }
+    file.forEach((element) {
+      File(element).copy('$path\\$element');
+    });
   }
 }

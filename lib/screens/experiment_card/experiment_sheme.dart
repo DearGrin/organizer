@@ -2,8 +2,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:first_approval_app/bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/custom_widgets/utils.dart';
-import 'package:first_approval_app/models/group.dart';
-import 'package:first_approval_app/models/sample.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -223,44 +221,51 @@ class DottedAreaWithSamples extends StatelessWidget {
 //   }
 // }
 
-// class NewSample extends StatelessWidget {
-//   final VoidCallback? onTap;
-//   const NewSample({
-//     super.key,
-//     this.onTap,
-//     required this.group,
-//   }) : super();
 
-//   final Group group;
-//   @override
-//   Widget build(BuildContext context) {
-//     return ExpansionTile(
-//       title: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           CustomText(group.name, 14, FontWeight.w700),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//             children: [
-//               CustomNoBordersButton(IconsSvg.edit, () {}),
-//               CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
-//               CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
-//             ],
-//           ),
-//         ],
-//       ),
-//       children: const [
-//         TextField(
-//           style: TextStyle(),
-//           decoration: InputDecoration(
-//             hintText: "Введите описание",
-//           ),
-//           maxLines: 3,
-//         ),
-//       ],
-//     );
-//   }
-// }
+class AddSampleWidget extends StatelessWidget {
+  const AddSampleWidget({super.key, required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return DottedBorder(
+      dashPattern: const [30, 10],
+      strokeCap: StrokeCap.butt,
+      borderType: BorderType.RRect,
+      color: const Color.fromRGBO(153, 153, 153, 0.6),
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: const Color.fromRGBO(153, 153, 153, 0.6),
+            style: BorderStyle.none,
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: onTap,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  SvgPicture.asset(IconsSvg.schemeLittleEllipse),
+                  SvgPicture.asset(IconsSvg.schemeLittlePLus),
+                ],
+              ),
+            ),
+            const CustomText(
+              'Добавить\nобразец',
+              12,
+              weight: FontWeight.w700,
+              color: Color.fromRGBO(153, 153, 153, 0.6),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class NewSample extends StatefulWidget {
   const NewSample({super.key});
