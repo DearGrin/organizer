@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
@@ -16,7 +16,7 @@ class SampleRepository {
   }
 
   void addFirstSample(Sample sample) {
-    data.add(Group(name: 'Безымянная группа ', id: 0, samples: [sample]));
+    data.add(Group(name: 'Безымянная группа ', id: 0, samples: [sample], groupDescription: ""));
     ungroupedSamples.add(sample);
   }
 
@@ -62,4 +62,6 @@ class SampleRepository {
   void clearData() => data.clear();
   List<Group> getData() => data;
   List<Sample> getUngroupedSamples() => ungroupedSamples;
+
+  void clearUngroupedSamples() => ungroupedSamples.clear();
 }

@@ -22,10 +22,13 @@ Sample _$SampleFromJson(Map<String, dynamic> json) {
 mixin _$Sample {
   int get id => throw _privateConstructorUsedError;
   set id(int value) => throw _privateConstructorUsedError;
-  String get tittle => throw _privateConstructorUsedError;
-  set tittle(String value) => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  set title(String value) => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
   set text(String value) => throw _privateConstructorUsedError;
+  List<Measurement> get measurements => throw _privateConstructorUsedError;
+  set measurements(List<Measurement> value) =>
+      throw _privateConstructorUsedError;
   List<String> get attachments => throw _privateConstructorUsedError;
   set attachments(List<String> value) => throw _privateConstructorUsedError;
 
@@ -39,7 +42,12 @@ abstract class $SampleCopyWith<$Res> {
   factory $SampleCopyWith(Sample value, $Res Function(Sample) then) =
       _$SampleCopyWithImpl<$Res, Sample>;
   @useResult
-  $Res call({int id, String tittle, String text, List<String> attachments});
+  $Res call(
+      {int id,
+      String title,
+      String text,
+      List<Measurement> measurements,
+      List<String> attachments});
 }
 
 /// @nodoc
@@ -56,8 +64,9 @@ class _$SampleCopyWithImpl<$Res, $Val extends Sample>
   @override
   $Res call({
     Object? id = null,
-    Object? tittle = null,
+    Object? title = null,
     Object? text = null,
+    Object? measurements = null,
     Object? attachments = null,
   }) {
     return _then(_value.copyWith(
@@ -65,14 +74,18 @@ class _$SampleCopyWithImpl<$Res, $Val extends Sample>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      tittle: null == tittle
-          ? _value.tittle
-          : tittle // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      measurements: null == measurements
+          ? _value.measurements
+          : measurements // ignore: cast_nullable_to_non_nullable
+              as List<Measurement>,
       attachments: null == attachments
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
@@ -87,7 +100,12 @@ abstract class _$$_SampleCopyWith<$Res> implements $SampleCopyWith<$Res> {
       __$$_SampleCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String tittle, String text, List<String> attachments});
+  $Res call(
+      {int id,
+      String title,
+      String text,
+      List<Measurement> measurements,
+      List<String> attachments});
 }
 
 /// @nodoc
@@ -101,8 +119,9 @@ class __$$_SampleCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? tittle = null,
+    Object? title = null,
     Object? text = null,
+    Object? measurements = null,
     Object? attachments = null,
   }) {
     return _then(_$_Sample(
@@ -110,14 +129,18 @@ class __$$_SampleCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      tittle: null == tittle
-          ? _value.tittle
-          : tittle // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
+      measurements: null == measurements
+          ? _value.measurements
+          : measurements // ignore: cast_nullable_to_non_nullable
+              as List<Measurement>,
       attachments: null == attachments
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
@@ -131,8 +154,9 @@ class __$$_SampleCopyWithImpl<$Res>
 class _$_Sample implements _Sample {
   _$_Sample(
       {required this.id,
-      required this.tittle,
+      required this.title,
       required this.text,
+      this.measurements = const [],
       required this.attachments});
 
   factory _$_Sample.fromJson(Map<String, dynamic> json) =>
@@ -141,15 +165,18 @@ class _$_Sample implements _Sample {
   @override
   int id;
   @override
-  String tittle;
+  String title;
   @override
   String text;
+  @override
+  @JsonKey()
+  List<Measurement> measurements;
   @override
   List<String> attachments;
 
   @override
   String toString() {
-    return 'Sample(id: $id, tittle: $tittle, text: $text, attachments: $attachments)';
+    return 'Sample(id: $id, title: $title, text: $text, measurements: $measurements, attachments: $attachments)';
   }
 
   @JsonKey(ignore: true)
@@ -169,8 +196,9 @@ class _$_Sample implements _Sample {
 abstract class _Sample implements Sample {
   factory _Sample(
       {required int id,
-      required String tittle,
+      required String title,
       required String text,
+      List<Measurement> measurements,
       required List<String> attachments}) = _$_Sample;
 
   factory _Sample.fromJson(Map<String, dynamic> json) = _$_Sample.fromJson;
@@ -179,11 +207,14 @@ abstract class _Sample implements Sample {
   int get id;
   set id(int value);
   @override
-  String get tittle;
-  set tittle(String value);
+  String get title;
+  set title(String value);
   @override
   String get text;
   set text(String value);
+  @override
+  List<Measurement> get measurements;
+  set measurements(List<Measurement> value);
   @override
   List<String> get attachments;
   set attachments(List<String> value);

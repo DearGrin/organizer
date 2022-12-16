@@ -21,8 +21,13 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Group {
   String get name => throw _privateConstructorUsedError;
+  set name(String value) => throw _privateConstructorUsedError;
+  String get groupDescription => throw _privateConstructorUsedError;
+  set groupDescription(String value) => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
+  set id(int value) => throw _privateConstructorUsedError;
   List<Sample> get samples => throw _privateConstructorUsedError;
+  set samples(List<Sample> value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +39,8 @@ abstract class $GroupCopyWith<$Res> {
   factory $GroupCopyWith(Group value, $Res Function(Group) then) =
       _$GroupCopyWithImpl<$Res, Group>;
   @useResult
-  $Res call({String name, int id, List<Sample> samples});
+  $Res call(
+      {String name, String groupDescription, int id, List<Sample> samples});
 }
 
 /// @nodoc
@@ -51,6 +57,7 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
   @override
   $Res call({
     Object? name = null,
+    Object? groupDescription = null,
     Object? id = null,
     Object? samples = null,
   }) {
@@ -58,6 +65,10 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      groupDescription: null == groupDescription
+          ? _value.groupDescription
+          : groupDescription // ignore: cast_nullable_to_non_nullable
               as String,
       id: null == id
           ? _value.id
@@ -77,7 +88,8 @@ abstract class _$$_GroupCopyWith<$Res> implements $GroupCopyWith<$Res> {
       __$$_GroupCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name, int id, List<Sample> samples});
+  $Res call(
+      {String name, String groupDescription, int id, List<Sample> samples});
 }
 
 /// @nodoc
@@ -90,6 +102,7 @@ class __$$_GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res, _$_Group>
   @override
   $Res call({
     Object? name = null,
+    Object? groupDescription = null,
     Object? id = null,
     Object? samples = null,
   }) {
@@ -98,12 +111,16 @@ class __$$_GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res, _$_Group>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      groupDescription: null == groupDescription
+          ? _value.groupDescription
+          : groupDescription // ignore: cast_nullable_to_non_nullable
+              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
       samples: null == samples
-          ? _value._samples
+          ? _value.samples
           : samples // ignore: cast_nullable_to_non_nullable
               as List<Sample>,
     ));
@@ -115,43 +132,26 @@ class __$$_GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res, _$_Group>
 class _$_Group implements _Group {
   _$_Group(
       {required this.name,
+      required this.groupDescription,
       required this.id,
-      required final List<Sample> samples})
-      : _samples = samples;
+      required this.samples});
 
   factory _$_Group.fromJson(Map<String, dynamic> json) =>
       _$$_GroupFromJson(json);
 
   @override
-  final String name;
+  String name;
   @override
-  final int id;
-  final List<Sample> _samples;
+  String groupDescription;
   @override
-  List<Sample> get samples {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_samples);
-  }
+  int id;
+  @override
+  List<Sample> samples;
 
   @override
   String toString() {
-    return 'Group(name: $name, id: $id, samples: $samples)';
+    return 'Group(name: $name, groupDescription: $groupDescription, id: $id, samples: $samples)';
   }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Group &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other._samples, _samples));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, name, id, const DeepCollectionEquality().hash(_samples));
 
   @JsonKey(ignore: true)
   @override
@@ -169,18 +169,25 @@ class _$_Group implements _Group {
 
 abstract class _Group implements Group {
   factory _Group(
-      {required final String name,
-      required final int id,
-      required final List<Sample> samples}) = _$_Group;
+      {required String name,
+      required String groupDescription,
+      required int id,
+      required List<Sample> samples}) = _$_Group;
 
   factory _Group.fromJson(Map<String, dynamic> json) = _$_Group.fromJson;
 
   @override
   String get name;
+  set name(String value);
+  @override
+  String get groupDescription;
+  set groupDescription(String value);
   @override
   int get id;
+  set id(int value);
   @override
   List<Sample> get samples;
+  set samples(List<Sample> value);
   @override
   @JsonKey(ignore: true)
   _$$_GroupCopyWith<_$_Group> get copyWith =>

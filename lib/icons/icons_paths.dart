@@ -62,4 +62,6 @@ class IconsSvg {
   static const String moreHorizontal =
       'assets/images/icons_svg/more-horizontal.svg';
   static const String trashIcon = 'assets/images/icons_svg/trash.svg';
+  static const String attachedFilesWithoutRedCircle = 'assets/images/icons_svg/attached-files-without-red-circle.svg';
+  static const String inactiveEdit = 'assets/images/icons_svg/inactive-edit.svg';
 }

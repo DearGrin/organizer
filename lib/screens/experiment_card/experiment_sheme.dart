@@ -63,11 +63,20 @@ class ExperimentScheme extends StatelessWidget {
 
 class DottedAreaWidget extends StatelessWidget {
   final VoidCallback? onTap;
-  const DottedAreaWidget({super.key, this.onTap});
+  final bool? isMiniWidget;
+  const DottedAreaWidget({super.key, this.onTap, this.isMiniWidget});
 
   @override
   Widget build(BuildContext context) {
     return DottedBorder(
+      customPath: isMiniWidget != null ? (size) {
+
+        return Path()
+          ..moveTo(1, 1)
+          ..lineTo(size.width, 1)
+          ..lineTo(size.width, size.height + 1)
+          ..lineTo(1, size.height + 1);
+      } : null,
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,
@@ -81,6 +90,7 @@ class DottedAreaWidget extends StatelessWidget {
           ),
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             InkWell(
@@ -93,7 +103,12 @@ class DottedAreaWidget extends StatelessWidget {
                 ],
               ),
             ),
-            const CustomText(
+            isMiniWidget != null ? const CustomText(
+              'Добавить\nобразец',
+              16,
+              weight: FontWeight.w700,
+              color: Color.fromRGBO(153, 153, 153, 0.6),
+            ) :  const CustomText(
               'Добавить новый\nобразец',
               16,
               weight: FontWeight.w700,
@@ -113,6 +128,13 @@ class DottedAreaWithSamples extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DottedBorder(
+      customPath: (size) {
+        return Path()
+          ..moveTo(0, size.height)
+          ..lineTo(0, 0)
+          ..lineTo(size.width, 0)
+          ..lineTo(size.width, size.height);
+      },
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,

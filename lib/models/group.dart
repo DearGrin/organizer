@@ -4,10 +4,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'group.freezed.dart';
 part 'group.g.dart';
 
-@freezed
+@unfreezed
 class Group with _$Group {
   factory Group({
     required String name,
+    required String groupDescription,
     required int id,
     required List<Sample> samples,
   }) = _Group;

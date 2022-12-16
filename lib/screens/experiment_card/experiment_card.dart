@@ -369,9 +369,9 @@ class _MyFilesState extends State<MyFiles> {
             contentPadding: const EdgeInsets.only(left: 40, right: 40),
             dense: true,
             minLeadingWidth: 16,
-            trailing: CustomNoBordersButton(IconsSvg.trashIcon, () {
+            trailing: mouseInArea ? CustomNoBordersButton(IconsSvg.trashIcon, () {
               context.read<FileCubit>().deleteFileName(widget.fileName);
-            }),
+            }) : null,
             leading: SvgPicture.asset(IconsSvg.file),
             title: CustomText(
               widget.fileName,
