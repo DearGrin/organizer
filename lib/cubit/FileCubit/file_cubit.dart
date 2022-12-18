@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
@@ -87,7 +89,7 @@ class FileManager {
   Future<void> writeCardToFile(
       ExperimentCardTextFields card, String? dir) async {
     final file = cardFile(dir);
-    file.writeAsString(card.toString());
+    file.writeAsString(jsonEncode(card));
   }
 
   Future<String?> getDirectory() async {
@@ -112,8 +114,14 @@ class FileManager {
     for (int i = 0; i < files.length; i++) {
       file.add(File(files[i]).path);
     }
-    file.forEach((element) {
+    for (var element in file) {
       File(element).copy('$path\\$element');
-    });
+    }
+  }
+
+  Future<String?> getFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    PlatformFile file = result!.files.first;
+    return file.path;
   }
 }

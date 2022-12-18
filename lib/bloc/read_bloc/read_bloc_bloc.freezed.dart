@@ -165,19 +165,20 @@ abstract class _Started implements ReadBlocEvent {
 
 /// @nodoc
 mixin _$ReadBlocState {
+  ExperimentCardTextFields get card => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(ExperimentCardTextFields card) initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(ExperimentCardTextFields card)? initial,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(ExperimentCardTextFields card)? initial,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -197,6 +198,10 @@ mixin _$ReadBlocState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ReadBlocStateCopyWith<ReadBlocState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -204,6 +209,10 @@ abstract class $ReadBlocStateCopyWith<$Res> {
   factory $ReadBlocStateCopyWith(
           ReadBlocState value, $Res Function(ReadBlocState) then) =
       _$ReadBlocStateCopyWithImpl<$Res, ReadBlocState>;
+  @useResult
+  $Res call({ExperimentCardTextFields card});
+
+  $ExperimentCardTextFieldsCopyWith<$Res> get card;
 }
 
 /// @nodoc
@@ -215,13 +224,41 @@ class _$ReadBlocStateCopyWithImpl<$Res, $Val extends ReadBlocState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? card = null,
+  }) {
+    return _then(_value.copyWith(
+      card: null == card
+          ? _value.card
+          : card // ignore: cast_nullable_to_non_nullable
+              as ExperimentCardTextFields,
+    ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ExperimentCardTextFieldsCopyWith<$Res> get card {
+    return $ExperimentCardTextFieldsCopyWith<$Res>(_value.card, (value) {
+      return _then(_value.copyWith(card: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
+abstract class _$$_InitialCopyWith<$Res>
+    implements $ReadBlocStateCopyWith<$Res> {
   factory _$$_InitialCopyWith(
           _$_Initial value, $Res Function(_$_Initial) then) =
       __$$_InitialCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({ExperimentCardTextFields card});
+
+  @override
+  $ExperimentCardTextFieldsCopyWith<$Res> get card;
 }
 
 /// @nodoc
@@ -230,51 +267,75 @@ class __$$_InitialCopyWithImpl<$Res>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? card = null,
+  }) {
+    return _then(_$_Initial(
+      null == card
+          ? _value.card
+          : card // ignore: cast_nullable_to_non_nullable
+              as ExperimentCardTextFields,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Initial implements _Initial {
-  const _$_Initial();
+  const _$_Initial(this.card);
+
+  @override
+  final ExperimentCardTextFields card;
 
   @override
   String toString() {
-    return 'ReadBlocState.initial()';
+    return 'ReadBlocState.initial(card: $card)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType &&
+            other is _$_Initial &&
+            (identical(other.card, card) || other.card == card));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, card);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      __$$_InitialCopyWithImpl<_$_Initial>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initial,
+    required TResult Function(ExperimentCardTextFields card) initial,
   }) {
-    return initial();
+    return initial(card);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
+    TResult? Function(ExperimentCardTextFields card)? initial,
   }) {
-    return initial?.call();
+    return initial?.call(card);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
+    TResult Function(ExperimentCardTextFields card)? initial,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial();
+      return initial(card);
     }
     return orElse();
   }
@@ -309,5 +370,12 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements ReadBlocState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial(final ExperimentCardTextFields card) = _$_Initial;
+
+  @override
+  ExperimentCardTextFields get card;
+  @override
+  @JsonKey(ignore: true)
+  _$$_InitialCopyWith<_$_Initial> get copyWith =>
+      throw _privateConstructorUsedError;
 }
