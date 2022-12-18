@@ -83,7 +83,7 @@ class FileManager {
 
   File cardFile(String? dirPath) {
     final path = dirPath;
-    return File('$path/FA.txt');
+    return File('$path/FA.json');
   }
 
   Future<void> writeCardToFile(
@@ -102,8 +102,8 @@ class FileManager {
   void writeSchemeToFile(SampleRepository groupsAndSamples, String? dir) {
     final path = dir;
     File file = File('$path/Scheme.txt');
-    // file.writeAsString(groupsAndSamples.getData().toString());
-    file.writeAsString(groupsAndSamples.getUngroupedSamples().toString());
+    file.writeAsString(groupsAndSamples.getData().toString());
+    // file.writeAsString(groupsAndSamples.getUngroupedSamples().toString());
   }
 
   Future<void> saveFiles(List<String> files, String? path) async {

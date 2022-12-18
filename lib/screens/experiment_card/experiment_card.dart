@@ -1,10 +1,8 @@
 import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
-import 'package:first_approval_app/bloc/read_bloc/read_bloc_bloc.dart';
 import 'package:first_approval_app/bloc/save_card_bloc/save_card_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/custom_widgets/utils.dart';
-import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -91,17 +89,9 @@ class ExperimentInfoCard extends StatelessWidget {
                 20,
                 weight: FontWeight.w700,
               ),
-              BlocBuilder<ReadBlocBloc, ReadBlocState>(
-                builder: (context, state) {
-                  return CustomNoBordersButton(
-                    IconsSvg.moreHorizontal,
-                    () {
-                      context.read<ReadBlocBloc>().add(
-                            const ReadBlocEvent.started(),
-                          );
-                    },
-                  );
-                },
+              CustomNoBordersButton(
+                IconsSvg.moreHorizontal,
+                () {},
               ),
             ],
           ),
@@ -118,9 +108,7 @@ class ExperimentInfoCard extends StatelessWidget {
 class TextCard extends StatefulWidget {
   final String name;
   final int lines;
-  final String text;
-  const TextCard(this.name, {Key? key, this.lines = 1, this.text = ''})
-      : super(key: key);
+  const TextCard(this.name, {Key? key, this.lines = 1}) : super(key: key);
 
   @override
   State<TextCard> createState() => _TextCardState();
@@ -138,7 +126,7 @@ class _TextCardState extends State<TextCard> {
   @override
   void initState() {
     super.initState();
-    myController = TextEditingController(text: widget.text);
+    myController = TextEditingController(text: '');
   }
 
   @override
@@ -180,84 +168,79 @@ class TextFieldsArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ReadBlocBloc, ReadBlocState>(
-      builder: (context, state) => state.map(
-        initial: (state) => Expanded(
-          flex: 1,
-          child: Column(
+    return Expanded(
+      flex: 1,
+      child: Column(
+        children: [
+          Row(
+            children: const [
+              Expanded(
+                flex: 3,
+                child: TextCard(
+                  'Цель',
+                ),
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              Expanded(
+                flex: 1,
+                child: TextCard(
+                  'Дата проведения',
+                ),
+              )
+            ],
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          Row(
             children: [
-              Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: TextCard(
-                      'Цель',
-                      text: state.card.goal,
+              Expanded(
+                flex: 3,
+                child: Column(
+                  children: const [
+                    TextCard(
+                      'Описание',
+                      lines: 10,
                     ),
-                  ),
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: TextCard(
-                      'Дата проведения',
-                    ),
-                  )
-                ],
+                  ],
+                ),
               ),
               const SizedBox(
-                height: 8,
+                width: 30,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: const [
-                        TextCard(
-                          'Описание',
-                          lines: 10,
-                        ),
-                      ],
+              Expanded(
+                flex: 1,
+                child: Column(
+                  children: const [
+                    TextCard(
+                      'Метод',
                     ),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: const [
-                        TextCard(
-                          'Метод',
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextCard(
-                          'Объект',
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextCard(
-                          'Прибор',
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        TextCard(
-                          'Софт',
-                        ),
-                      ],
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                ],
+                    TextCard(
+                      'Объект',
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextCard(
+                      'Прибор',
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextCard(
+                      'Софт',
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
@@ -386,9 +369,11 @@ class _MyFilesState extends State<MyFiles> {
             contentPadding: const EdgeInsets.only(left: 40, right: 40),
             dense: true,
             minLeadingWidth: 16,
-            trailing: mouseInArea ? CustomNoBordersButton(IconsSvg.trashIcon, () {
-              context.read<FileCubit>().deleteFileName(widget.fileName);
-            }) : null,
+            trailing: mouseInArea
+                ? CustomNoBordersButton(IconsSvg.trashIcon, () {
+                    context.read<FileCubit>().deleteFileName(widget.fileName);
+                  })
+                : null,
             leading: SvgPicture.asset(IconsSvg.file),
             title: CustomText(
               widget.fileName,

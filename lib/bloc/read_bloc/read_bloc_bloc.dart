@@ -14,15 +14,17 @@ class ReadBlocBloc extends Bloc<ReadBlocEvent, ReadBlocState> {
   FileManager fileManager;
   ExperimentCardTextFields card;
   ReadBlocBloc(this.fileManager, this.card) : super(_Initial(card)) {
-    on<ReadBlocEvent>((event, emit) async {
-      event.map(
-        started: (event) async {
-          await _openFile(event, emit);
-          emit.isDone;
-          emit(ReadBlocState.initial(card));
-        },
-      );
-    });
+    on<ReadBlocEvent>(
+      (event, emit) {
+        event.map(
+          started: (event) async {
+            await _openFile(event, emit);
+            emit.isDone;
+            emit(ReadBlocState.initial(card));
+          },
+        );
+      },
+    );
   }
 
   Future<void> _openFile(_Started event, Emitter<ReadBlocState> emit) async {

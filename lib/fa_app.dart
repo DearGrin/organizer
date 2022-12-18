@@ -1,3 +1,5 @@
+import 'package:first_approval_app/bloc/read_bloc/read_bloc_bloc.dart';
+import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
 import 'package:first_approval_app/repositorys/experiment_card_repository.dart';
 import 'package:first_approval_app/repositorys/samples_repository.dart';
 import 'package:first_approval_app/screens/experiment_card/experiment_card.dart';
@@ -45,14 +47,25 @@ class FaApp extends StatelessWidget {
                     create: (context) => ExperimentCardBloc(
                       Provider.of(context, listen: false),
                     ),
-                    child: BlocProvider<SaveCardBloc>(
-                        create: (context) => SaveCardBloc(
-                              cardRepo: Provider.of(context, listen: false),
-                              schemeRepo: Provider.of(context, listen: false),
-                              fileCubit: Provider.of(context, listen: false),
-                              fileManager: FileManager(),
-                            ),
-                        child: const ExperimentCard()),
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider<SaveCardBloc>(
+                          create: (context) => SaveCardBloc(
+                            cardRepo: Provider.of(context, listen: false),
+                            schemeRepo: Provider.of(context, listen: false),
+                            fileCubit: Provider.of(context, listen: false),
+                            fileManager: FileManager(),
+                          ),
+                        ),
+                        BlocProvider(
+                          create: (context) => ReadBlocBloc(
+                            FileManager(),
+                            ExperimentCardTextFields(),
+                          ),
+                        ),
+                      ],
+                      child: const ExperimentCard(),
+                    ),
                   ),
                 ),
                 const SizedBox(
