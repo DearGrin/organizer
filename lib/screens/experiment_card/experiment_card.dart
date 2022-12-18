@@ -1,4 +1,5 @@
 import 'package:first_approval_app/bloc/experiment_card_bloc/experiment_card_bloc.dart';
+import 'package:first_approval_app/bloc/read_bloc/read_bloc_bloc.dart';
 import 'package:first_approval_app/bloc/save_card_bloc/save_card_bloc.dart';
 import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
@@ -89,9 +90,17 @@ class ExperimentInfoCard extends StatelessWidget {
                 20,
                 weight: FontWeight.w700,
               ),
-              CustomNoBordersButton(
-                IconsSvg.moreHorizontal,
-                () {},
+              BlocBuilder<ReadBlocBloc, ReadBlocState>(
+                builder: (context, state) {
+                  return CustomNoBordersButton(
+                    IconsSvg.moreHorizontal,
+                    () {
+                      context.read<ReadBlocBloc>().add(
+                            const ReadBlocEvent.started(),
+                          );
+                    },
+                  );
+                },
               ),
             ],
           ),
