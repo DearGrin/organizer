@@ -73,7 +73,7 @@ class FileManager {
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/FA.json');
+    return File('$path\\FA.txt');
   }
 
   Future<void> writeToFile(String info) async {
@@ -83,13 +83,13 @@ class FileManager {
 
   File cardFile(String? dirPath) {
     final path = dirPath;
-    return File('$path/FA.json');
+    return File('$path\\FA.txt');
   }
 
-  Future<void> writeCardToFile(
+  Future<File> writeCardToFile(
       ExperimentCardTextFields card, String? dir) async {
     final file = cardFile(dir);
-    file.writeAsString(jsonEncode(card));
+    return file.writeAsString(jsonEncode(card));
   }
 
   Future<String?> getDirectory() async {
@@ -99,11 +99,15 @@ class FileManager {
     return selectedDirectory;
   }
 
-  void writeSchemeToFile(SampleRepository groupsAndSamples, String? dir) {
+  Future<File> writeSchemeToFile(
+      SampleRepository groupsAndSamples, String? dir) {
     final path = dir;
-    File file = File('$path/Scheme.txt');
-    file.writeAsString(groupsAndSamples.getData().toString());
-    // file.writeAsString(groupsAndSamples.getUngroupedSamples().toString());
+    File file = File('$path\\Scheme.txt');
+    if (groupsAndSamples.data.isEmpty) {
+      return file
+          .writeAsString(jsonEncode(groupsAndSamples.getUngroupedSamples()));
+    }
+    return file.writeAsString(jsonEncode(groupsAndSamples.getData()));
   }
 
   Future<void> saveFiles(List<String> files, String? path) async {

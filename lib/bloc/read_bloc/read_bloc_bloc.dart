@@ -25,11 +25,14 @@ class ReadBlocBloc extends Bloc<ReadBlocEvent, ReadBlocState> {
     );
   }
 
-  void _openFile(_Started event, Emitter<ReadBlocState> emit) async {
+  Future<void> _openFile(_Started event, Emitter<ReadBlocState> emit) async {
     String? file = await fileManager.getFile();
     if (file == null) return;
     String result = await File(file).readAsString();
     card = ExperimentCardTextFields.fromJson(jsonDecode(result));
+    if (isClosed) {
+      emit(ReadBlocState.initial(card));
+    }
     print(card);
   }
 }

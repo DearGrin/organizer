@@ -134,33 +134,29 @@ class FaApp extends StatelessWidget {
                                               children: [
                                                 Groups(data: state.data),
                                                 Container(
-                                                    constraints:
-                                                        const BoxConstraints(
-                                                            minHeight: 180,
-                                                            minWidth: 2000),
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: AppColors
-                                                                .borderColor,
-                                                            width: 2)),
-                                                    child:
-                                                        state.ungroupedSamples
-                                                                    .length >
-                                                                5
-                                                            ? UngroupedWidget(
-                                                                ungroupedSamples:
-                                                                    state
-                                                                        .ungroupedSamples,
-                                                                moreElements:
-                                                                    true,
-                                                              )
-                                                            : UngroupedWidget(
-                                                                ungroupedSamples:
-                                                                    state
-                                                                        .ungroupedSamples,
-                                                                moreElements:
-                                                                    false,
-                                                              )),
+                                                  constraints:
+                                                      const BoxConstraints(
+                                                          minHeight: 180,
+                                                          minWidth: 2000),
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: AppColors
+                                                              .borderColor,
+                                                          width: 2)),
+                                                  child: state.ungroupedSamples
+                                                              .length >
+                                                          5
+                                                      ? UngroupedWidget(
+                                                          ungroupedSamples: state
+                                                              .ungroupedSamples,
+                                                          moreElements: true,
+                                                        )
+                                                      : UngroupedWidget(
+                                                          ungroupedSamples: state
+                                                              .ungroupedSamples,
+                                                          moreElements: false,
+                                                        ),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -633,7 +629,9 @@ class _SampleState extends State<_Sample> {
                                 sample: widget.sample,
                               ));
                         }),
-                        CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
+                        CustomNoBordersButton(IconsSvg.attachedFiles, () {
+                          context.read<FileCubit>().pickFiles();
+                        }),
                       ],
                     ),
                   ],
@@ -792,8 +790,10 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                   const SizedBox(
                     width: 5,
                   ),
-                  CustomNoBordersButton(
-                      IconsSvg.attachedFilesWithoutRedCircle, () {}),
+                  CustomNoBordersButton(IconsSvg.attachedFilesWithoutRedCircle,
+                      () {
+                    context.read<FileCubit>().pickFiles();
+                  }),
                 ],
               ),
             ],

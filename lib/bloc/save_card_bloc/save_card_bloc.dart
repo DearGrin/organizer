@@ -31,18 +31,15 @@ class SaveCardBloc extends Bloc<SaveCardEvent, SaveCardState> {
 
   void _save(_Save event, Emitter<SaveCardState> emit) async {
     String? path = await fileManager.getDirectory();
-    fileManager.writeCardToFile(cardRepo.fields.first, path);
-    fileManager.writeSchemeToFile(schemeRepo, path);
-    await fileManager.saveFiles(fileCubit.files, path);
-    // _acrhive(path!);
-  }
-
-  void _acrhive(String path) {
+    if (path == null) return;
     var encoder = ZipFileEncoder();
-    encoder.create('$path.zip');
-    encoder.addDirectory(Directory(path));
-    encoder.addFile(File('$path/FA.txt'));
-    encoder.addFile(File('$path/Scheme.txt'));
+    encoder.create('$path\\FA.zip');
+    encoder.addFile(
+        await fileManager.writeCardToFile(cardRepo.fields.first, path));
+    encoder.addFile(await fileManager.writeSchemeToFile(schemeRepo, path));
+    for (var file in fileCubit.files) {
+      encoder.addFile(File(file));
+    }
     encoder.close();
   }
 }
