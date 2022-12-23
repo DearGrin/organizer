@@ -74,6 +74,7 @@ class FaApp extends StatelessWidget {
                 BlocProvider(
                   create: (context) => ExperimentSchemeBloc(
                     Provider.of(context, listen: false),
+                    FileManager(),
                   ),
                   child: ExperimentScheme(
                     child: BlocBuilder<ExperimentSchemeBloc,
@@ -665,7 +666,10 @@ class _SampleState extends State<_Sample> {
                     List<Measurement> measurements = sample.measurements;
                     List<Widget> list = [];
                     measurements.asMap().forEach((key, value) {
-                      list.add(MeasurementWidget(measurementIndex: key));
+                      list.add(MeasurementWidget(
+                          sampleId: widget.sample.id,
+                          groupId: widget.idGroup,
+                          measurementIndex: key));
                     });
                     return Column(
                       mainAxisSize: MainAxisSize.min,
@@ -684,6 +688,8 @@ class _SampleState extends State<_Sample> {
                         itemCount: measurements.length,
                         itemBuilder: (context, index) {
                           return MeasurementWidget(
+                            sampleId: widget.sample.id,
+                            groupId: widget.idGroup,
                             measurementIndex: index,
                           );
                         });
@@ -750,9 +756,15 @@ class _CreateSampleState extends State<_CreateSample> {
 }
 
 class MeasurementWidget extends StatefulWidget {
-  const MeasurementWidget({Key? key, required this.measurementIndex})
+  const MeasurementWidget(
+      {Key? key,
+      required this.measurementIndex,
+      required this.sampleId,
+      required this.groupId})
       : super(key: key);
   final int measurementIndex;
+  final int sampleId;
+  final int? groupId;
 
   @override
   State<MeasurementWidget> createState() => _MeasurementWidgetState();
@@ -790,10 +802,17 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                   const SizedBox(
                     width: 5,
                   ),
-                  CustomNoBordersButton(IconsSvg.attachedFilesWithoutRedCircle,
-                      () {
-                    context.read<FileCubit>().pickFiles();
-                  }),
+                  CustomNoBordersButton(
+                    IconsSvg.attachedFilesWithoutRedCircle,
+                    () {
+                      context.read<ExperimentSchemeBloc>().add(
+                            ExperimentSchemeEvent.addFilesToMeasurement(
+                                measurementId: widget.measurementIndex,
+                                groupId: widget.groupId,
+                                sampleId: widget.sampleId),
+                          );
+                    },
+                  ),
                 ],
               ),
             ],

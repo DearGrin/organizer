@@ -1,6 +1,5 @@
-
-
 import 'package:bloc/bloc.dart';
+import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
 import 'package:first_approval_app/repositorys/samples_repository.dart';
@@ -15,7 +14,9 @@ part 'experiment_scheme_bloc.freezed.dart';
 class ExperimentSchemeBloc
     extends Bloc<ExperimentSchemeEvent, ExperimentSchemeState> {
   SampleRepository repository;
-  ExperimentSchemeBloc(this.repository) : super(const _EmptyState()) {
+  FileManager fileManager;
+  ExperimentSchemeBloc(this.repository, this.fileManager)
+      : super(const _EmptyState()) {
     on<ExperimentSchemeEvent>((event, emit) {
       event.map(
         addNewSample: (event) => _addNewSample(event, emit),
@@ -26,6 +27,7 @@ class ExperimentSchemeBloc
         addUngroupedSample: (event) => _addUngroupedSample(event, emit),
         addUngroupedSamplesToGroup: (event) =>
             _addUngroupedSamplesToGroup(event, emit),
+        addFilesToMeasurement: (event) => _addFilesToMeasurement(event, emit),
       );
     });
   }
@@ -120,15 +122,15 @@ class ExperimentSchemeBloc
   }
 
   void _addMeasurementToSample(
-      _AddMeasurementToSample event,
-      Emitter<ExperimentSchemeState> emit,
-      ) {
+    _AddMeasurementToSample event,
+    Emitter<ExperimentSchemeState> emit,
+  ) {
     if (event.groupId == null) {
       repository.ungroupedSamples.asMap().forEach((key, value) {
         if (value.id == event.sample.id) {
           repository.ungroupedSamples[key].measurements =
-          List.from(repository.ungroupedSamples[key].measurements)
-            ..add(Measurement());
+              List.from(repository.ungroupedSamples[key].measurements)
+                ..add(Measurement());
         }
       });
     } else {
@@ -136,8 +138,8 @@ class ExperimentSchemeBloc
         groupValue.samples.asMap().forEach((key, value) {
           if (value.id == event.sample.id && groupValue.id == event.groupId) {
             repository.data[keyGroup].samples[key].measurements =
-            List.from(repository.data[keyGroup].samples[key].measurements)
-              ..add(Measurement());
+                List.from(repository.data[keyGroup].samples[key].measurements)
+                  ..add(Measurement());
           }
         });
       });
@@ -150,10 +152,9 @@ class ExperimentSchemeBloc
   }
 
   void _addUngroupedSamplesToGroup(
-      _AddUngroupedSamplesToGroup event,
-      Emitter<ExperimentSchemeState> emit,
-      ) {
-
+    _AddUngroupedSamplesToGroup event,
+    Emitter<ExperimentSchemeState> emit,
+  ) {
     List<Sample> samples = [...repository.ungroupedSamples];
 
     repository.addGroup(Group(
@@ -169,9 +170,9 @@ class ExperimentSchemeBloc
   }
 
   void _addUngroupedSample(
-      _AddUngroupedSample event,
-      Emitter<ExperimentSchemeState> emit,
-      ) {
+    _AddUngroupedSample event,
+    Emitter<ExperimentSchemeState> emit,
+  ) {
     repository.addSampleUngrouped(Sample(
       id: repository.ungroupedSamples.length,
       title: event.title,
@@ -182,5 +183,22 @@ class ExperimentSchemeBloc
     emit(ExperimentSchemeState.loadedState(
         data: repository.getData(),
         ungroupedSamples: repository.ungroupedSamples));
+  }
+
+  Future<void> _addFilesToMeasurement(
+    _AddFilesToMeasurement event,
+    Emitter<ExperimentSchemeState> emit,
+  ) async {
+    List<String> files = await fileManager.pickFiles();
+    for (var file in files) {
+      repository.addFileToMeasurement(
+          file, event.measurementId, event.groupId, event.sampleId);
+    }
+    emit(
+      ExperimentSchemeState.loadedState(
+        data: repository.getData(),
+        ungroupedSamples: repository.getUngroupedSamples(),
+      ),
+    );
   }
 }

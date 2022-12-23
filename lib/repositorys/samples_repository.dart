@@ -1,5 +1,3 @@
-
-
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
 
@@ -16,7 +14,11 @@ class SampleRepository {
   }
 
   void addFirstSample(Sample sample) {
-    data.add(Group(name: 'Безымянная группа ', id: 0, samples: [sample], groupDescription: ""));
+    data.add(Group(
+        name: 'Безымянная группа ',
+        id: 0,
+        samples: [sample],
+        groupDescription: ""));
     ungroupedSamples.add(sample);
   }
 
@@ -55,9 +57,25 @@ class SampleRepository {
     }
   }
 
-  void deleteSampleToGroup(String sampleName, int i) {
-    
+  void addFileToMeasurement(
+      String file, int measurermentId, int? groupId, int sampleId) {
+    if (data.isEmpty) {
+      ungroupedSamples[sampleId].measurements[measurermentId].addedFiles = [
+        ...ungroupedSamples[sampleId].measurements[measurermentId].addedFiles,
+        file
+      ];
+      return;
+    }
+    data[groupId!].samples[sampleId].measurements[measurermentId].addedFiles = [
+      ...data[groupId]
+          .samples[sampleId]
+          .measurements[measurermentId]
+          .addedFiles,
+      file
+    ];
   }
+
+  void deleteSampleToGroup(String sampleName, int i) {}
 
   void clearData() => data.clear();
   List<Group> getData() => data;

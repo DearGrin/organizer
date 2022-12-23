@@ -27,6 +27,8 @@ mixin _$ExperimentSchemeEvent {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,8 @@ mixin _$ExperimentSchemeEvent {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -49,6 +53,8 @@ mixin _$ExperimentSchemeEvent {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -63,6 +69,8 @@ mixin _$ExperimentSchemeEvent {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +83,7 @@ mixin _$ExperimentSchemeEvent {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -87,6 +96,7 @@ mixin _$ExperimentSchemeEvent {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -192,6 +202,8 @@ class _$_AddNewSample implements _AddNewSample {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) {
     return addNewSample(text, title);
   }
@@ -206,6 +218,8 @@ class _$_AddNewSample implements _AddNewSample {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) {
     return addNewSample?.call(text, title);
   }
@@ -220,6 +234,8 @@ class _$_AddNewSample implements _AddNewSample {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addNewSample != null) {
@@ -240,6 +256,8 @@ class _$_AddNewSample implements _AddNewSample {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) {
     return addNewSample(this);
   }
@@ -255,6 +273,7 @@ class _$_AddNewSample implements _AddNewSample {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) {
     return addNewSample?.call(this);
   }
@@ -270,6 +289,7 @@ class _$_AddNewSample implements _AddNewSample {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addNewSample != null) {
@@ -381,6 +401,8 @@ class _$_AddSample implements _AddSample {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) {
     return addSampleToGroup(text, title, id);
   }
@@ -395,6 +417,8 @@ class _$_AddSample implements _AddSample {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) {
     return addSampleToGroup?.call(text, title, id);
   }
@@ -409,6 +433,8 @@ class _$_AddSample implements _AddSample {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addSampleToGroup != null) {
@@ -429,6 +455,8 @@ class _$_AddSample implements _AddSample {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) {
     return addSampleToGroup(this);
   }
@@ -444,6 +472,7 @@ class _$_AddSample implements _AddSample {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) {
     return addSampleToGroup?.call(this);
   }
@@ -459,6 +488,7 @@ class _$_AddSample implements _AddSample {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addSampleToGroup != null) {
@@ -573,6 +603,8 @@ class _$_EditSample implements _EditSample {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) {
     return editSample(sample, idGroup);
   }
@@ -587,6 +619,8 @@ class _$_EditSample implements _EditSample {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) {
     return editSample?.call(sample, idGroup);
   }
@@ -601,6 +635,8 @@ class _$_EditSample implements _EditSample {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (editSample != null) {
@@ -621,6 +657,8 @@ class _$_EditSample implements _EditSample {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) {
     return editSample(this);
   }
@@ -636,6 +674,7 @@ class _$_EditSample implements _EditSample {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) {
     return editSample?.call(this);
   }
@@ -651,6 +690,7 @@ class _$_EditSample implements _EditSample {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (editSample != null) {
@@ -745,6 +785,8 @@ class _$_GroupSamplesById implements _GroupSamplesById {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) {
     return groupSamplesById(id);
   }
@@ -759,6 +801,8 @@ class _$_GroupSamplesById implements _GroupSamplesById {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) {
     return groupSamplesById?.call(id);
   }
@@ -773,6 +817,8 @@ class _$_GroupSamplesById implements _GroupSamplesById {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (groupSamplesById != null) {
@@ -793,6 +839,8 @@ class _$_GroupSamplesById implements _GroupSamplesById {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) {
     return groupSamplesById(this);
   }
@@ -808,6 +856,7 @@ class _$_GroupSamplesById implements _GroupSamplesById {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) {
     return groupSamplesById?.call(this);
   }
@@ -823,6 +872,7 @@ class _$_GroupSamplesById implements _GroupSamplesById {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (groupSamplesById != null) {
@@ -935,6 +985,8 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) {
     return addMeasurementToSample(groupId, sample);
   }
@@ -949,6 +1001,8 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) {
     return addMeasurementToSample?.call(groupId, sample);
   }
@@ -963,6 +1017,8 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addMeasurementToSample != null) {
@@ -983,6 +1039,8 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) {
     return addMeasurementToSample(this);
   }
@@ -998,6 +1056,7 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) {
     return addMeasurementToSample?.call(this);
   }
@@ -1013,6 +1072,7 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addMeasurementToSample != null) {
@@ -1116,6 +1176,8 @@ class _$_AddUngroupedSample implements _AddUngroupedSample {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) {
     return addUngroupedSample(text, title);
   }
@@ -1130,6 +1192,8 @@ class _$_AddUngroupedSample implements _AddUngroupedSample {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) {
     return addUngroupedSample?.call(text, title);
   }
@@ -1144,6 +1208,8 @@ class _$_AddUngroupedSample implements _AddUngroupedSample {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addUngroupedSample != null) {
@@ -1164,6 +1230,8 @@ class _$_AddUngroupedSample implements _AddUngroupedSample {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) {
     return addUngroupedSample(this);
   }
@@ -1179,6 +1247,7 @@ class _$_AddUngroupedSample implements _AddUngroupedSample {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) {
     return addUngroupedSample?.call(this);
   }
@@ -1194,6 +1263,7 @@ class _$_AddUngroupedSample implements _AddUngroupedSample {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addUngroupedSample != null) {
@@ -1292,6 +1362,8 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
         addMeasurementToSample,
     required TResult Function(String text, String title) addUngroupedSample,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
   }) {
     return addUngroupedSamplesToGroup(name);
   }
@@ -1306,6 +1378,8 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
     TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult? Function(String text, String title)? addUngroupedSample,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
   }) {
     return addUngroupedSamplesToGroup?.call(name);
   }
@@ -1320,6 +1394,8 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
     TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
     TResult Function(String text, String title)? addUngroupedSample,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addUngroupedSamplesToGroup != null) {
@@ -1340,6 +1416,8 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
     required TResult Function(_AddUngroupedSample value) addUngroupedSample,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
   }) {
     return addUngroupedSamplesToGroup(this);
   }
@@ -1355,6 +1433,7 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
     TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
   }) {
     return addUngroupedSamplesToGroup?.call(this);
   }
@@ -1370,6 +1449,7 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
     TResult Function(_AddUngroupedSample value)? addUngroupedSample,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
     required TResult orElse(),
   }) {
     if (addUngroupedSamplesToGroup != null) {
@@ -1387,6 +1467,213 @@ abstract class _AddUngroupedSamplesToGroup implements ExperimentSchemeEvent {
   @JsonKey(ignore: true)
   _$$_AddUngroupedSamplesToGroupCopyWith<_$_AddUngroupedSamplesToGroup>
       get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_AddFilesToMeasurementCopyWith<$Res> {
+  factory _$$_AddFilesToMeasurementCopyWith(_$_AddFilesToMeasurement value,
+          $Res Function(_$_AddFilesToMeasurement) then) =
+      __$$_AddFilesToMeasurementCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int measurementId, int? groupId, int sampleId});
+}
+
+/// @nodoc
+class __$$_AddFilesToMeasurementCopyWithImpl<$Res>
+    extends _$ExperimentSchemeEventCopyWithImpl<$Res, _$_AddFilesToMeasurement>
+    implements _$$_AddFilesToMeasurementCopyWith<$Res> {
+  __$$_AddFilesToMeasurementCopyWithImpl(_$_AddFilesToMeasurement _value,
+      $Res Function(_$_AddFilesToMeasurement) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? measurementId = null,
+    Object? groupId = freezed,
+    Object? sampleId = null,
+  }) {
+    return _then(_$_AddFilesToMeasurement(
+      measurementId: null == measurementId
+          ? _value.measurementId
+          : measurementId // ignore: cast_nullable_to_non_nullable
+              as int,
+      groupId: freezed == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sampleId: null == sampleId
+          ? _value.sampleId
+          : sampleId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddFilesToMeasurement implements _AddFilesToMeasurement {
+  const _$_AddFilesToMeasurement(
+      {required this.measurementId,
+      required this.groupId,
+      required this.sampleId});
+
+  @override
+  final int measurementId;
+  @override
+  final int? groupId;
+  @override
+  final int sampleId;
+
+  @override
+  String toString() {
+    return 'ExperimentSchemeEvent.addFilesToMeasurement(measurementId: $measurementId, groupId: $groupId, sampleId: $sampleId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AddFilesToMeasurement &&
+            (identical(other.measurementId, measurementId) ||
+                other.measurementId == measurementId) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.sampleId, sampleId) ||
+                other.sampleId == sampleId));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, measurementId, groupId, sampleId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AddFilesToMeasurementCopyWith<_$_AddFilesToMeasurement> get copyWith =>
+      __$$_AddFilesToMeasurementCopyWithImpl<_$_AddFilesToMeasurement>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
+    required TResult Function(int id) groupSamplesById,
+    required TResult Function(int? groupId, Sample sample)
+        addMeasurementToSample,
+    required TResult Function(String text, String title) addUngroupedSample,
+    required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int? groupId, int sampleId)
+        addFilesToMeasurement,
+  }) {
+    return addFilesToMeasurement(measurementId, groupId, sampleId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
+    TResult? Function(int id)? groupSamplesById,
+    TResult? Function(int? groupId, Sample sample)? addMeasurementToSample,
+    TResult? Function(String text, String title)? addUngroupedSample,
+    TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
+  }) {
+    return addFilesToMeasurement?.call(measurementId, groupId, sampleId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
+    TResult Function(int id)? groupSamplesById,
+    TResult Function(int? groupId, Sample sample)? addMeasurementToSample,
+    TResult Function(String text, String title)? addUngroupedSample,
+    TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int? groupId, int sampleId)?
+        addFilesToMeasurement,
+    required TResult orElse(),
+  }) {
+    if (addFilesToMeasurement != null) {
+      return addFilesToMeasurement(measurementId, groupId, sampleId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_AddNewSample value) addNewSample,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
+    required TResult Function(_GroupSamplesById value) groupSamplesById,
+    required TResult Function(_AddMeasurementToSample value)
+        addMeasurementToSample,
+    required TResult Function(_AddUngroupedSample value) addUngroupedSample,
+    required TResult Function(_AddUngroupedSamplesToGroup value)
+        addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
+  }) {
+    return addFilesToMeasurement(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_AddNewSample value)? addNewSample,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
+    TResult? Function(_GroupSamplesById value)? groupSamplesById,
+    TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_AddUngroupedSample value)? addUngroupedSample,
+    TResult? Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+  }) {
+    return addFilesToMeasurement?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_AddNewSample value)? addNewSample,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
+    TResult Function(_GroupSamplesById value)? groupSamplesById,
+    TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_AddUngroupedSample value)? addUngroupedSample,
+    TResult Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    required TResult orElse(),
+  }) {
+    if (addFilesToMeasurement != null) {
+      return addFilesToMeasurement(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddFilesToMeasurement implements ExperimentSchemeEvent {
+  const factory _AddFilesToMeasurement(
+      {required final int measurementId,
+      required final int? groupId,
+      required final int sampleId}) = _$_AddFilesToMeasurement;
+
+  int get measurementId;
+  int? get groupId;
+  int get sampleId;
+  @JsonKey(ignore: true)
+  _$$_AddFilesToMeasurementCopyWith<_$_AddFilesToMeasurement> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

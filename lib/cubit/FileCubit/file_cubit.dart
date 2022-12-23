@@ -51,19 +51,20 @@ class FileCubit extends Cubit<FileState> {
 class FileManager {
   // List<String> files = [];
 
-  void pickFiles() async {
+  Future<List<String>> pickFiles() async {
     FilePickerResult? results = await FilePicker.platform.pickFiles(
       allowMultiple: true,
       // type: FileType.custom,
       // allowedExtensions: ['list of files'],
     );
-    if (results == null) return;
+    if (results == null) return [];
 
     List<String> files = [];
     for (PlatformFile file in results.files) {
       files.add(file.name);
     }
     print('files $files');
+    return files;
   }
 
   Future<String> get _localPath async {

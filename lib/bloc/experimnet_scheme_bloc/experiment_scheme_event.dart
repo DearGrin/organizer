@@ -12,11 +12,10 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
     required int id,
   }) = _AddSample;
 
- const factory ExperimentSchemeEvent.editSample({
+  const factory ExperimentSchemeEvent.editSample({
     required Sample sample,
     required int idGroup,
   }) = _EditSample;
-
 
   const factory ExperimentSchemeEvent.groupSamplesById({
     required int id,
@@ -34,4 +33,10 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
   const factory ExperimentSchemeEvent.addUngroupedSamplesToGroup({
     String? name,
   }) = _AddUngroupedSamplesToGroup;
+
+  const factory ExperimentSchemeEvent.addFilesToMeasurement({
+    required int measurementId,
+    required int? groupId,
+    required int sampleId,
+  }) = _AddFilesToMeasurement;
 }
