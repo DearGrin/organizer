@@ -6,6 +6,7 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
     required String text,
     required String title,
   }) = _AddNewSample;
+
   const factory ExperimentSchemeEvent.addSampleToGroup({
     required String text,
     required String title,
@@ -36,7 +37,7 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
 
   const factory ExperimentSchemeEvent.addFilesToMeasurement({
     required int measurementId,
-    required int? groupId,
+    required int groupId,
     required int sampleId,
   }) = _AddFilesToMeasurement;
 }

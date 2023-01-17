@@ -224,16 +224,17 @@ class FaApp extends StatelessWidget {
                                         Expanded(
                                           flex: 9,
                                           child: SizedBox(
-                                              height: 100,
-                                              child: AddGroup(
-                                                onTap: () {
-                                                  context
-                                                      .read<
-                                                          ExperimentSchemeBloc>()
-                                                      .add(const ExperimentSchemeEvent
-                                                          .addUngroupedSamplesToGroup());
-                                                },
-                                              )),
+                                            height: 100,
+                                            child: AddGroup(
+                                              onTap: () {
+                                                context
+                                                    .read<
+                                                        ExperimentSchemeBloc>()
+                                                    .add(const ExperimentSchemeEvent
+                                                        .addUngroupedSamplesToGroup());
+                                              },
+                                            ),
+                                          ),
                                         ),
                                         Expanded(flex: 1, child: Container())
                                       ],
@@ -808,7 +809,7 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                       context.read<ExperimentSchemeBloc>().add(
                             ExperimentSchemeEvent.addFilesToMeasurement(
                                 measurementId: widget.measurementIndex,
-                                groupId: widget.groupId,
+                                groupId: widget.groupId ?? 0,
                                 sampleId: widget.sampleId),
                           );
                     },
@@ -821,10 +822,30 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
             ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 52),
               child: Column(
-                children: const [
-                  TextField(
-                    maxLines: null,
+                children: [
+                  const TextField(
+                    maxLines: 3,
                     decoration: InputDecoration(border: InputBorder.none),
+                  ),
+                  BlocBuilder<ExperimentSchemeBloc, ExperimentSchemeState>(
+                    builder: (context, state) {
+                      return Row(
+                        children: state.map(
+                            emptyState: ((state) => []),
+                            loadedState: ((state) => state
+                                .ungroupedSamples[widget.sampleId]
+                                .measurements[widget.measurementIndex]
+                                .addedFiles
+                                .map(
+                                  (e) => File(
+                                    fileName: e,
+                                  ),
+                                )
+                                .toList()),
+                            errorState: ((state) => []),
+                            loading: ((state) => [])),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -834,6 +855,27 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
             setState(() => tileExpanded = expanded);
           },
         ),
+      ),
+    );
+  }
+}
+
+class File extends StatelessWidget {
+  final String fileName;
+  const File({super.key, required this.fileName});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      child: Row(
+        children: [
+          IconButton(
+            onPressed: () {},
+            icon: SvgPicture.asset(IconsSvg.file),
+          ),
+          Text(fileName),
+        ],
       ),
     );
   }

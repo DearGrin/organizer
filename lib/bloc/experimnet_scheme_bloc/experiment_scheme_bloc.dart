@@ -130,7 +130,7 @@ class ExperimentSchemeBloc
         if (value.id == event.sample.id) {
           repository.ungroupedSamples[key].measurements =
               List.from(repository.ungroupedSamples[key].measurements)
-                ..add(Measurement());
+                ..add(Measurement(addedFiles: []));
         }
       });
     } else {
@@ -139,7 +139,7 @@ class ExperimentSchemeBloc
           if (value.id == event.sample.id && groupValue.id == event.groupId) {
             repository.data[keyGroup].samples[key].measurements =
                 List.from(repository.data[keyGroup].samples[key].measurements)
-                  ..add(Measurement());
+                  ..add(Measurement(addedFiles: []));
           }
         });
       });

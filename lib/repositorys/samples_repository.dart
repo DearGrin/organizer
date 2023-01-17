@@ -58,7 +58,7 @@ class SampleRepository {
   }
 
   void addFileToMeasurement(
-      String file, int measurermentId, int? groupId, int sampleId) {
+      String file, int measurermentId, int groupId, int sampleId) {
     if (data.isEmpty) {
       ungroupedSamples[sampleId].measurements[measurermentId].addedFiles = [
         ...ungroupedSamples[sampleId].measurements[measurermentId].addedFiles,
@@ -66,13 +66,21 @@ class SampleRepository {
       ];
       return;
     }
-    data[groupId!].samples[sampleId].measurements[measurermentId].addedFiles = [
+    data[groupId].samples[sampleId].measurements[measurermentId] = data[groupId]
+        .samples[sampleId]
+        .measurements[measurermentId]
+        .copyWith(addedFiles: [
       ...data[groupId]
           .samples[sampleId]
           .measurements[measurermentId]
           .addedFiles,
-      file
-    ];
+      file,
+    ]);
+    // data[groupId]
+    //     .samples[sampleId]
+    //     .measurements[measurermentId]
+    //     .addedFiles
+    //     .add(file);
   }
 
   void deleteSampleToGroup(String sampleName, int i) {}
