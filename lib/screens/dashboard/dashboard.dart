@@ -6,6 +6,8 @@ import 'package:first_approval_app/custom_widgets/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+/// обычно на такие импорты линтер ругается и просить писать полный путь
+/// лучше использовать польный путь
 import '../../http_and_backend/http_class.dart';
 import '../../icons/icons_paths.dart';
 import '../../main.dart';
@@ -18,11 +20,14 @@ class Dashboard extends StatelessWidget {
     return Scaffold(
       appBar: ProjectAppBar(
         icon: SvgPicture.asset(IconsSvg.notification),
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         onTap: () {},
       ),
       body: BlocProvider<FileCubit>(
         create: (context) => FileCubit(),
         child: Container(
+          ///цвет вынести в стили
           color: const Color(0xffEAEAEA),
           padding: EdgeInsets.only(
             left: context.navigationPagePadding,
@@ -38,6 +43,7 @@ class Dashboard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  /// не забываем использовать const
                   AddCard(
                     text: 'Добавить карточку\n     эскперимента',
                   ),
@@ -55,9 +61,11 @@ class Dashboard extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class AddCard extends StatelessWidget {
   const AddCard({required this.text, super.key, this.bydefault = true});
   final String text;
+  /// переименовать в соответствии с правилами нейминга dart: byDefault
   final bool bydefault;
 
   @override
@@ -68,11 +76,13 @@ class AddCard extends StatelessWidget {
           dashPattern: const [30, 10],
           strokeCap: StrokeCap.butt,
           borderType: BorderType.RRect,
+          ///цвет вынести в стили
           color: const Color.fromRGBO(153, 153, 153, 0.6),
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
               border: Border.all(
+                ///цвет вынести в стили
                 color: const Color.fromRGBO(153, 153, 153, 0.6),
                 style: BorderStyle.none,
               ),
@@ -84,7 +94,12 @@ class AddCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
-                  onTap: (bydefault == true)
+                  /// для читаемости вынес бы в отдельную функцию
+                  /// _onTap(){
+                  /// if(bydefault){...}else{..}
+                  /// }
+                  /// onTap: _onTap,
+                  onTap: (bydefault == true) ///можно просто bydefault? вместо (bydefault == true)?
                       ? () {
                           showDialog(
                             context: context,
@@ -112,6 +127,7 @@ class AddCard extends StatelessWidget {
                   text,
                   16,
                   weight: FontWeight.w700,
+                  ///цвет вынести в стили
                   color: const Color.fromRGBO(153, 153, 153, 0.6),
                 ),
               ],
@@ -123,6 +139,7 @@ class AddCard extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class Navigation extends StatelessWidget {
   const Navigation({super.key});
 
@@ -141,6 +158,7 @@ class Navigation extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class ChooseOptionPopUp extends StatelessWidget {
   const ChooseOptionPopUp({super.key});
 
@@ -189,16 +207,23 @@ class ChooseOptionPopUp extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class DashboardNavigationCards extends StatelessWidget {
   const DashboardNavigationCards({super.key});
 
   // Post запрос отправки данных в базу данных
+  ///Так очень плохо - у сетевых запросов часто бывают ошибки -
+  ///в такой реализации это приведет к крашам/красным экранам  и тд
+  ///обязательно эту логику выносить в блок
+  ///и оборачивать в try catch
   void _get() async {
     CustomHttpRequest httpRequest = CustomHttpRequest();
+    /// лишнее
     var pupa;
 
+    /// смысл в этой переменной, если она никуда не передается?
     pupa = await httpRequest.getUserById();
+    ///от принтов избавляемся: испольщуем debugPrint или log
     print('$pupa');
   }
 
@@ -207,6 +232,8 @@ class DashboardNavigationCards extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         NavigationPropertiesCard('Настройки', IconsSvg.setting, () {}),
         NavigationPropertiesCard(
           'Экспорт данных',
@@ -219,17 +246,23 @@ class DashboardNavigationCards extends StatelessWidget {
           BlocProvider.of<FileCubit>(context).pickFiles,
         ),
         NavigationPropertiesCard(
+          /// есть разница между null и пустой функцией в поведении кнопок -
+          /// надо учитывать, какое поведение предпочтительнее
             'Валидация файлов', IconsSvg.validation, () {}),
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         NavigationPropertiesCard('Публикация', IconsSvg.menuPublication, () {}),
       ],
     );
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class NavigationPropertiesCard extends StatelessWidget {
   const NavigationPropertiesCard(this.name, this.icon, this.onTap, {super.key});
   final String name;
   final String icon;
+  ///вынес бы в необязательные параметры
   final VoidCallback? onTap;
 
   @override
@@ -257,6 +290,7 @@ class NavigationPropertiesCard extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class RecentExperimentCard extends StatelessWidget {
   const RecentExperimentCard({super.key});
 
@@ -273,8 +307,11 @@ class RecentExperimentCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              ///похоже на дату, но почему тогда хардкодом?
               const CustomText('01.08.2022', 10, weight: FontWeight.w400,),
               IconButton(
+                /// есть разница между null и пустой функцией в поведении кнопок -
+                /// надо учитывать, какое поведение предпочтительнее
                 onPressed: () {},
                 splashRadius: 10,
                 icon: SvgPicture.asset(IconsSvg.cardClose),
@@ -299,18 +336,24 @@ class RecentExperimentCard extends StatelessWidget {
                   IconButton(
                     constraints: const BoxConstraints(),
                     padding: const EdgeInsets.all(0.0),
+                    /// есть разница между null и пустой функцией в поведении кнопок -
+                    /// надо учитывать, какое поведение предпочтительнее
                     onPressed: () {},
                     icon: SvgPicture.asset(IconsSvg.cardValidation),
                   ),
                   IconButton(
                     constraints: const BoxConstraints(),
                     padding: const EdgeInsets.all(0.0),
+                    /// есть разница между null и пустой функцией в поведении кнопок -
+                    /// надо учитывать, какое поведение предпочтительнее
                     onPressed: () {},
                     icon: SvgPicture.asset(IconsSvg.cardAttachedFiles),
                   ),
                   IconButton(
                     constraints: const BoxConstraints(),
                     padding: const EdgeInsets.all(0.0),
+                    /// есть разница между null и пустой функцией в поведении кнопок -
+                    /// надо учитывать, какое поведение предпочтительнее
                     onPressed: () {},
                     icon: SvgPicture.asset(IconsSvg.cardArchive),
                   ),
@@ -328,6 +371,7 @@ class RecentExperimentCard extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class DrakThemeSwitcher extends StatelessWidget {
   const DrakThemeSwitcher({super.key});
 
@@ -343,6 +387,7 @@ class DrakThemeSwitcher extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class HorizontalSwitcher extends StatefulWidget {
   const HorizontalSwitcher({Key? key}) : super(key: key);
 
@@ -359,6 +404,9 @@ class _HorizontalSwitcherState extends State<HorizontalSwitcher> {
       value: status,
       onChanged: (value) {
         setState(() {
+          /// 1) явно надо куда сохранить новое значение
+          /// 2) явно надо при запуске получить это значение
+          /// 3) ну и сменить тему, соответственно
           status = value;
         });
       },
@@ -367,6 +415,7 @@ class _HorizontalSwitcherState extends State<HorizontalSwitcher> {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class PublicButton extends StatelessWidget {
   const PublicButton({super.key});
 
@@ -397,7 +446,7 @@ class PublicButton extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class ExperimentName extends StatelessWidget {
   const ExperimentName({super.key});
 
@@ -418,7 +467,8 @@ class ExperimentName extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///не вижу смысла в StatefulWidget - стейта-то никакого нет
 class ShowAll extends StatefulWidget {
   const ShowAll({super.key});
 
@@ -430,12 +480,15 @@ class _ShowAllState extends State<ShowAll> {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      /// есть разница между null и пустой функцией в поведении кнопок -
+      /// надо учитывать, какое поведение предпочтительнее
       onPressed: () {},
       child: const Text(
         'Показать все',
         style: TextStyle(
           decoration: TextDecoration.underline,
           fontSize: 16,
+          ///ряд значений у шрифта можно опускать, если они совпадают с заданными параметрами по умлочанию
           fontFamily: "Inter",
           fontWeight: FontWeight.w700,
           color: Colors.black,

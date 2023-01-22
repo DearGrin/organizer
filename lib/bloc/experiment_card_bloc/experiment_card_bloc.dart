@@ -36,6 +36,19 @@ class ExperimentCardBloc
     if (repository.fields.isEmpty) {
       repository.addExperiment(ExperimentCardTextFields());
     }
+    /// [event.fieldName] - лучше изменить тип на enum (вот пример):
+    // enum FieldNameType {
+    // goal('Цель'),
+    // date('Дата проведения');
+    // final String value;
+    // const FieldNameType(this.value);
+    // }
+    /// [FieldNameType.goal.value] = 'Цель'
+    /// плюсы:
+    ///    1) перебор через switch case (ide сама создаст весь бойлерплейт и проследит за всеми кейсами)
+    ///    2) масштабируемость
+    ///    3) защита от ошибок (забыл кейс, опечатался и тд)
+    ///    4) легче сторить ui через map
     if (event.fieldName == 'Цель') {
       repository.setGoal(event.text);
     } else if (event.fieldName == 'Описание') {

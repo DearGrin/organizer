@@ -4,7 +4,10 @@ import 'measurement.dart';
 
 part 'sample.freezed.dart';
 part 'sample.g.dart';
-
+///почему используется @unfreezed ???
+///вероятно, причина в том, что есть потребность изменять список [samples]
+///для этого вместо @unfreezed можно использовать:
+/// @Freezed(makeCollectionsUnmodifiable: false)
 @unfreezed
 class Sample with _$Sample {
   factory Sample({

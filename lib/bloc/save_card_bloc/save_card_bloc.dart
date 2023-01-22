@@ -12,8 +12,11 @@ part 'save_card_state.dart';
 part 'save_card_bloc.freezed.dart';
 
 class SaveCardBloc extends Bloc<SaveCardEvent, SaveCardState> {
+  /// не забываем использовать final
   ExperimentCardRepository cardRepo;
   SampleRepository schemeRepo;
+  /// [FileCubit] выглядит как репо для работы с файловым менеджером
+  /// зачем тогда [FileManager] отдельно получать и использовать
   FileCubit fileCubit;
   FileManager fileManager;
   SaveCardBloc(
@@ -21,6 +24,7 @@ class SaveCardBloc extends Bloc<SaveCardEvent, SaveCardState> {
       required this.schemeRepo,
       required this.fileCubit,
       required this.fileManager})
+  /// не забываем использовать const
       : super(_Initial()) {
     on<SaveCardEvent>((event, emit) {
       event.map(
@@ -30,6 +34,7 @@ class SaveCardBloc extends Bloc<SaveCardEvent, SaveCardState> {
   }
 
   void _save(_Save event, Emitter<SaveCardState> emit) async {
+    ///вот тут напрашивается какой-то лоадинг стейт, пока операции в процессе
     String? path = await fileManager.getDirectory();
     if (path == null) return;
     var encoder = ZipFileEncoder();

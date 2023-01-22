@@ -38,13 +38,18 @@ class ExperimentScheme extends StatelessWidget {
                 children: [
                   CustomNoBordersButton(
                     IconsSvg.import,
+                    /// есть разница между null и пустой функцией в поведении кнопок -
+                    /// надо учитывать, какое поведение предпочтительнее
                     () {},
                   ),
+                  ///зачем при MainAxisAlignment.spaceEvenly вставлять SizedBox?
                   const SizedBox(
                     width: 5,
                   ),
                   CustomNoBordersButton(
                     IconsSvg.export,
+                    /// есть разница между null и пустой функцией в поведении кнопок -
+                    /// надо учитывать, какое поведение предпочтительнее
                     () {},
                   ),
                 ],
@@ -60,9 +65,12 @@ class ExperimentScheme extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class DottedAreaWidget extends StatelessWidget {
+  ///сделать необязательным парматром
   final VoidCallback? onTap;
+  ///в данном случае нет смысла делать [isMiniWidget] nullable
+  ///нужно сделать необязательным парметром с указанием значения по умлочанию
   final bool? isMiniWidget;
   const DottedAreaWidget({super.key, this.onTap, this.isMiniWidget});
 
@@ -80,11 +88,13 @@ class DottedAreaWidget extends StatelessWidget {
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,
+      ///цвета в стили
       color: const Color.fromRGBO(153, 153, 153, 0.6),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
+            ///цвета в стили
             color: const Color.fromRGBO(153, 153, 153, 0.6),
             style: BorderStyle.none,
           ),
@@ -103,15 +113,18 @@ class DottedAreaWidget extends StatelessWidget {
                 ],
               ),
             ),
+            ///соответственно не isMiniWidget !=null а isMiniWidget?
             isMiniWidget != null ? const CustomText(
               'Добавить\nобразец',
               16,
               weight: FontWeight.w700,
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ) :  const CustomText(
               'Добавить новый\nобразец',
               16,
               weight: FontWeight.w700,
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
@@ -120,8 +133,9 @@ class DottedAreaWidget extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class DottedAreaWithSamples extends StatelessWidget {
+  ///сделать необязательным парматром
   final VoidCallback? onTap;
   const DottedAreaWithSamples({super.key, this.onTap});
 
@@ -138,11 +152,13 @@ class DottedAreaWithSamples extends StatelessWidget {
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,
+      ///цвета в стили
       color: const Color.fromRGBO(153, 153, 153, 0.6),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
+            ///цвета в стили
             color: const Color.fromRGBO(153, 153, 153, 0.6),
             style: BorderStyle.none,
           ),
@@ -167,12 +183,14 @@ class DottedAreaWithSamples extends StatelessWidget {
               'Объединить в группу',
               12,
               weight: FontWeight.w700,
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
         ),
       ),
     );
+    ///удаляем мертвый код
     // Flexible(
     //   flex: 3,
     //   child: Container(
@@ -189,7 +207,7 @@ class DottedAreaWithSamples extends StatelessWidget {
     //   );
   }
 }
-
+///удаляем мертвый код
 // class GroupUpSamplesWidget extends StatelessWidget {
 //   final VoidCallback? onTap;
 //   final List<Sample> children;
@@ -243,7 +261,7 @@ class DottedAreaWithSamples extends StatelessWidget {
 //   }
 // }
 
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class AddSampleWidget extends StatelessWidget {
   const AddSampleWidget({super.key, required this.onTap});
   final VoidCallback onTap;
@@ -254,11 +272,13 @@ class AddSampleWidget extends StatelessWidget {
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,
+      ///цвета в стили
       color: const Color.fromRGBO(153, 153, 153, 0.6),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
+            ///цвета в стили
             color: const Color.fromRGBO(153, 153, 153, 0.6),
             style: BorderStyle.none,
           ),
@@ -280,6 +300,7 @@ class AddSampleWidget extends StatelessWidget {
               'Добавить\nобразец',
               12,
               weight: FontWeight.w700,
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
@@ -288,7 +309,7 @@ class AddSampleWidget extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class NewSample extends StatefulWidget {
   const NewSample({super.key});
 
@@ -323,6 +344,8 @@ class _NewSampleState extends State<NewSample> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                /// есть разница между null и пустой функцией в поведении кнопок -
+                /// надо учитывать, какое поведение предпочтительнее
                 CustomNoBordersButton(IconsSvg.edit, () {}),
                 CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
                 CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
@@ -333,6 +356,7 @@ class _NewSampleState extends State<NewSample> {
         children: [
           ElevatedButton(
             onPressed: () {
+              ///для читаемости вынести отдельно
               context.read<ExperimentSchemeBloc>().add(
                     ExperimentSchemeEvent.addNewSample(
                       text: descriptionText.text,
@@ -346,6 +370,7 @@ class _NewSampleState extends State<NewSample> {
             child: const Text('Добавить образец'),
           )
         ],
+        ///удаляем мертвый код
         // children: [
         //   TextField(
         //     controller: descriptionText,

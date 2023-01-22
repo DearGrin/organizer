@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class ProjectAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget icon;
+  ///вынес бы в необязательные параметры
+  ///VoidCallback вместо Function()
   final void Function()? onTap;
 
   const ProjectAppBar({
@@ -16,6 +18,7 @@ class ProjectAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     //выровнять по середине
     return AppBar(
+      ///цвета в стили
       backgroundColor: const Color(0xffd9d9d9),
       elevation: 0,
       title: const HeaderText('First Approval'),

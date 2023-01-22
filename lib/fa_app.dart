@@ -22,11 +22,17 @@ import 'models/group.dart';
 import 'models/measurement.dart';
 import 'models/sample.dart';
 
+///ТРЕБУЕТСЯ ОБЯЗАТЕЛЬНЫЙ РЕФАКТОРИНГ
 class FaApp extends StatelessWidget {
   const FaApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ///тут идет череда инициализаций Provider и Bloc
+    /// 1) нужно разбить на отдельные файлы и виджеты
+    /// 2) можно использовать MultiProvider и MultiBlocProvider
+    /// для упрощения и больше логичности процессов инициализации компонентов
+    /// тогда вполне можно было использовать context.read() для инъеккции зависимостей
     return Provider<SampleRepository>(
       create: (context) => SampleRepository(),
       child: ProjectBody(
@@ -84,10 +90,15 @@ class FaApp extends StatelessWidget {
                           constraints: const BoxConstraints(
                               minHeight: 250, maxHeight: 250),
                           child: DottedAreaWidget(
+                            ///для читаемости вынести отдельно
                             onTap: () => context
                                 .read<ExperimentSchemeBloc>()
                                 .add(const ExperimentSchemeEvent
                                         .addUngroupedSample(
+                              ///пустые не лучше бы?
+                              ///а если в TextField использовать hint/label...
+                              ///+ зачем эти параметры вообще перендавать при создании нового объекта
+                              ///со значениями по умолчанию?
                                     text: "Введите описание",
                                     title: "Образец")),
                           ),
@@ -95,9 +106,16 @@ class FaApp extends StatelessWidget {
                         loadedState: (state) {
                           return Builder(
                             builder: (BuildContext context) {
+                              ///однозначно разбивать на части
+                              ///пока дочитал до else уже успел забыть, что какое-то условие было
+                              ///если я правильно понял: это условие определяет есть ли группы
+                              ///можно в Column в children добавить в нужном месте это условие
+                              /// if (state.data.isNotEmpty) ...[Widget<SomeGroups>]
+                              /// "..." - это spread operator
                               if (state.data.isEmpty) {
                                 return Column(
                                   children: [
+                                    ///этот виджет общий в обоих условиях - вынести отдельно
                                     Row(
                                       children: [
                                         Expanded(
@@ -105,6 +123,7 @@ class FaApp extends StatelessWidget {
                                           child: SizedBox(
                                               height: 60,
                                               child: DottedAreaWithSamples(
+                                                /// вынести отддельно для читаемости
                                                 onTap: () {
                                                   state.ungroupedSamples
                                                           .isNotEmpty
@@ -117,7 +136,10 @@ class FaApp extends StatelessWidget {
                                                 },
                                               )),
                                         ),
+                                        /// а нужен ли тут этот разделитель на 10% от высоты?
+                                        /// SizedBox с фикс высотой не подойдет?
                                         Expanded(
+                                          ///опускаем значения по умолчанию
                                           flex: 1,
                                           child: Container(),
                                         )
@@ -138,12 +160,17 @@ class FaApp extends StatelessWidget {
                                                   constraints:
                                                       const BoxConstraints(
                                                           minHeight: 180,
+                                                          ///смущает меня minWidth 2000 - при маленьком окне/экране ошибок не вызывает?
+                                                          ///тем более что тут нагромождение column и row
+                                                          ///можно использовать CrossAxisAlignment.stretch и следаить за виджетами внутри
+                                                          ///(но вроде бы везде используются Flex/ListView)
                                                           minWidth: 2000),
                                                   decoration: BoxDecoration(
                                                       border: Border.all(
                                                           color: AppColors
                                                               .borderColor,
                                                           width: 2)),
+                                                  ///в [UngroupedWidget] описал подробнее - это лишнее
                                                   child: state.ungroupedSamples
                                                               .length >
                                                           5
@@ -162,7 +189,9 @@ class FaApp extends StatelessWidget {
                                             ),
                                           ),
                                           Expanded(
+                                            ///опускаем значения по умолчанию
                                             flex: 1,
+                                            /// а смысл в Padding, если отступ 0?
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.only(top: 0),
@@ -171,11 +200,16 @@ class FaApp extends StatelessWidget {
                                                 width: 90,
                                                 child: DottedAreaWidget(
                                                   isMiniWidget: true,
+                                                  ///для читаемости вынести отдельно
                                                   onTap: () => context
                                                       .read<
                                                           ExperimentSchemeBloc>()
                                                       .add(const ExperimentSchemeEvent
                                                               .addUngroupedSample(
+                                                    ///пустые не лучше бы?
+                                                    ///а если в TextField использовать hint/label...
+                                                    ///+ зачем эти параметры вообще перендавать при создании нового объекта
+                                                    ///со значениями по умолчанию?
                                                           text:
                                                               "Введите описание",
                                                           title: "Образец")),
@@ -194,6 +228,7 @@ class FaApp extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Expanded(
+                                            ///в row 1 элемент - смысл в flex:9?
                                             flex: 9,
                                             child: Column(
                                               children: [
@@ -202,6 +237,7 @@ class FaApp extends StatelessWidget {
                                                         height: 60,
                                                         child:
                                                             DottedAreaWithSamples(
+                                                              ///для читаемости вынести отдельно
                                                           onTap: () {
                                                             state.ungroupedSamples
                                                                     .isNotEmpty
@@ -226,6 +262,7 @@ class FaApp extends StatelessWidget {
                                           child: SizedBox(
                                             height: 100,
                                             child: AddGroup(
+                                              ///для читаемости вынести отдельно
                                               onTap: () {
                                                 context
                                                     .read<
@@ -236,6 +273,7 @@ class FaApp extends StatelessWidget {
                                             ),
                                           ),
                                         ),
+                                        ///опускаем значения по умлочанию
                                         Expanded(flex: 1, child: Container())
                                       ],
                                     )
@@ -259,7 +297,7 @@ class FaApp extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class WidgetSizeRenderObject extends RenderProxyBox {
   final OnWidgetSizeChange onSizeChange;
   Size? currentSize;
@@ -284,7 +322,7 @@ class WidgetSizeRenderObject extends RenderProxyBox {
     }
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 typedef OnWidgetSizeChange = void Function(Size size);
 
 class WidgetSizeOffsetWrapper extends SingleChildRenderObjectWidget {
@@ -301,7 +339,8 @@ class WidgetSizeOffsetWrapper extends SingleChildRenderObjectWidget {
     return WidgetSizeRenderObject(onSizeChange);
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///нет стейта - нет смысла в StatefulWidget
 class Groups extends StatefulWidget {
   const Groups({Key? key, required this.data}) : super(key: key);
   final List<Group> data;
@@ -319,18 +358,24 @@ class _GroupsState extends State<Groups> {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return GroupElement(
+            ///передвать не список + индекс, а сам элемент из списка
             data: widget.data,
             index: index,
           );
         });
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///ТРЕБУЕТСЯ РЕФАКТОРИНГ ЭТОГО ВИДЖЕТА - разбить на части, убрать лишнее
 class GroupElement extends StatefulWidget {
   const GroupElement({Key? key, required this.data, required this.index})
       : super(key: key);
+  ///не понял зачем передавать весь список, когда требуется только элемент
   final List<Group> data;
+  ///лишний парметр - удалить
   final int index;
+  ///таким образом вместо длинной конструкции widget.data[widget.index].name
+  ///можно использовать [widget.Group.name]
 
   @override
   State<GroupElement> createState() => _GroupElementState();
@@ -351,8 +396,11 @@ class _GroupElementState extends State<GroupElement> {
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(color: AppColors.borderColor, width: 2)),
+            ///зачем отдельно использовать тут Theme, если всего-то нужно цвет [dividerColor] поменять?
+            ///не увидел тут divider  - нужно ли это вообще?
             child: Theme(
               data: ThemeData(dividerColor: Colors.transparent),
+              ///надо копать, но есть подозрение, что этот виджет с его операциями лишний ...
               child: WidgetSizeOffsetWrapper(
                 onSizeChange: (Size size) {
                   setState(() {
@@ -360,6 +408,7 @@ class _GroupElementState extends State<GroupElement> {
                   });
                 },
                 child: ExpansionTile(
+                  /// для читаемости вынести отдельно
                   onExpansionChanged: (isExpanded) {
                     if (isExpanded) {
                       visible = true;
@@ -368,6 +417,7 @@ class _GroupElementState extends State<GroupElement> {
                     }
                     setState(() {});
                   },
+                  ///значения по умлочанию опускаем
                   initiallyExpanded: false,
                   iconColor: Colors.black,
                   expandedCrossAxisAlignment: CrossAxisAlignment.start,
@@ -379,6 +429,8 @@ class _GroupElementState extends State<GroupElement> {
                     children: [
                       Text(widget.data[widget.index].name,
                           style: AppTextStyles.groupTitleTextStyle),
+                      /// есть разница между null и пустой функцией в поведении кнопок -
+                      /// надо учитывать, какое поведение предпочтительнее
                       CustomNoBordersButton(IconsSvg.edit, () {})
                     ],
                   ),
@@ -386,6 +438,7 @@ class _GroupElementState extends State<GroupElement> {
                     Container(
                       constraints: const BoxConstraints(minHeight: 180),
                       child: Column(
+                        ///значения по умлочанию опускаем
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           widget.data[widget.index].groupDescription.isNotEmpty
@@ -394,6 +447,13 @@ class _GroupElementState extends State<GroupElement> {
                                       InputDecoration(border: InputBorder.none),
                                 )
                               : const SizedBox.shrink(),
+                          ///зачем это место?
+                          ///высчитать размер элемента по-другому и передать в список
+                          /// в списке используется [BoxConstraints] - те ширина всегда будет 300
+                           /// возможно, растягивать и вовсе необязательно
+                          /// + вот кейс: ширина области 1200, а элементов 5
+                          /// те ширина элемента будет 240, что меньше случая со списком
+                          /// смысл тогда расстягивать?
                           widget.data[widget.index].samples.length <= 5
                               ? Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,9 +466,13 @@ class _GroupElementState extends State<GroupElement> {
                                           )))
                                       .toList())
                               : Scrollbar(
+                            /// вот тут должен использовать объявленный контроллер
                                   child: SingleChildScrollView(
+                                    /// вот тут должен использовать объявленный контроллер
+                                    /// точно нужен это параметр primary=true ?
                                     primary: true,
                                     scrollDirection: Axis.horizontal,
+                                    ///куда проще было бы использовать ListView
                                     child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -419,7 +483,9 @@ class _GroupElementState extends State<GroupElement> {
                                                       const BoxConstraints(
                                                           maxWidth: 300,
                                                           minHeight: 180),
+                                                  ///в [Column] всего 1 элемент - нужен ли тогда это виджет?
                                                   child: Column(
+                                                    ///значения по умлочанию опускаем
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
@@ -445,6 +511,7 @@ class _GroupElementState extends State<GroupElement> {
           ),
         ),
         Expanded(
+          ///значения по умлочанию опускаем
             flex: 1,
             child: MiniAddSample(
               height: height,
@@ -455,7 +522,7 @@ class _GroupElementState extends State<GroupElement> {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class MiniAddSample extends StatelessWidget {
   const MiniAddSample(
       {Key? key,
@@ -474,7 +541,11 @@ class MiniAddSample extends StatelessWidget {
       child: Visibility(
         visible: visible,
         child: SizedBox(
+          /// потенциально может привести к ошибке, е
           height: height - 69,
+          /// в идеале нужно избавиться от привезяки к [height]
+          /// тем более, что в случае со списком (когда элементов >5)
+          /// используется [BoxConstraints] c minHeight: 180 - те условие всегда true
           child: height < 160
               ? Container()
               : DottedAreaWidget(
@@ -482,6 +553,7 @@ class MiniAddSample extends StatelessWidget {
                   onTap: () {
                     context.read<ExperimentSchemeBloc>().add(
                         ExperimentSchemeEvent.addSampleToGroup(
+                          /// [text] и [title] хардкодом - их нельзя редактировать?
                             text: "", title: "Образец", id: groupId));
                   },
                 ),
@@ -490,7 +562,8 @@ class MiniAddSample extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
+/// а вот тут лечше StatefulWidget тк нужно объявить ScrollController и его dispose
 class UngroupedWidget extends StatelessWidget {
   const UngroupedWidget(
       {Key? key, required this.ungroupedSamples, required this.moreElements})
@@ -502,11 +575,18 @@ class UngroupedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
+      ///зачем это условие?
+      ///повторяется сценарий верстки [GroupElement] - нужно унифицировать
+      ///по сути
       if (moreElements) {
         return Scrollbar(
+          ///добавить контроллер
           child: SingleChildScrollView(
+            ///добавить контроллер
               scrollDirection: Axis.horizontal,
+              ///нужен ли этот параметр?
               primary: true,
+              /// ListView лучше
               child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -516,6 +596,7 @@ class UngroupedWidget extends StatelessWidget {
                           width: 300,
                           decoration: BoxDecoration(
                               border: Border.all(color: AppColors.borderColor)),
+                          ///зачем тут column?
                           child: Column(
                             children: [
                               _Sample(
@@ -526,10 +607,12 @@ class UngroupedWidget extends StatelessWidget {
                       .toList())),
         );
       } else {
+        ///считаю, что эта часть лишняя
         return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: ungroupedSamples
                 .map((e) => Expanded(
+              ///опускаем параметры по умлочанию
                     flex: 1,
                     child: Container(
                       decoration: BoxDecoration(
@@ -544,7 +627,11 @@ class UngroupedWidget extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///разбить на части
 class _Sample extends StatefulWidget {
+  ///почему не final?
+  ///не увидел, чтобы эта переменная менялась
   Sample sample;
   final int? idGroup;
 
@@ -583,6 +670,7 @@ class _SampleState extends State<_Sample> {
     });
     super.initState();
   }
+  ///не забыть про dispose контроллеров
 
   @override
   Widget build(BuildContext context) {
@@ -593,6 +681,7 @@ class _SampleState extends State<_Sample> {
               right: BorderSide(color: AppColors.borderColor, width: 2),
               left: BorderSide(color: AppColors.borderColor, width: 2))),
       child: Column(
+        ///опускаем значения по умолчанию
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
@@ -600,6 +689,7 @@ class _SampleState extends State<_Sample> {
                 border: Border(
                     bottom:
                         BorderSide(color: AppColors.borderColor, width: 2))),
+            ///зачем тут Theme?
             child: Theme(
               data: ThemeData(dividerColor: Colors.transparent),
               child: ExpansionTile(
@@ -615,6 +705,7 @@ class _SampleState extends State<_Sample> {
                         maxLength: 20,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
+                          ///а смысл в пустом counterText?
                           counterText: '',
                         ),
                         controller: fieldTittle,
@@ -622,7 +713,10 @@ class _SampleState extends State<_Sample> {
                     ),
                     Row(
                       children: [
+                        /// есть разница между null и пустой функцией в поведении кнопок -
+                        /// надо учитывать, какое поведение предпочтительнее
                         CustomNoBordersButton(IconsSvg.edit, () {}),
+                        ///для читаемости вынести метод отдельно
                         CustomNoBordersButton(IconsSvg.schemeCompass, () {
                           context
                               .read<ExperimentSchemeBloc>()
@@ -631,6 +725,7 @@ class _SampleState extends State<_Sample> {
                                 sample: widget.sample,
                               ));
                         }),
+                        ///для читаемости вынести метод отдельно
                         CustomNoBordersButton(IconsSvg.attachedFiles, () {
                           context.read<FileCubit>().pickFiles();
                         }),
@@ -661,6 +756,9 @@ class _SampleState extends State<_Sample> {
             return state.when(
                 emptyState: () => const SizedBox.shrink(),
                 loadedState: (data, u) {
+                  ///не понял: в чем разница с точки зрения верстки с этим условием?
+                  ///список [Sample] по-разному формируется - нужно:
+                  ///унифицированный виджет, в который передается этот список парметром
                   if (widget.idGroup == null) {
                     Sample sample = u.firstWhere(
                         (element) => element.id == widget.sample.id);
@@ -672,12 +770,18 @@ class _SampleState extends State<_Sample> {
                           groupId: widget.idGroup,
                           measurementIndex: key));
                     });
+                    ///непонятно почему в одном случае Column а в другом ListView
+                    ///нужно вынести виджет списка отдельно и тогда
+                    ///можно будет использовать читаемую и унифицированную конструкцию
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: list,
                     );
                   } else {
+                    ///не помню, где присваивается [groupId]
+                    ///возможно там аналогичная ситуация с уникальностью и удалением/добавлением
+                    ///как и с [sampleId]
                     Group group = data
                         .firstWhere((element) => element.id == widget.idGroup);
                     Sample sample = group.samples.firstWhere(
@@ -697,6 +801,7 @@ class _SampleState extends State<_Sample> {
                   }
                 },
                 errorState: () => const SizedBox.shrink(),
+                ///обычно что-то бы пользователю показать во время загрузки
                 loading: () => const SizedBox.shrink());
           }),
         ],
@@ -704,7 +809,7 @@ class _SampleState extends State<_Sample> {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class _CreateSample extends StatefulWidget {
   const _CreateSample({
     Key? key,
@@ -725,7 +830,7 @@ class _CreateSampleState extends State<_CreateSample> {
 
     super.initState();
   }
-
+///не забыть про dispose контроллеров
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -739,6 +844,7 @@ class _CreateSampleState extends State<_CreateSample> {
           ),
           ElevatedButton(
             onPressed: () {
+              ///для читаемости вынести отдельно
               context.read<ExperimentSchemeBloc>().add(
                     ExperimentSchemeEvent.addNewSample(
                       text: fieldText.text,
@@ -748,6 +854,7 @@ class _CreateSampleState extends State<_CreateSample> {
               fieldText.clear();
               fieldTittle.clear();
             },
+            ///не забываем про const
             child: Text("Создать образец"),
           )
         ],
@@ -755,7 +862,7 @@ class _CreateSampleState extends State<_CreateSample> {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class MeasurementWidget extends StatefulWidget {
   const MeasurementWidget(
       {Key? key,
@@ -780,6 +887,8 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
       decoration: const BoxDecoration(
           border: Border(
               bottom: BorderSide(width: 2, color: AppColors.borderColor))),
+      ///зачем тут Theme?
+      ///вообще [dividerColor] можно задать в теме ...
       child: Theme(
         data: ThemeData(
           dividerColor: Colors.transparent,
@@ -799,6 +908,8 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                 children: [
                   CustomNoBordersButton(
                       tileExpanded ? IconsSvg.inactiveEdit : IconsSvg.edit,
+                      /// есть разница между null и пустой функцией в поведении кнопок -
+                      /// надо учитывать, какое поведение предпочтительнее
                       () {}),
                   const SizedBox(
                     width: 5,
@@ -806,9 +917,12 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                   CustomNoBordersButton(
                     IconsSvg.attachedFilesWithoutRedCircle,
                     () {
+                      ///для читаемости вынести отдельно
                       context.read<ExperimentSchemeBloc>().add(
                             ExperimentSchemeEvent.addFilesToMeasurement(
                                 measurementId: widget.measurementIndex,
+                                ///а вот это странно:
+                                ///если widget.groupId == null, то значит нет группы, а не группа с id 0?
                                 groupId: widget.groupId ?? 0,
                                 sampleId: widget.sampleId),
                           );
@@ -824,6 +938,8 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
               child: Column(
                 children: [
                   const TextField(
+                    ///нет ни контрорллера ни методов onChanged/onSubmitted
+                    ///куда значение-то передавать?
                     maxLines: 3,
                     decoration: InputDecoration(border: InputBorder.none),
                   ),
@@ -833,6 +949,10 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                         children: state.map(
                             emptyState: ((state) => []),
                             loadedState: ((state) => state
+                            ///у виджета есть параметр [groupId], те потенциально эти измерения
+                            ///могут быть сгруппированы
+                            ///но список формируется только из [ungroupedSamples]
+                            ///это не ошибка?
                                 .ungroupedSamples[widget.sampleId]
                                 .measurements[widget.measurementIndex]
                                 .addedFiles
@@ -842,7 +962,9 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                                   ),
                                 )
                                 .toList()),
+                            ///обычно что-то бы пользователю показать при ошибке
                             errorState: ((state) => []),
+                            ///обычно что-то бы пользователю показать во время загрузки
                             loading: ((state) => [])),
                       );
                     },
@@ -859,7 +981,7 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class File extends StatelessWidget {
   final String fileName;
   const File({super.key, required this.fileName});
@@ -870,7 +992,11 @@ class File extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         children: [
+          ///почему бы просто не использовать [Icon]?
+          ///зачем тут кнопка?
           IconButton(
+            /// есть разница между null и пустой функцией в поведении кнопок -
+            /// надо учитывать, какое поведение предпочтительнее
             onPressed: () {},
             icon: SvgPicture.asset(IconsSvg.file),
           ),
@@ -880,7 +1006,7 @@ class File extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class ProjectBody extends StatelessWidget {
   final Widget body;
 
@@ -893,9 +1019,12 @@ class ProjectBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      ///цвета в стили
       backgroundColor: const Color(0xffEAEAEA),
       appBar: ProjectAppBar(
         icon: SvgPicture.asset(IconsSvg.notification),
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         onTap: () {},
       ),
       body: Row(
@@ -907,7 +1036,8 @@ class ProjectBody extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///использовать enum для составления списка унифицированного виджета
 class ProjectMenu extends StatelessWidget {
   const ProjectMenu({
     Key? key,
@@ -919,6 +1049,7 @@ class ProjectMenu extends StatelessWidget {
       width: 80,
       child: Column(
         children: [
+          /// не забываем использовать const
           Menu(),
           Home(),
           MySettings(),

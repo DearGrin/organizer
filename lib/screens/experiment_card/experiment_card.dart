@@ -29,6 +29,7 @@ class ExperimentCard extends StatelessWidget {
               width: 50,
             ),
             Flexible(
+              ///значения по умлочанию принято опускать
               flex: 1,
               child: FilesCard(),
             ),
@@ -38,7 +39,7 @@ class ExperimentCard extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class ExperimentNameWidget extends StatelessWidget {
   const ExperimentNameWidget({super.key});
   @override
@@ -62,6 +63,7 @@ class ExperimentNameWidget extends StatelessWidget {
             ),
           ),
           const Flexible(
+            ///значения по умлочанию принято опускать
             flex: 1,
             child: ExperimentPageButtons(),
           ),
@@ -70,7 +72,7 @@ class ExperimentNameWidget extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class ExperimentInfoCard extends StatelessWidget {
   const ExperimentInfoCard({super.key});
 
@@ -90,10 +92,14 @@ class ExperimentInfoCard extends StatelessWidget {
                 20,
                 weight: FontWeight.w700,
               ),
+              ///зачем тут [BlocBuilder] ?
+              ///вызвать функцию через  context.read можно и без него
+              ///а виджет никак не меняется от стейта блока
               BlocBuilder<ReadBlocBloc, ReadBlocState>(
                 builder: (context, state) {
                   return CustomNoBordersButton(
                     IconsSvg.moreHorizontal,
+                    /// для читаемости лучше вынести функцию отдельно
                     () {
                       context.read<ReadBlocBloc>().add(
                             const ReadBlocEvent.started(),
@@ -113,7 +119,7 @@ class ExperimentInfoCard extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class TextCard extends StatefulWidget {
   final String name;
   final int lines;
@@ -142,6 +148,7 @@ class _TextCardState extends State<TextCard> {
   Widget build(BuildContext context) {
     return TextField(
       controller: myController,
+      /// для читаемости лучше вынести функцию отдельно
       onSubmitted: (value) {
         context.read<ExperimentCardBloc>().add(
               ExperimentCardEvent.fieldFilled(
@@ -150,6 +157,7 @@ class _TextCardState extends State<TextCard> {
               ),
             );
       },
+      /// для читаемости лучше вынести функцию отдельно
       onChanged: (value) {
         context.read<ExperimentCardBloc>().add(
               ExperimentCardEvent.fieldFilled(
@@ -158,10 +166,12 @@ class _TextCardState extends State<TextCard> {
               ),
             );
       },
+      ///нет смысла в пустом параметре, можно просто убрать
       onEditingComplete: () {},
       maxLines: widget.lines,
       decoration: InputDecoration(
         filled: true,
+        ///цвета в стили
         hoverColor: const Color(0x00eaeaea),
         border: const OutlineInputBorder(),
         labelText: widget.name,
@@ -169,15 +179,17 @@ class _TextCardState extends State<TextCard> {
     );
   }
 
+  ///смысл в этом геттере, можно использовать без него
   String getText() => myController.text;
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class TextFieldsArea extends StatelessWidget {
   const TextFieldsArea({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
+      ///значения по умлочанию принято опускать
       flex: 1,
       child: Column(
         children: [
@@ -220,9 +232,14 @@ class TextFieldsArea extends StatelessWidget {
                 width: 30,
               ),
               Expanded(
+                ///значения по умлочанию принято опускать
                 flex: 1,
                 child: Column(
                   children: const [
+                    ///в [ExperimentCardBloc] есть комментарий про enum
+                    ///вот и использовать FieldNameType.values.map
+                    ///для списка виджетов по возможности (вижу, что немного неудобно в данном случае)
+                    ///как минимум можно вместо хардкода названия использовать FieldNameType.method.value
                     TextCard(
                       'Метод',
                     ),
@@ -254,7 +271,7 @@ class TextFieldsArea extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class ExperimentPageButtons extends StatelessWidget {
   const ExperimentPageButtons({super.key});
 
@@ -263,12 +280,18 @@ class ExperimentPageButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         CustomButtonsWithBorders(IconsSvg.back, () {}),
         const SizedBox(width: 20),
+        ///зачем тут [BlocBuilder] ?
+        ///вызвать функцию через  context.read можно и без него
+        ///а виджет никак не меняется от стейта блока
         BlocBuilder<SaveCardBloc, SaveCardState>(
           builder: (context, state) => state.map(
             initial: (state) => CustomButtonsWithBorders(
               IconsSvg.saved,
+              /// для читаемости лучше вынести функцию отдельно
               () {
                 context.read<SaveCardBloc>().add(
                       const SaveCardEvent.save(),
@@ -279,16 +302,22 @@ class ExperimentPageButtons extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         CustomButtonsWithBorders(IconsSvg.archive, () {}),
         const SizedBox(width: 10),
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         CustomButtonsWithBorders(IconsSvg.export, () {}),
         const SizedBox(width: 10),
+        /// есть разница между null и пустой функцией в поведении кнопок -
+        /// надо учитывать, какое поведение предпочтительнее
         CustomButtonsWithBorders(IconsSvg.publication, () {}),
       ],
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class FilesCard extends StatelessWidget {
   const FilesCard({super.key});
 
@@ -315,6 +344,7 @@ class FilesCard extends StatelessWidget {
                 ),
                 CustomNoBordersButton(
                   IconsSvg.moreHorizontal,
+                  /// для читаемости лучше вынести функцию отдельно
                   () {
                     context.read<FileCubit>().pickFiles();
                   },
@@ -346,7 +376,7 @@ class FilesCard extends StatelessWidget {
     );
   }
 }
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class MyFiles extends StatefulWidget {
   const MyFiles(this.fileName, {super.key});
 
@@ -380,6 +410,7 @@ class _MyFilesState extends State<MyFiles> {
             minLeadingWidth: 16,
             trailing: mouseInArea
                 ? CustomNoBordersButton(IconsSvg.trashIcon, () {
+              /// для читаемости лучше вынести функцию отдельно
                     context.read<FileCubit>().deleteFileName(widget.fileName);
                   })
                 : null,
