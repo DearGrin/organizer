@@ -1,3 +1,8 @@
+
+///подход правильный, но все уже придумано и автоматизировано
+///https://pub.dev/packages/flutter_gen
+///удобно + кодогенерация
+///
 class IconsSvg {
   IconsSvg._();
   //---------------------icons for experiment card page------------------------//

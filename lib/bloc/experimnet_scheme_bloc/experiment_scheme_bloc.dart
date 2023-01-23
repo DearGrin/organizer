@@ -5,6 +5,8 @@ import 'package:first_approval_app/models/sample.dart';
 import 'package:first_approval_app/repositorys/samples_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+/// обычно на такие импорты линтер ругается и просить писать полный путь
+/// лучше использовать польный путь
 import '../../models/measurement.dart';
 
 part 'experiment_scheme_event.dart';
@@ -13,6 +15,7 @@ part 'experiment_scheme_bloc.freezed.dart';
 
 class ExperimentSchemeBloc
     extends Bloc<ExperimentSchemeEvent, ExperimentSchemeState> {
+  /// не забываем использовать final
   SampleRepository repository;
   FileManager fileManager;
   ExperimentSchemeBloc(this.repository, this.fileManager)
@@ -31,6 +34,16 @@ class ExperimentSchemeBloc
       );
     });
   }
+
+  /// [id] формируется через размер списка
+  /// что будет если удалить эелемент из середины, а потом добавить новый?
+  /// будет два элемента с одинаковым [id], что потом приведет к ошибкам
+  /// при поиске элемента по [id]
+  /// наиболее простой способ присвоить уникальный [id]:
+  ///id: DateTime.now().millisecondsSinceEpoch,
+  ///
+  /// кроме того сейчас в разных методах этот [id] присваивается разными способоми:
+  /// 0, data.length, ungroupedSamples.length + 1
 
   void _addNewSample(
     _AddNewSample event,
@@ -102,6 +115,7 @@ class ExperimentSchemeBloc
     ));
   }
 
+  ///неиспользуемый код? если да, то убрать и ивент в том числе соответствующий
   void _groupSamplesById(
     _GroupSamplesById event,
     Emitter<ExperimentSchemeState> emit,
@@ -179,6 +193,9 @@ class ExperimentSchemeBloc
       text: event.text,
       attachments: [],
     ));
+    /// по идее эмитить два стейта подряд смысла нет - первый пользователь не заметит даже
+    /// обычно [loading] вызывается в начале каких-то операций
+    /// а по их завершению эмитится новый стейт
     emit(const ExperimentSchemeState.loading());
     emit(ExperimentSchemeState.loadedState(
         data: repository.getData(),

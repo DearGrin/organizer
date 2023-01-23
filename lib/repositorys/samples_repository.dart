@@ -1,6 +1,7 @@
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/sample.dart';
 
+///по сути та же архиттектурная проблема, что и в [ExperimentCardRepository]
 class SampleRepository {
   final List<Group> data = [];
   final List<Sample> ungroupedSamples = [];

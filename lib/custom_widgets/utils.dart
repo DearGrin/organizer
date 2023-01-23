@@ -2,8 +2,14 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// обычно на такие импорты линтер ругается и просить писать полный путь
+/// лучше использовать польный путь
 import '../icons/icons_paths.dart';
 
+/// Архитектурный вопрос: я бы каждый класс вынес в отдельный файл:
+/// - лечге ориентироваться
+/// - нет "лишних" импортов, где они не требуются
+/// - сейчас в одном файле смешаны виджеты и стили
 class HeaderText extends StatelessWidget {
   final String text;
   const HeaderText(this.text, {Key? key}) : super(key: key);
@@ -89,6 +95,7 @@ class CustomNoBordersButton extends StatelessWidget {
   const CustomNoBordersButton(this.icon, this.onPressed,
       {super.key});
   final String icon;
+  /// вынести в необязательные парметры
   final VoidCallback? onPressed;
 
   @override
@@ -102,7 +109,9 @@ class CustomNoBordersButton extends StatelessWidget {
 }
 
 class AddGroup extends StatelessWidget {
+  ///вынести в необязательные параметры
   final VoidCallback? onTap;
+  /// не забываем использовать const
   AddGroup({Key? key, this.onTap}) : super(key: key);
 
   @override
@@ -132,6 +141,7 @@ class AddGroup extends StatelessWidget {
           children: [
             InkWell(
               onTap: onTap,
+              ///тут бы иконку отрисовать и избавиться от Stack двух иконок
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -147,6 +157,7 @@ class AddGroup extends StatelessWidget {
               'Добавить группу',
               12,
               weight: FontWeight.w700,
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
@@ -158,12 +169,15 @@ class AddGroup extends StatelessWidget {
   }
 }
 
+///стилей мало - их вполне можно добавить в стандартную тему
 class AppColors {
   static const Color borderColor = Color.fromRGBO(153, 153, 153, 0.6);
   static const Color expansionTileIconColor = Color(0xff28303F);
   static const Color dottedColor = Color.fromRGBO(153, 153, 153, 0.6);
 }
 
+///стилей мало - их вполне можно добавить в тему и использовать через
+///Theme.of(context).textTheme.header1 например
 class AppTextStyles {
   static const measurementTextStyle = TextStyle(
       fontSize: 12,

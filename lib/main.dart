@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      ///стилей немного - почему бы шрифты, цвета, стили кнопок и тд не вынести сюда?
       theme: ThemeData(
         fontFamily: "Inter",
       ),
