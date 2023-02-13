@@ -18,18 +18,11 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
     required int idGroup,
   }) = _EditSample;
 
-  const factory ExperimentSchemeEvent.groupSamplesById({
-    required int id,
-  }) = _GroupSamplesById;
   const factory ExperimentSchemeEvent.addMeasurementToSample({
-    required int? groupId,
-    required Sample sample,
+    required int groupId,
+    required int sampleId,
+    required Measurement measurment,
   }) = _AddMeasurementToSample;
-
-  const factory ExperimentSchemeEvent.addUngroupedSample({
-    required String text,
-    required String title,
-  }) = _AddUngroupedSample;
 
   const factory ExperimentSchemeEvent.addUngroupedSamplesToGroup({
     String? name,
@@ -40,4 +33,7 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
     required int groupId,
     required int sampleId,
   }) = _AddFilesToMeasurement;
+
+  const factory ExperimentSchemeEvent.createNewEmptyGroup() =
+      _CreateNewEmptyGroup;
 }

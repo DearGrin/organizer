@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 
 class ProjectAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget icon;
-  ///вынес бы в необязательные параметры
-  ///VoidCallback вместо Function()
-  final void Function()? onTap;
+  final VoidCallback? onTap;
 
   const ProjectAppBar({
     Key? key,

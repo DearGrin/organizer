@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
-import 'package:first_approval_app/repositorys/experiment_card_repository.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -10,8 +10,10 @@ part 'experiment_card_bloc.freezed.dart';
 
 class ExperimentCardBloc
     extends Bloc<ExperimentCardEvent, ExperimentCardState> {
-  ExperimentCardRepository repository;
-  ExperimentCardBloc(this.repository) : super(_Saved(ExperimentCardTextFields())) {
+  final List<ExperimentCardTextFields> fields = [ExperimentCardTextFields()];
+  final FileManager fileManager;
+  ExperimentCardBloc(this.fileManager)
+      : super(_Saved(ExperimentCardTextFields())) {
     on<ExperimentCardEvent>((event, emit) {
       event.map(
         saveCard: (event) => _saved(event, emit),
@@ -24,8 +26,8 @@ class ExperimentCardBloc
     _SaveCard event,
     Emitter<ExperimentCardState> emit,
   ) {
-    repository.addExperiment(event.card);
-    repository.saveToFile(event.card);
+    fields.add(event.card);
+    fileManager.writeToFile(fields[fields.length - 1].toString());
     emit(ExperimentCardState.saved(event.card));
   }
 
@@ -33,9 +35,6 @@ class ExperimentCardBloc
     _FieldFilled event,
     Emitter<ExperimentCardState> emit,
   ) {
-    if (repository.fields.isEmpty) {
-      repository.addExperiment(ExperimentCardTextFields());
-    }
     /// [event.fieldName] - лучше изменить тип на enum (вот пример):
     // enum FieldNameType {
     // goal('Цель'),
@@ -50,21 +49,27 @@ class ExperimentCardBloc
     ///    3) защита от ошибок (забыл кейс, опечатался и тд)
     ///    4) легче сторить ui через map
     if (event.fieldName == 'Цель') {
-      repository.setGoal(event.text);
+      fields[fields.length - 1] =
+          fields[fields.length - 1].copyWith(goal: event.text);
     } else if (event.fieldName == 'Описание') {
-      repository.setDesription(event.text);
+      fields[fields.length - 1] =
+          fields[fields.length - 1].copyWith(description: event.text);
     } else if (event.fieldName == 'Дата проведения') {
-      repository.setDate(event.text);
+      fields[fields.length - 1] =
+          fields[fields.length - 1].copyWith(date: event.text);
     } else if (event.fieldName == 'Метод') {
-      repository.setMethod(event.text);
+      fields[fields.length - 1] =
+          fields[fields.length - 1].copyWith(method: event.text);
     } else if (event.fieldName == 'Объект') {
-      repository.setObject(event.text);
+      fields[fields.length - 1] =
+          fields[fields.length - 1].copyWith(object: event.text);
     } else if (event.fieldName == 'Прибор') {
-      repository.setDevice(event.text);
+      fields[fields.length - 1] =
+          fields[fields.length - 1].copyWith(device: event.text);
     } else if (event.fieldName == 'Софт') {
-      repository.setSoft(event.text);
+      fields[fields.length - 1] =
+          fields[fields.length - 1].copyWith(soft: event.text);
     }
-    emit(ExperimentCardState.saved(repository.fields[0]));
+    emit(ExperimentCardState.saved(fields[fields.length - 1]));
   }
-
 }

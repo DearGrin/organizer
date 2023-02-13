@@ -63,15 +63,3 @@ class CustomHttpRequest {
 /// 1) удалить мертвый код
 /// 2) для dto использовать freezed или json_serializable
 /// 3) вынести в отдельный файл
-class PostAndGet {
-  final String _name;
-  final String _description;
-  final String _date;
-  final String _method;
-  final String _object;
-  final String _device;
-  final String _soft;
-
-  PostAndGet(this._name, this._description, this._date, this._method,
-      this._object, this._device, this._soft);
-}

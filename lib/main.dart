@@ -1,5 +1,5 @@
+import 'package:first_approval_app/screens/experiment_card/card_page.dart';
 import 'package:flutter/material.dart';
-import 'fa_app.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       title: 'FA',
-      home: const FaApp(),
+      home: const CardPage(),
     );
   }
 }

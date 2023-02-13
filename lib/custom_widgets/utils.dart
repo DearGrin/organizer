@@ -1,10 +1,9 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:first_approval_app/custom_widgets/custom_text_widget.dart';
+import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-/// обычно на такие импорты линтер ругается и просить писать полный путь
-/// лучше использовать польный путь
-import '../icons/icons_paths.dart';
 
 /// Архитектурный вопрос: я бы каждый класс вынес в отдельный файл:
 /// - лечге ориентироваться
@@ -28,91 +27,12 @@ class HeaderText extends StatelessWidget {
   }
 }
 
-class CustomText extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final FontWeight weight;
-  final Color? color;
-  final TextOverflow? textOverflow;
-  final TextAlign textAlign;
-  const CustomText(this.text, this.fontSize,
-      {Key? key,
-      this.color = Colors.black,
-      this.textOverflow = TextOverflow.ellipsis,
-      this.weight = FontWeight.normal,
-      this.textAlign = TextAlign.center})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      style: TextStyle(
-        overflow: textOverflow,
-        color: color,
-        fontSize: fontSize,
-        fontFamily: "Inter",
-        fontWeight: weight,
-      ),
-    );
-  }
-}
-
-class CustomButtonsWithBorders extends StatelessWidget {
-  const CustomButtonsWithBorders(this.icon, this.onPressed,
-      {this.withText = false, super.key});
-  final String icon;
-  final bool withText;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: OutlinedButton(
-        onPressed: onPressed,
-        child: withText
-            ? Row(
-                children: [
-                  SvgPicture.asset(icon),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  const CustomText(
-                    'Сохранить',
-                    10,
-                    weight: FontWeight.w400,
-                  )
-                ],
-              )
-            : SvgPicture.asset(icon),
-      ),
-    );
-  }
-}
-
-class CustomNoBordersButton extends StatelessWidget {
-  const CustomNoBordersButton(this.icon, this.onPressed,
-      {super.key});
-  final String icon;
-  /// вынести в необязательные парметры
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: Colors.grey,
-      onTap: onPressed,
-      child: SvgPicture.asset(icon),
-    );
-  }
-}
 
 class AddGroup extends StatelessWidget {
   ///вынести в необязательные параметры
   final VoidCallback? onTap;
   /// не забываем использовать const
-  AddGroup({Key? key, this.onTap}) : super(key: key);
+  const AddGroup({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +84,6 @@ class AddGroup extends StatelessWidget {
         ),
       ),
     );
-
-
   }
 }
 
