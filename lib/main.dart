@@ -1,5 +1,5 @@
+import 'package:first_approval_app/screens/experiment_card/card_page.dart';
 import 'package:flutter/material.dart';
-import 'fa_app.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      ///стилей немного - почему бы шрифты, цвета, стили кнопок и тд не вынести сюда?
       theme: ThemeData(
         fontFamily: "Inter",
       ),
       debugShowCheckedModeBanner: false,
       title: 'FA',
-      home: const FaApp(),
+      home: const CardPage(),
     );
   }
 }

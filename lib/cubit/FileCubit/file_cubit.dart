@@ -3,17 +3,27 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
-import 'package:first_approval_app/repositorys/samples_repository.dart';
+import 'package:first_approval_app/models/group.dart';
+import 'package:first_approval_app/models/sample.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 part 'file_state.dart';
 
+///в идеале или все через блок как остальные блоки или все через кубиты - единообразие в приложении всегда хорошо
+///
+/// [FileState] также прогнать через freezed
 class FileCubit extends Cubit<FileState> {
   FileCubit() : super(FileState(files: []));
   List<String> files = [];
+
+  ///большинство методов по сути дублируют [FileManager], если чего-то не хватает,
+  ///то это надо просто добавить в [FileManager]
+  /// а в этом блоке остаются только методы касающиеся стейта
   void pickFiles() async {
     FilePickerResult? results = await FilePicker.platform.pickFiles(
       allowMultiple: true,
+
+      ///мервый код удаляем
       // type: FileType.custom,
       // allowedExtensions: ['list of files'],
     );
@@ -22,6 +32,8 @@ class FileCubit extends Cubit<FileState> {
     for (PlatformFile file in results.files) {
       files.add(file.name);
     }
+
+    ///от принтов избавляемся: испольщуем debugPrint или log
     print('files $files');
     emit(FileState(files: files));
   }
@@ -47,6 +59,14 @@ class FileCubit extends Cubit<FileState> {
     emit(FileState(files: files));
   }
 }
+
+///вынести в отдеьный файл
+///
+///  я бы испольовал mixin для этой задачи
+///там, где нужно к классу бы добавлялся with MyFileMixin
+///и получал бы доступы к методам без необходимости
+///инициализации или инъекций зависимостей
+/// mixin MyFileMixin{...}
 
 class FileManager {
   // List<String> files = [];
@@ -100,15 +120,16 @@ class FileManager {
     return selectedDirectory;
   }
 
-  Future<File> writeSchemeToFile(
-      SampleRepository groupsAndSamples, String? dir) {
+  Future<File> writeGroupsToFile(List<Group> groups, String? dir) {
     final path = dir;
     File file = File('$path\\Scheme.txt');
-    if (groupsAndSamples.data.isEmpty) {
-      return file
-          .writeAsString(jsonEncode(groupsAndSamples.getUngroupedSamples()));
-    }
-    return file.writeAsString(jsonEncode(groupsAndSamples.getData()));
+    return file.writeAsString(jsonEncode(groups));
+  }
+
+  Future<File> writeSamplesToFile(List<Sample> ungroupdedSamples, String? dir) {
+    final path = dir;
+    File file = File('$path\\Scheme.txt');
+    return file.writeAsString(jsonEncode(ungroupdedSamples));
   }
 
   Future<void> saveFiles(List<String> files, String? path) async {

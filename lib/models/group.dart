@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'group.freezed.dart';
 part 'group.g.dart';
 
-@unfreezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class Group with _$Group {
   factory Group({
     required String name,

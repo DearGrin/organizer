@@ -21,16 +21,10 @@ Sample _$SampleFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Sample {
   int get id => throw _privateConstructorUsedError;
-  set id(int value) => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  set title(String value) => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  set text(String value) => throw _privateConstructorUsedError;
   List<Measurement> get measurements => throw _privateConstructorUsedError;
-  set measurements(List<Measurement> value) =>
-      throw _privateConstructorUsedError;
   List<String> get attachments => throw _privateConstructorUsedError;
-  set attachments(List<String> value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -163,21 +157,45 @@ class _$_Sample implements _Sample {
       _$$_SampleFromJson(json);
 
   @override
-  int id;
+  final int id;
   @override
-  String title;
+  final String title;
   @override
-  String text;
+  final String text;
   @override
   @JsonKey()
-  List<Measurement> measurements;
+  final List<Measurement> measurements;
   @override
-  List<String> attachments;
+  final List<String> attachments;
 
   @override
   String toString() {
     return 'Sample(id: $id, title: $title, text: $text, measurements: $measurements, attachments: $attachments)';
   }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Sample &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.text, text) || other.text == text) &&
+            const DeepCollectionEquality()
+                .equals(other.measurements, measurements) &&
+            const DeepCollectionEquality()
+                .equals(other.attachments, attachments));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      text,
+      const DeepCollectionEquality().hash(measurements),
+      const DeepCollectionEquality().hash(attachments));
 
   @JsonKey(ignore: true)
   @override
@@ -195,29 +213,24 @@ class _$_Sample implements _Sample {
 
 abstract class _Sample implements Sample {
   factory _Sample(
-      {required int id,
-      required String title,
-      required String text,
-      List<Measurement> measurements,
-      required List<String> attachments}) = _$_Sample;
+      {required final int id,
+      required final String title,
+      required final String text,
+      final List<Measurement> measurements,
+      required final List<String> attachments}) = _$_Sample;
 
   factory _Sample.fromJson(Map<String, dynamic> json) = _$_Sample.fromJson;
 
   @override
   int get id;
-  set id(int value);
   @override
   String get title;
-  set title(String value);
   @override
   String get text;
-  set text(String value);
   @override
   List<Measurement> get measurements;
-  set measurements(List<Measurement> value);
   @override
   List<String> get attachments;
-  set attachments(List<String> value);
   @override
   @JsonKey(ignore: true)
   _$$_SampleCopyWith<_$_Sample> get copyWith =>

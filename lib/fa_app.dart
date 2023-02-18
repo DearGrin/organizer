@@ -1,19 +1,9 @@
-import 'package:first_approval_app/bloc/read_bloc/read_bloc_bloc.dart';
-import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
-import 'package:first_approval_app/repositorys/experiment_card_repository.dart';
-import 'package:first_approval_app/repositorys/samples_repository.dart';
-import 'package:first_approval_app/screens/experiment_card/experiment_card.dart';
+import 'package:first_approval_app/custom_widgets/custom_no_border_button.dart';
 import 'package:first_approval_app/screens/experiment_card/experiment_sheme.dart';
-import 'package:first_approval_app/widgets_present_on_multiple_screens/project_appbar.dart';
-import 'package:first_approval_app/bloc/save_card_bloc/save_card_bloc.dart';
-import 'package:first_approval_app/widgets_present_on_multiple_screens/project_menu.dart';
+import 'package:first_approval_app/screens/experiment_card/file_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
-
-import 'bloc/experiment_card_bloc/experiment_card_bloc.dart';
 import 'bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
 import 'cubit/FileCubit/file_cubit.dart';
 import 'custom_widgets/utils.dart';
@@ -22,244 +12,8 @@ import 'models/group.dart';
 import 'models/measurement.dart';
 import 'models/sample.dart';
 
-class FaApp extends StatelessWidget {
-  const FaApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Provider<SampleRepository>(
-      create: (context) => SampleRepository(),
-      child: ProjectBody(
-        body: BlocProvider<FileCubit>(
-          create: (context) => FileCubit(),
-          child: Container(
-            margin: const EdgeInsets.only(
-              top: 40,
-              right: 33,
-              left: 28,
-              bottom: 53,
-            ),
-            child: ListView(
-              children: [
-                Provider<ExperimentCardRepository>(
-                  create: (context) => ExperimentCardRepository(),
-                  child: BlocProvider<ExperimentCardBloc>(
-                    create: (context) => ExperimentCardBloc(
-                      Provider.of(context, listen: false),
-                    ),
-                    child: MultiBlocProvider(
-                      providers: [
-                        BlocProvider<SaveCardBloc>(
-                          create: (context) => SaveCardBloc(
-                            cardRepo: Provider.of(context, listen: false),
-                            schemeRepo: Provider.of(context, listen: false),
-                            fileCubit: Provider.of(context, listen: false),
-                            fileManager: FileManager(),
-                          ),
-                        ),
-                        BlocProvider(
-                          create: (context) => ReadBlocBloc(
-                            FileManager(),
-                            ExperimentCardTextFields(),
-                          ),
-                        ),
-                      ],
-                      child: const ExperimentCard(),
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                BlocProvider(
-                  create: (context) => ExperimentSchemeBloc(
-                    Provider.of(context, listen: false),
-                    FileManager(),
-                  ),
-                  child: ExperimentScheme(
-                    child: BlocBuilder<ExperimentSchemeBloc,
-                        ExperimentSchemeState>(
-                      builder: (context, state) => state.map(
-                        emptyState: (state) => ConstrainedBox(
-                          constraints: const BoxConstraints(
-                              minHeight: 250, maxHeight: 250),
-                          child: DottedAreaWidget(
-                            onTap: () => context
-                                .read<ExperimentSchemeBloc>()
-                                .add(const ExperimentSchemeEvent
-                                        .addUngroupedSample(
-                                    text: "Введите описание",
-                                    title: "Образец")),
-                          ),
-                        ),
-                        loadedState: (state) {
-                          return Builder(
-                            builder: (BuildContext context) {
-                              if (state.data.isEmpty) {
-                                return Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 9,
-                                          child: SizedBox(
-                                              height: 60,
-                                              child: DottedAreaWithSamples(
-                                                onTap: () {
-                                                  state.ungroupedSamples
-                                                          .isNotEmpty
-                                                      ? context
-                                                          .read<
-                                                              ExperimentSchemeBloc>()
-                                                          .add(const ExperimentSchemeEvent
-                                                              .addUngroupedSamplesToGroup())
-                                                      : null;
-                                                },
-                                              )),
-                                        ),
-                                        Expanded(
-                                          flex: 1,
-                                          child: Container(),
-                                        )
-                                      ],
-                                    ),
-                                    Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            flex: 9,
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Groups(data: state.data),
-                                                Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                          minHeight: 180,
-                                                          minWidth: 2000),
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: AppColors
-                                                              .borderColor,
-                                                          width: 2)),
-                                                  child: state.ungroupedSamples
-                                                              .length >
-                                                          5
-                                                      ? UngroupedWidget(
-                                                          ungroupedSamples: state
-                                                              .ungroupedSamples,
-                                                          moreElements: true,
-                                                        )
-                                                      : UngroupedWidget(
-                                                          ungroupedSamples: state
-                                                              .ungroupedSamples,
-                                                          moreElements: false,
-                                                        ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Expanded(
-                                            flex: 1,
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 0),
-                                              child: SizedBox(
-                                                height: 180,
-                                                width: 90,
-                                                child: DottedAreaWidget(
-                                                  isMiniWidget: true,
-                                                  onTap: () => context
-                                                      .read<
-                                                          ExperimentSchemeBloc>()
-                                                      .add(const ExperimentSchemeEvent
-                                                              .addUngroupedSample(
-                                                          text:
-                                                              "Введите описание",
-                                                          title: "Образец")),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ]),
-                                  ],
-                                );
-                              } else {
-                                return Column(
-                                  children: [
-                                    Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            flex: 9,
-                                            child: Column(
-                                              children: [
-                                                state.data.isEmpty
-                                                    ? SizedBox(
-                                                        height: 60,
-                                                        child:
-                                                            DottedAreaWithSamples(
-                                                          onTap: () {
-                                                            state.ungroupedSamples
-                                                                    .isNotEmpty
-                                                                ? context
-                                                                    .read<
-                                                                        ExperimentSchemeBloc>()
-                                                                    .add(const ExperimentSchemeEvent
-                                                                        .addUngroupedSamplesToGroup())
-                                                                : null;
-                                                          },
-                                                        ))
-                                                    : const SizedBox.shrink(),
-                                                Groups(data: state.data),
-                                              ],
-                                            ),
-                                          ),
-                                        ]),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          flex: 9,
-                                          child: SizedBox(
-                                            height: 100,
-                                            child: AddGroup(
-                                              onTap: () {
-                                                context
-                                                    .read<
-                                                        ExperimentSchemeBloc>()
-                                                    .add(const ExperimentSchemeEvent
-                                                        .addUngroupedSamplesToGroup());
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                        Expanded(flex: 1, child: Container())
-                                      ],
-                                    )
-                                  ],
-                                );
-                              }
-                            },
-                          );
-                        },
-                        loading: (state) => const CircularProgressIndicator(),
-                        errorState: (state) => Container(),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class WidgetSizeRenderObject extends RenderProxyBox {
   final OnWidgetSizeChange onSizeChange;
   Size? currentSize;
@@ -285,6 +39,7 @@ class WidgetSizeRenderObject extends RenderProxyBox {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 typedef OnWidgetSizeChange = void Function(Size size);
 
 class WidgetSizeOffsetWrapper extends SingleChildRenderObjectWidget {
@@ -302,6 +57,8 @@ class WidgetSizeOffsetWrapper extends SingleChildRenderObjectWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///нет стейта - нет смысла в StatefulWidget
 class Groups extends StatefulWidget {
   const Groups({Key? key, required this.data}) : super(key: key);
   final List<Group> data;
@@ -319,6 +76,7 @@ class _GroupsState extends State<Groups> {
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           return GroupElement(
+            ///передвать не список + индекс, а сам элемент из списка
             data: widget.data,
             index: index,
           );
@@ -326,11 +84,20 @@ class _GroupsState extends State<Groups> {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///ТРЕБУЕТСЯ РЕФАКТОРИНГ ЭТОГО ВИДЖЕТА - разбить на части, убрать лишнее
 class GroupElement extends StatefulWidget {
   const GroupElement({Key? key, required this.data, required this.index})
       : super(key: key);
+
+  ///не понял зачем передавать весь список, когда требуется только элемент
   final List<Group> data;
+
+  ///лишний парметр - удалить
   final int index;
+
+  ///таким образом вместо длинной конструкции widget.data[widget.index].name
+  ///можно использовать [widget.Group.name]
 
   @override
   State<GroupElement> createState() => _GroupElementState();
@@ -351,8 +118,13 @@ class _GroupElementState extends State<GroupElement> {
           child: Container(
             decoration: BoxDecoration(
                 border: Border.all(color: AppColors.borderColor, width: 2)),
+
+            ///зачем отдельно использовать тут Theme, если всего-то нужно цвет [dividerColor] поменять?
+            ///не увидел тут divider  - нужно ли это вообще?
             child: Theme(
               data: ThemeData(dividerColor: Colors.transparent),
+
+              ///надо копать, но есть подозрение, что этот виджет с его операциями лишний ...
               child: WidgetSizeOffsetWrapper(
                 onSizeChange: (Size size) {
                   setState(() {
@@ -360,6 +132,7 @@ class _GroupElementState extends State<GroupElement> {
                   });
                 },
                 child: ExpansionTile(
+                  /// для читаемости вынести отдельно
                   onExpansionChanged: (isExpanded) {
                     if (isExpanded) {
                       visible = true;
@@ -368,6 +141,8 @@ class _GroupElementState extends State<GroupElement> {
                     }
                     setState(() {});
                   },
+
+                  ///значения по умлочанию опускаем
                   initiallyExpanded: false,
                   iconColor: Colors.black,
                   expandedCrossAxisAlignment: CrossAxisAlignment.start,
@@ -379,13 +154,14 @@ class _GroupElementState extends State<GroupElement> {
                     children: [
                       Text(widget.data[widget.index].name,
                           style: AppTextStyles.groupTitleTextStyle),
-                      CustomNoBordersButton(IconsSvg.edit, () {})
+                      const CustomNoBordersButton(IconsSvg.edit)
                     ],
                   ),
                   children: [
                     Container(
                       constraints: const BoxConstraints(minHeight: 180),
                       child: Column(
+                        ///значения по умлочанию опускаем
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           widget.data[widget.index].groupDescription.isNotEmpty
@@ -394,6 +170,14 @@ class _GroupElementState extends State<GroupElement> {
                                       InputDecoration(border: InputBorder.none),
                                 )
                               : const SizedBox.shrink(),
+
+                          ///зачем это место?
+                          ///высчитать размер элемента по-другому и передать в список
+                          /// в списке используется [BoxConstraints] - те ширина всегда будет 300
+                          /// возможно, растягивать и вовсе необязательно
+                          /// + вот кейс: ширина области 1200, а элементов 5
+                          /// те ширина элемента будет 240, что меньше случая со списком
+                          /// смысл тогда расстягивать?
                           widget.data[widget.index].samples.length <= 5
                               ? Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,9 +190,14 @@ class _GroupElementState extends State<GroupElement> {
                                           )))
                                       .toList())
                               : Scrollbar(
+                                  /// вот тут должен использовать объявленный контроллер
                                   child: SingleChildScrollView(
+                                    /// вот тут должен использовать объявленный контроллер
+                                    /// точно нужен это параметр primary=true ?
                                     primary: true,
                                     scrollDirection: Axis.horizontal,
+
+                                    ///куда проще было бы использовать ListView
                                     child: Row(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -419,7 +208,10 @@ class _GroupElementState extends State<GroupElement> {
                                                       const BoxConstraints(
                                                           maxWidth: 300,
                                                           minHeight: 180),
+
+                                                  ///в [Column] всего 1 элемент - нужен ли тогда это виджет?
                                                   child: Column(
+                                                    ///значения по умлочанию опускаем
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
@@ -445,17 +237,17 @@ class _GroupElementState extends State<GroupElement> {
           ),
         ),
         Expanded(
-            flex: 1,
             child: MiniAddSample(
-              height: height,
-              visible: visible,
-              groupId: widget.data[widget.index].id,
-            )),
+          height: height,
+          visible: visible,
+          groupId: widget.data[widget.index].id,
+        )),
       ],
     );
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class MiniAddSample extends StatelessWidget {
   const MiniAddSample(
       {Key? key,
@@ -474,15 +266,25 @@ class MiniAddSample extends StatelessWidget {
       child: Visibility(
         visible: visible,
         child: SizedBox(
+          /// потенциально может привести к ошибке, е
           height: height - 69,
+
+          /// в идеале нужно избавиться от привезяки к [height]
+          /// тем более, что в случае со списком (когда элементов >5)
+          /// используется [BoxConstraints] c minHeight: 180 - те условие всегда true
           child: height < 160
               ? Container()
               : DottedAreaWidget(
                   isMiniWidget: true,
                   onTap: () {
-                    context.read<ExperimentSchemeBloc>().add(
-                        ExperimentSchemeEvent.addSampleToGroup(
-                            text: "", title: "Образец", id: groupId));
+                    context
+                        .read<ExperimentSchemeBloc>()
+                        .add(ExperimentSchemeEvent.addSampleToGroup(
+
+                            /// [text] и [title] хардкодом - их нельзя редактировать?
+                            text: "",
+                            title: "Образец",
+                            id: groupId));
                   },
                 ),
         ),
@@ -491,6 +293,8 @@ class MiniAddSample extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
+/// а вот тут лечше StatefulWidget тк нужно объявить ScrollController и его dispose
 class UngroupedWidget extends StatelessWidget {
   const UngroupedWidget(
       {Key? key, required this.ungroupedSamples, required this.moreElements})
@@ -502,11 +306,21 @@ class UngroupedWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
+      ///зачем это условие?
+      ///повторяется сценарий верстки [GroupElement] - нужно унифицировать
+      ///по сути
       if (moreElements) {
         return Scrollbar(
+          ///добавить контроллер
           child: SingleChildScrollView(
+
+              ///добавить контроллер
               scrollDirection: Axis.horizontal,
+
+              ///нужен ли этот параметр?
               primary: true,
+
+              /// ListView лучше
               child: Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -516,26 +330,30 @@ class UngroupedWidget extends StatelessWidget {
                           width: 300,
                           decoration: BoxDecoration(
                               border: Border.all(color: AppColors.borderColor)),
+
+                          ///зачем тут column?
                           child: Column(
                             children: [
                               _Sample(
                                 sample: e,
+                                idGroup: 0,
                               ),
                             ],
                           )))
                       .toList())),
         );
       } else {
+        ///считаю, что эта часть лишняя
         return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: ungroupedSamples
                 .map((e) => Expanded(
-                    flex: 1,
-                    child: Container(
+                        child: Container(
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColors.borderColor)),
                       child: _Sample(
                         sample: e,
+                        idGroup: 0,
                       ),
                     )))
                 .toList());
@@ -544,14 +362,16 @@ class UngroupedWidget extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
+///разбить на части
 class _Sample extends StatefulWidget {
-  Sample sample;
-  final int? idGroup;
+  final Sample sample;
+  final int idGroup;
 
-  _Sample({
+  const _Sample({
     Key? key,
     required this.sample,
-    this.idGroup,
+    required this.idGroup,
   }) : super(key: key);
 
   @override
@@ -571,18 +391,20 @@ class _SampleState extends State<_Sample> {
       context.read<ExperimentSchemeBloc>().add(
             ExperimentSchemeEvent.editSample(
                 sample: widget.sample.copyWith(text: fieldText.text),
-                idGroup: widget.idGroup!),
+                idGroup: widget.idGroup),
           );
     });
     fieldTittle.addListener(() {
       context.read<ExperimentSchemeBloc>().add(
             ExperimentSchemeEvent.editSample(
                 sample: widget.sample.copyWith(title: fieldTittle.text),
-                idGroup: widget.idGroup!),
+                idGroup: widget.idGroup),
           );
     });
     super.initState();
   }
+
+  ///не забыть про dispose контроллеров
 
   @override
   Widget build(BuildContext context) {
@@ -593,13 +415,14 @@ class _SampleState extends State<_Sample> {
               right: BorderSide(color: AppColors.borderColor, width: 2),
               left: BorderSide(color: AppColors.borderColor, width: 2))),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           Container(
             decoration: const BoxDecoration(
                 border: Border(
                     bottom:
                         BorderSide(color: AppColors.borderColor, width: 2))),
+
+            ///зачем тут Theme?
             child: Theme(
               data: ThemeData(dividerColor: Colors.transparent),
               child: ExpansionTile(
@@ -615,6 +438,8 @@ class _SampleState extends State<_Sample> {
                         maxLength: 20,
                         decoration: const InputDecoration(
                           border: InputBorder.none,
+
+                          ///а смысл в пустом counterText?
                           counterText: '',
                         ),
                         controller: fieldTittle,
@@ -622,18 +447,18 @@ class _SampleState extends State<_Sample> {
                     ),
                     Row(
                       children: [
-                        CustomNoBordersButton(IconsSvg.edit, () {}),
-                        CustomNoBordersButton(IconsSvg.schemeCompass, () {
-                          context
-                              .read<ExperimentSchemeBloc>()
-                              .add(ExperimentSchemeEvent.addMeasurementToSample(
-                                groupId: widget.idGroup,
-                                sample: widget.sample,
-                              ));
-                        }),
-                        CustomNoBordersButton(IconsSvg.attachedFiles, () {
-                          context.read<FileCubit>().pickFiles();
-                        }),
+                        const CustomNoBordersButton(IconsSvg.edit),
+
+                        ///для читаемости вынести метод отдельно
+                        CustomNoBordersButton(IconsSvg.schemeCompass,
+                            onPressed: () {}),
+
+                        ///для читаемости вынести метод отдельно
+                        CustomNoBordersButton(
+                          IconsSvg.attachedFiles,
+                          onPressed: () =>
+                              context.read<FileCubit>().pickFiles(),
+                        ),
                       ],
                     ),
                   ],
@@ -661,7 +486,10 @@ class _SampleState extends State<_Sample> {
             return state.when(
                 emptyState: () => const SizedBox.shrink(),
                 loadedState: (data, u) {
-                  if (widget.idGroup == null) {
+                  ///не понял: в чем разница с точки зрения верстки с этим условием?
+                  ///список [Sample] по-разному формируется - нужно:
+                  ///унифицированный виджет, в который передается этот список парметром
+                  if (widget.idGroup == 0) {
                     Sample sample = u.firstWhere(
                         (element) => element.id == widget.sample.id);
                     List<Measurement> measurements = sample.measurements;
@@ -672,12 +500,19 @@ class _SampleState extends State<_Sample> {
                           groupId: widget.idGroup,
                           measurementIndex: key));
                     });
+
+                    ///непонятно почему в одном случае Column а в другом ListView
+                    ///нужно вынести виджет списка отдельно и тогда
+                    ///можно будет использовать читаемую и унифицированную конструкцию
                     return Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: list,
                     );
                   } else {
+                    ///не помню, где присваивается [groupId]
+                    ///возможно там аналогичная ситуация с уникальностью и удалением/добавлением
+                    ///как и с [sampleId]
                     Group group = data
                         .firstWhere((element) => element.id == widget.idGroup);
                     Sample sample = group.samples.firstWhere(
@@ -697,6 +532,8 @@ class _SampleState extends State<_Sample> {
                   }
                 },
                 errorState: () => const SizedBox.shrink(),
+
+                ///обычно что-то бы пользователю показать во время загрузки
                 loading: () => const SizedBox.shrink());
           }),
         ],
@@ -705,6 +542,7 @@ class _SampleState extends State<_Sample> {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class _CreateSample extends StatefulWidget {
   const _CreateSample({
     Key? key,
@@ -726,6 +564,7 @@ class _CreateSampleState extends State<_CreateSample> {
     super.initState();
   }
 
+  ///не забыть про dispose контроллеров
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -739,6 +578,7 @@ class _CreateSampleState extends State<_CreateSample> {
           ),
           ElevatedButton(
             onPressed: () {
+              ///для читаемости вынести отдельно
               context.read<ExperimentSchemeBloc>().add(
                     ExperimentSchemeEvent.addNewSample(
                       text: fieldText.text,
@@ -748,6 +588,8 @@ class _CreateSampleState extends State<_CreateSample> {
               fieldText.clear();
               fieldTittle.clear();
             },
+
+            ///не забываем про const
             child: Text("Создать образец"),
           )
         ],
@@ -756,6 +598,7 @@ class _CreateSampleState extends State<_CreateSample> {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class MeasurementWidget extends StatefulWidget {
   const MeasurementWidget(
       {Key? key,
@@ -780,6 +623,9 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
       decoration: const BoxDecoration(
           border: Border(
               bottom: BorderSide(width: 2, color: AppColors.borderColor))),
+
+      ///зачем тут Theme?
+      ///вообще [dividerColor] можно задать в теме ...
       child: Theme(
         data: ThemeData(
           dividerColor: Colors.transparent,
@@ -798,17 +644,24 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
               Row(
                 children: [
                   CustomNoBordersButton(
-                      tileExpanded ? IconsSvg.inactiveEdit : IconsSvg.edit,
-                      () {}),
+                    tileExpanded ? IconsSvg.inactiveEdit : IconsSvg.edit,
+
+                    /// есть разница между null и пустой функцией в поведении кнопок -
+                    /// надо учитывать, какое поведение предпочтительнее
+                  ),
                   const SizedBox(
                     width: 5,
                   ),
                   CustomNoBordersButton(
                     IconsSvg.attachedFilesWithoutRedCircle,
-                    () {
+                    onPressed: () {
+                      ///для читаемости вынести отдельно
                       context.read<ExperimentSchemeBloc>().add(
                             ExperimentSchemeEvent.addFilesToMeasurement(
                                 measurementId: widget.measurementIndex,
+
+                                ///а вот это странно:
+                                ///если widget.groupId == null, то значит нет группы, а не группа с id 0?
                                 groupId: widget.groupId ?? 0,
                                 sampleId: widget.sampleId),
                           );
@@ -824,6 +677,8 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
               child: Column(
                 children: [
                   const TextField(
+                    ///нет ни контрорллера ни методов onChanged/onSubmitted
+                    ///куда значение-то передавать?
                     maxLines: 3,
                     decoration: InputDecoration(border: InputBorder.none),
                   ),
@@ -833,6 +688,11 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                         children: state.map(
                             emptyState: ((state) => []),
                             loadedState: ((state) => state
+
+                                ///у виджета есть параметр [groupId], те потенциально эти измерения
+                                ///могут быть сгруппированы
+                                ///но список формируется только из [ungroupedSamples]
+                                ///это не ошибка?
                                 .ungroupedSamples[widget.sampleId]
                                 .measurements[widget.measurementIndex]
                                 .addedFiles
@@ -842,7 +702,11 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
                                   ),
                                 )
                                 .toList()),
+
+                            ///обычно что-то бы пользователю показать при ошибке
                             errorState: ((state) => []),
+
+                            ///обычно что-то бы пользователю показать во время загрузки
                             loading: ((state) => [])),
                       );
                     },
@@ -855,82 +719,6 @@ class _MeasurementWidgetState extends State<MeasurementWidget> {
             setState(() => tileExpanded = expanded);
           },
         ),
-      ),
-    );
-  }
-}
-
-class File extends StatelessWidget {
-  final String fileName;
-  const File({super.key, required this.fileName});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () {},
-            icon: SvgPicture.asset(IconsSvg.file),
-          ),
-          Text(fileName),
-        ],
-      ),
-    );
-  }
-}
-
-class ProjectBody extends StatelessWidget {
-  final Widget body;
-
-  const ProjectBody({
-    Key? key,
-    required this.body,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: const Color(0xffEAEAEA),
-      appBar: ProjectAppBar(
-        icon: SvgPicture.asset(IconsSvg.notification),
-        onTap: () {},
-      ),
-      body: Row(
-        children: [
-          const ProjectMenu(),
-          Flexible(child: body),
-        ],
-      ),
-    );
-  }
-}
-
-class ProjectMenu extends StatelessWidget {
-  const ProjectMenu({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 80,
-      child: Column(
-        children: [
-          Menu(),
-          Home(),
-          MySettings(),
-          MyExperiment(),
-          MyExport(),
-          MyImport(),
-          MyValidation(),
-          MenuPublication(),
-          SvgPicture.asset(IconsSvg.lightModeIcon),
-          MySwitcher(),
-          SvgPicture.asset(IconsSvg.nightModeIcon),
-        ],
       ),
     );
   }

@@ -1,9 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
-import 'package:first_approval_app/bloc/experimnet_scheme_bloc/experiment_scheme_bloc.dart';
+import 'package:first_approval_app/custom_widgets/custom_no_border_button.dart';
+import 'package:first_approval_app/custom_widgets/custom_text_widget.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
-import 'package:first_approval_app/custom_widgets/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ExperimentScheme extends StatelessWidget {
@@ -35,18 +34,9 @@ class ExperimentScheme extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  CustomNoBordersButton(
-                    IconsSvg.import,
-                    () {},
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  CustomNoBordersButton(
-                    IconsSvg.export,
-                    () {},
-                  ),
+                children: const [
+                  CustomNoBordersButton(IconsSvg.import),
+                  CustomNoBordersButton(IconsSvg.export),
                 ],
               ),
             ],
@@ -61,30 +51,39 @@ class ExperimentScheme extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class DottedAreaWidget extends StatelessWidget {
+  ///сделать необязательным парматром
   final VoidCallback? onTap;
+
+  ///в данном случае нет смысла делать [isMiniWidget] nullable
+  ///нужно сделать необязательным парметром с указанием значения по умлочанию
   final bool? isMiniWidget;
   const DottedAreaWidget({super.key, this.onTap, this.isMiniWidget});
 
   @override
   Widget build(BuildContext context) {
     return DottedBorder(
-      customPath: isMiniWidget != null ? (size) {
-
-        return Path()
-          ..moveTo(1, 1)
-          ..lineTo(size.width, 1)
-          ..lineTo(size.width, size.height + 1)
-          ..lineTo(1, size.height + 1);
-      } : null,
+      customPath: isMiniWidget != null
+          ? (size) {
+              return Path()
+                ..moveTo(1, 1)
+                ..lineTo(size.width, 1)
+                ..lineTo(size.width, size.height + 1)
+                ..lineTo(1, size.height + 1);
+            }
+          : null,
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,
+
+      ///цвета в стили
       color: const Color.fromRGBO(153, 153, 153, 0.6),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
+            ///цвета в стили
             color: const Color.fromRGBO(153, 153, 153, 0.6),
             style: BorderStyle.none,
           ),
@@ -103,17 +102,25 @@ class DottedAreaWidget extends StatelessWidget {
                 ],
               ),
             ),
-            isMiniWidget != null ? const CustomText(
-              'Добавить\nобразец',
-              16,
-              weight: FontWeight.w700,
-              color: Color.fromRGBO(153, 153, 153, 0.6),
-            ) :  const CustomText(
-              'Добавить новый\nобразец',
-              16,
-              weight: FontWeight.w700,
-              color: Color.fromRGBO(153, 153, 153, 0.6),
-            ),
+
+            ///соответственно не isMiniWidget !=null а isMiniWidget?
+            isMiniWidget != null
+                ? const CustomText(
+                    'Добавить\nобразец',
+                    16,
+                    weight: FontWeight.w700,
+
+                    ///цвета в стили
+                    color: Color.fromRGBO(153, 153, 153, 0.6),
+                  )
+                : const CustomText(
+                    'Добавить новый\nобразец',
+                    16,
+                    weight: FontWeight.w700,
+
+                    ///цвета в стили
+                    color: Color.fromRGBO(153, 153, 153, 0.6),
+                  ),
           ],
         ),
       ),
@@ -121,6 +128,7 @@ class DottedAreaWidget extends StatelessWidget {
   }
 }
 
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class DottedAreaWithSamples extends StatelessWidget {
   final VoidCallback? onTap;
   const DottedAreaWithSamples({super.key, this.onTap});
@@ -138,11 +146,14 @@ class DottedAreaWithSamples extends StatelessWidget {
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,
+
+      ///цвета в стили
       color: const Color.fromRGBO(153, 153, 153, 0.6),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
+            ///цвета в стили
             color: const Color.fromRGBO(153, 153, 153, 0.6),
             style: BorderStyle.none,
           ),
@@ -167,83 +178,18 @@ class DottedAreaWithSamples extends StatelessWidget {
               'Объединить в группу',
               12,
               weight: FontWeight.w700,
+
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
         ),
       ),
     );
-    // Flexible(
-    //   flex: 3,
-    //   child: Container(
-    //     decoration: BoxDecoration(
-    //       border: Border.all(
-    //         width: 3.0,
-    //         color: const Color.fromRGBO(153, 153, 153, 0.6),
-    //         style: BorderStyle.solid,
-    //       ),
-    //     ),
-    //     child: Column(
-    //       children: children,
-    //     ),
-    //   );
   }
 }
 
-// class GroupUpSamplesWidget extends StatelessWidget {
-//   final VoidCallback? onTap;
-//   final List<Sample> children;
-//   const GroupUpSamplesWidget({
-//     super.key,
-//     this.onTap,
-//     required this.children,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Expanded(
-//       child: DottedBorder(
-//         dashPattern: const [30, 10],
-//         strokeCap: StrokeCap.butt,
-//         borderType: BorderType.RRect,
-//         color: const Color.fromRGBO(153, 153, 153, 0.6),
-//         child: Container(
-//           alignment: Alignment.center,
-//           decoration: BoxDecoration(
-//             border: Border.all(
-//               color: const Color.fromRGBO(153, 153, 153, 0.6),
-//               style: BorderStyle.none,
-//             ),
-//           ),
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               InkWell(
-//                 onTap: onTap,
-//                 child: Stack(
-//                   alignment: Alignment.center,
-//                   children: [
-//                     SvgPicture.asset(IconsSvg.schemeLittleEllipse),
-//                     SvgPicture.asset(IconsSvg.schemeLittlePLus),
-//                   ],
-//                 ),
-//               ),
-//               const CustomText(
-//                 'Объединить в группу',
-//                 16,
-//                 FontWeight.w700,
-//                 color: Color.fromRGBO(153, 153, 153, 0.6),
-//               ),
-//               NewSample(),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
+///вынести в отдеьлный файл - легче читать и ориентироваться
 class AddSampleWidget extends StatelessWidget {
   const AddSampleWidget({super.key, required this.onTap});
   final VoidCallback onTap;
@@ -254,11 +200,14 @@ class AddSampleWidget extends StatelessWidget {
       dashPattern: const [30, 10],
       strokeCap: StrokeCap.butt,
       borderType: BorderType.RRect,
+
+      ///цвета в стили
       color: const Color.fromRGBO(153, 153, 153, 0.6),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
+            ///цвета в стили
             color: const Color.fromRGBO(153, 153, 153, 0.6),
             style: BorderStyle.none,
           ),
@@ -280,96 +229,12 @@ class AddSampleWidget extends StatelessWidget {
               'Добавить\nобразец',
               12,
               weight: FontWeight.w700,
+
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class NewSample extends StatefulWidget {
-  const NewSample({super.key});
-
-  @override
-  State<NewSample> createState() => _NewSampleState();
-}
-
-class _NewSampleState extends State<NewSample> {
-  late TextEditingController title;
-  late TextEditingController descriptionText;
-
-  @override
-  void initState() {
-    title = TextEditingController();
-    descriptionText = TextEditingController();
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 100,
-      height: 100,
-      child: ExpansionTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            TextField(
-              controller: title,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomNoBordersButton(IconsSvg.edit, () {}),
-                CustomNoBordersButton(IconsSvg.schemeCompass, () {}),
-                CustomNoBordersButton(IconsSvg.attachedFiles, () {}),
-              ],
-            ),
-          ],
-        ),
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              context.read<ExperimentSchemeBloc>().add(
-                    ExperimentSchemeEvent.addNewSample(
-                      text: descriptionText.text,
-                      title: title.text,
-                    ),
-                  );
-
-              descriptionText.clear();
-              title.clear();
-            },
-            child: const Text('Добавить образец'),
-          )
-        ],
-        // children: [
-        //   TextField(
-        //     controller: descriptionText,
-        //     style: const TextStyle(),
-        //     decoration: const InputDecoration(
-        //       hintText: "Введите описание",
-        //     ),
-        //     maxLines: 3,
-        //   ),
-        //   ElevatedButton(
-        //     onPressed: () {
-        //       context.read<ExperimentSchemeBloc>().add(
-        //             ExperimentSchemeEvent.addNewSample(
-        //               text: descriptionText.text,
-        //               title: title.text,
-        //             ),
-        //           );
-
-        //       descriptionText.clear();
-        //       title.clear();
-        //     },
-        //     child: const Text('Добавить образец'),
-        //   )
-        // ],
       ),
     );
   }

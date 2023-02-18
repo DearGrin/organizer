@@ -5,7 +5,7 @@ import 'measurement.dart';
 part 'sample.freezed.dart';
 part 'sample.g.dart';
 
-@unfreezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class Sample with _$Sample {
   factory Sample({
     required int id,

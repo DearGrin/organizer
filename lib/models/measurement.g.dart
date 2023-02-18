@@ -8,10 +8,9 @@ part of 'measurement.dart';
 
 _$_Measurement _$$_MeasurementFromJson(Map<String, dynamic> json) =>
     _$_Measurement(
-      addedFiles: (json['addedFiles'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList() ??
-          const [],
+      addedFiles: (json['addedFiles'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       text: json['text'] as String? ?? "",
     );
 

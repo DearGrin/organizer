@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'card_text_fields.freezed.dart';
 part 'card_text_fields.g.dart';
 
-@freezed
+@Freezed(makeCollectionsUnmodifiable: false)
 class ExperimentCardTextFields with _$ExperimentCardTextFields {
   factory ExperimentCardTextFields({
     @Default('') String goal,

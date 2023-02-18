@@ -21,9 +21,7 @@ Measurement _$MeasurementFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Measurement {
   List<String> get addedFiles => throw _privateConstructorUsedError;
-  set addedFiles(List<String> value) => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  set text(String value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -110,22 +108,36 @@ class __$$_MeasurementCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Measurement implements _Measurement {
-  _$_Measurement({this.addedFiles = const [], this.text = ""});
+  _$_Measurement({required this.addedFiles, this.text = ""});
 
   factory _$_Measurement.fromJson(Map<String, dynamic> json) =>
       _$$_MeasurementFromJson(json);
 
   @override
-  @JsonKey()
-  List<String> addedFiles;
+  final List<String> addedFiles;
   @override
   @JsonKey()
-  String text;
+  final String text;
 
   @override
   String toString() {
     return 'Measurement(addedFiles: $addedFiles, text: $text)';
   }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Measurement &&
+            const DeepCollectionEquality()
+                .equals(other.addedFiles, addedFiles) &&
+            (identical(other.text, text) || other.text == text));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(addedFiles), text);
 
   @JsonKey(ignore: true)
   @override
@@ -142,17 +154,17 @@ class _$_Measurement implements _Measurement {
 }
 
 abstract class _Measurement implements Measurement {
-  factory _Measurement({List<String> addedFiles, String text}) = _$_Measurement;
+  factory _Measurement(
+      {required final List<String> addedFiles,
+      final String text}) = _$_Measurement;
 
   factory _Measurement.fromJson(Map<String, dynamic> json) =
       _$_Measurement.fromJson;
 
   @override
   List<String> get addedFiles;
-  set addedFiles(List<String> value);
   @override
   String get text;
-  set text(String value);
   @override
   @JsonKey(ignore: true)
   _$$_MeasurementCopyWith<_$_Measurement> get copyWith =>

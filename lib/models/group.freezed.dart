@@ -21,13 +21,9 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Group {
   String get name => throw _privateConstructorUsedError;
-  set name(String value) => throw _privateConstructorUsedError;
   String get groupDescription => throw _privateConstructorUsedError;
-  set groupDescription(String value) => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
-  set id(int value) => throw _privateConstructorUsedError;
   List<Sample> get samples => throw _privateConstructorUsedError;
-  set samples(List<Sample> value) => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -140,18 +136,35 @@ class _$_Group implements _Group {
       _$$_GroupFromJson(json);
 
   @override
-  String name;
+  final String name;
   @override
-  String groupDescription;
+  final String groupDescription;
   @override
-  int id;
+  final int id;
   @override
-  List<Sample> samples;
+  final List<Sample> samples;
 
   @override
   String toString() {
     return 'Group(name: $name, groupDescription: $groupDescription, id: $id, samples: $samples)';
   }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Group &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.groupDescription, groupDescription) ||
+                other.groupDescription == groupDescription) &&
+            (identical(other.id, id) || other.id == id) &&
+            const DeepCollectionEquality().equals(other.samples, samples));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, groupDescription, id,
+      const DeepCollectionEquality().hash(samples));
 
   @JsonKey(ignore: true)
   @override
@@ -169,25 +182,21 @@ class _$_Group implements _Group {
 
 abstract class _Group implements Group {
   factory _Group(
-      {required String name,
-      required String groupDescription,
-      required int id,
-      required List<Sample> samples}) = _$_Group;
+      {required final String name,
+      required final String groupDescription,
+      required final int id,
+      required final List<Sample> samples}) = _$_Group;
 
   factory _Group.fromJson(Map<String, dynamic> json) = _$_Group.fromJson;
 
   @override
   String get name;
-  set name(String value);
   @override
   String get groupDescription;
-  set groupDescription(String value);
   @override
   int get id;
-  set id(int value);
   @override
   List<Sample> get samples;
-  set samples(List<Sample> value);
   @override
   @JsonKey(ignore: true)
   _$$_GroupCopyWith<_$_Group> get copyWith =>

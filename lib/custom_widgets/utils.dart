@@ -1,9 +1,14 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:first_approval_app/custom_widgets/custom_text_widget.dart';
+import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../icons/icons_paths.dart';
 
+/// Архитектурный вопрос: я бы каждый класс вынес в отдельный файл:
+/// - лечге ориентироваться
+/// - нет "лишних" импортов, где они не требуются
+/// - сейчас в одном файле смешаны виджеты и стили
 class HeaderText extends StatelessWidget {
   final String text;
   const HeaderText(this.text, {Key? key}) : super(key: key);
@@ -22,88 +27,12 @@ class HeaderText extends StatelessWidget {
   }
 }
 
-class CustomText extends StatelessWidget {
-  final String text;
-  final double? fontSize;
-  final FontWeight weight;
-  final Color? color;
-  final TextOverflow? textOverflow;
-  final TextAlign textAlign;
-  const CustomText(this.text, this.fontSize,
-      {Key? key,
-      this.color = Colors.black,
-      this.textOverflow = TextOverflow.ellipsis,
-      this.weight = FontWeight.normal,
-      this.textAlign = TextAlign.center})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      textAlign: textAlign,
-      style: TextStyle(
-        overflow: textOverflow,
-        color: color,
-        fontSize: fontSize,
-        fontFamily: "Inter",
-        fontWeight: weight,
-      ),
-    );
-  }
-}
-
-class CustomButtonsWithBorders extends StatelessWidget {
-  const CustomButtonsWithBorders(this.icon, this.onPressed,
-      {this.withText = false, super.key});
-  final String icon;
-  final bool withText;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: OutlinedButton(
-        onPressed: onPressed,
-        child: withText
-            ? Row(
-                children: [
-                  SvgPicture.asset(icon),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  const CustomText(
-                    'Сохранить',
-                    10,
-                    weight: FontWeight.w400,
-                  )
-                ],
-              )
-            : SvgPicture.asset(icon),
-      ),
-    );
-  }
-}
-
-class CustomNoBordersButton extends StatelessWidget {
-  const CustomNoBordersButton(this.icon, this.onPressed,
-      {super.key});
-  final String icon;
-  final VoidCallback? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: Colors.grey,
-      onTap: onPressed,
-      child: SvgPicture.asset(icon),
-    );
-  }
-}
 
 class AddGroup extends StatelessWidget {
+  ///вынести в необязательные параметры
   final VoidCallback? onTap;
-  AddGroup({Key? key, this.onTap}) : super(key: key);
+  /// не забываем использовать const
+  const AddGroup({Key? key, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +61,7 @@ class AddGroup extends StatelessWidget {
           children: [
             InkWell(
               onTap: onTap,
+              ///тут бы иконку отрисовать и избавиться от Stack двух иконок
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -147,23 +77,25 @@ class AddGroup extends StatelessWidget {
               'Добавить группу',
               12,
               weight: FontWeight.w700,
+              ///цвета в стили
               color: Color.fromRGBO(153, 153, 153, 0.6),
             ),
           ],
         ),
       ),
     );
-
-
   }
 }
 
+///стилей мало - их вполне можно добавить в стандартную тему
 class AppColors {
   static const Color borderColor = Color.fromRGBO(153, 153, 153, 0.6);
   static const Color expansionTileIconColor = Color(0xff28303F);
   static const Color dottedColor = Color.fromRGBO(153, 153, 153, 0.6);
 }
 
+///стилей мало - их вполне можно добавить в тему и использовать через
+///Theme.of(context).textTheme.header1 например
 class AppTextStyles {
   static const measurementTextStyle = TextStyle(
       fontSize: 12,
