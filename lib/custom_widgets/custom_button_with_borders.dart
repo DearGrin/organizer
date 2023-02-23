@@ -22,9 +22,7 @@ class CustomButtonsWithBorders extends StatelessWidget {
             ? Row(
                 children: [
                   SvgPicture.asset(icon),
-                  const SizedBox(
-                    width: 12,
-                  ),
+                  const SizedBox(width: 12),
                   const CustomText(
                     'Сохранить',
                     10,

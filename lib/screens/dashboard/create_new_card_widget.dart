@@ -15,31 +15,34 @@ class ChooseOptionPopUp extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(
-                top: 77,
-                left: 90,
-                bottom: 65,
-              ),
-              child: CustomText(
-                'Выберите способ:',
-                20,
-                weight: FontWeight.w700,
+            const Material(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  top: 77,
+                  left: 90,
+                  bottom: 65,
+                ),
+                child: CustomText(
+                  'Выберите способ:',
+                  20,
+                  weight: FontWeight.w700,
+                ),
               ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children:  [
                 Card(
                   child: AddCard(
                     text: 'Новая карточка\nэксперимента',
                     byDefault: false,
+                    onTap: () => Navigator.of(context).pop(true),
                   ),
                 ),
                 Card(
                   child: AddCard(
                     text: 'Заполнить карточку \nпо образцу',
-                    byDefault: false,
+                    byDefault: false, onTap: () => Navigator.of(context).pop(false),
                   ),
                 ),
               ],

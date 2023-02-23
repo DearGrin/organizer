@@ -1,5 +1,6 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
-import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
 import 'package:first_approval_app/models/experiment_card_models/card_text_fields.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -10,10 +11,8 @@ part 'experiment_card_bloc.freezed.dart';
 
 class ExperimentCardBloc
     extends Bloc<ExperimentCardEvent, ExperimentCardState> {
-  final List<ExperimentCardTextFields> fields = [ExperimentCardTextFields()];
-  final FileManager fileManager;
-  ExperimentCardBloc(this.fileManager)
-      : super(_Saved(ExperimentCardTextFields())) {
+  ExperimentCardBloc()
+      : super(const ExperimentCardState.initial()) {
     on<ExperimentCardEvent>((event, emit) {
       event.map(
         saveCard: (event) => _saved(event, emit),
@@ -22,54 +21,85 @@ class ExperimentCardBloc
     });
   }
 
+  String goal = '';
+  String description = '';
+  String date = '';
+  String method = '';
+  String object = '';
+  String device = '';
+  String soft = '';
+  String name = '';
+
+  ExperimentCardTextFields get experimentInfo => ExperimentCardTextFields(
+    goal: goal,
+    description: description,
+    date: date,
+    method: method,
+    object: object,
+    device: device,
+    soft: soft,
+    name: name,
+  );
+
   void _saved(
     _SaveCard event,
     Emitter<ExperimentCardState> emit,
   ) {
-    fields.add(event.card);
-    fileManager.writeToFile(fields[fields.length - 1].toString());
-    emit(ExperimentCardState.saved(event.card));
+    goal = event.card?.goal??'';
+    description = event.card?.description??'';
+    date = event.card?.date??'';
+    method = event.card?.method??'';
+    object = event.card?.object??'';
+    soft = event.card?.soft??'';
+    name = event.card?.name??FieldNameType.name.value;
+    emit(ExperimentCardState.saved(experimentInfo));
   }
 
   void _fieldFilled(
     _FieldFilled event,
     Emitter<ExperimentCardState> emit,
   ) {
-    /// [event.fieldName] - лучше изменить тип на enum (вот пример):
-    // enum FieldNameType {
-    // goal('Цель'),
-    // date('Дата проведения');
-    // final String value;
-    // const FieldNameType(this.value);
-    // }
-    /// [FieldNameType.goal.value] = 'Цель'
-    /// плюсы:
-    ///    1) перебор через switch case (ide сама создаст весь бойлерплейт и проследит за всеми кейсами)
-    ///    2) масштабируемость
-    ///    3) защита от ошибок (забыл кейс, опечатался и тд)
-    ///    4) легче сторить ui через map
-    if (event.fieldName == 'Цель') {
-      fields[fields.length - 1] =
-          fields[fields.length - 1].copyWith(goal: event.text);
-    } else if (event.fieldName == 'Описание') {
-      fields[fields.length - 1] =
-          fields[fields.length - 1].copyWith(description: event.text);
-    } else if (event.fieldName == 'Дата проведения') {
-      fields[fields.length - 1] =
-          fields[fields.length - 1].copyWith(date: event.text);
-    } else if (event.fieldName == 'Метод') {
-      fields[fields.length - 1] =
-          fields[fields.length - 1].copyWith(method: event.text);
-    } else if (event.fieldName == 'Объект') {
-      fields[fields.length - 1] =
-          fields[fields.length - 1].copyWith(object: event.text);
-    } else if (event.fieldName == 'Прибор') {
-      fields[fields.length - 1] =
-          fields[fields.length - 1].copyWith(device: event.text);
-    } else if (event.fieldName == 'Софт') {
-      fields[fields.length - 1] =
-          fields[fields.length - 1].copyWith(soft: event.text);
-    }
-    emit(ExperimentCardState.saved(fields[fields.length - 1]));
+    log('FILLED EVENT');
+    log('name: ${event.field} text: ${event.text}');
+     switch (event.field){
+       case FieldNameType.goal:
+         goal = event.text;
+         break;
+       case FieldNameType.description:
+         description = event.text;
+         break;
+       case FieldNameType.date:
+         date = event.text;
+         break;
+       case FieldNameType.method:
+         method = event.text;
+         break;
+       case FieldNameType.object:
+         object = event.text;
+         break;
+       case FieldNameType.device:
+         device = event.text;
+         break;
+       case FieldNameType.soft:
+         soft = event.text;
+         break;
+       case FieldNameType.name:
+          name = event.text;
+         break;
+     }
   }
+}
+
+enum FieldNameType {
+  goal('Цель'),
+  description('Описание'),
+  date('Дата проведения'),
+  method('Метод'),
+  object('Объект'),
+  device('Прибор'),
+  soft('Софт'),
+  name('Название эксперимента');
+
+  final String value;
+  const FieldNameType(this.value);
 }

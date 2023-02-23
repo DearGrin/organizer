@@ -1,7 +1,8 @@
-import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
+import 'package:first_approval_app/bloc/experiment_common_files_bloc/experiment_common_files_bloc.dart';
 import 'package:first_approval_app/custom_widgets/custom_no_border_button.dart';
 import 'package:first_approval_app/custom_widgets/custom_text_widget.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
+import 'package:first_approval_app/models/attachment.dart';
 import 'package:first_approval_app/screens/experiment_card/file_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,9 @@ class FilesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onTap(){
+      context.read<ExperimentCommonFilesBloc>().add(const ExperimentCommonFilesEvent.addFiles());
+    }
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.only(
@@ -21,7 +25,7 @@ class FilesCard extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 40, right: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -32,29 +36,25 @@ class FilesCard extends StatelessWidget {
                 ),
                 CustomNoBordersButton(
                   IconsSvg.moreHorizontal,
-
-                  /// для читаемости лучше вынести функцию отдельно
-                  onPressed: () => context.read<FileCubit>().pickFiles(),
+                  onPressed: onTap,
                 ),
               ],
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          const SizedBox(height: 15),
           Expanded(
-            child: BlocBuilder<FileCubit, FileState>(
+            child: BlocBuilder<ExperimentCommonFilesBloc, ExperimentCommonFilesState>(
               builder: (context, state) {
-                if (state.files.isNotEmpty) {
+                List<Attachment> fileList = [];
+                state.whenOrNull(
+                    loaded: (files) => fileList.addAll(files),
+                );
                   return ListView.builder(
                       shrinkWrap: true,
-                      itemCount: state.files.length,
+                      itemCount: fileList.length,
                       itemBuilder: (context, index) {
-                        return MyFiles(state.files[index]);
+                        return MyFiles(fileList[index].fileName, index);
                       });
-                } else {
-                  return const SizedBox.shrink();
-                }
               },
             ),
           ),

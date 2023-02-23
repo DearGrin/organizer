@@ -18,20 +18,20 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ExperimentCardEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ExperimentCardTextFields card) saveCard,
-    required TResult Function(String fieldName, String text) fieldFilled,
+    required TResult Function(ExperimentCardTextFields? card) saveCard,
+    required TResult Function(FieldNameType field, String text) fieldFilled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ExperimentCardTextFields card)? saveCard,
-    TResult? Function(String fieldName, String text)? fieldFilled,
+    TResult? Function(ExperimentCardTextFields? card)? saveCard,
+    TResult? Function(FieldNameType field, String text)? fieldFilled,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ExperimentCardTextFields card)? saveCard,
-    TResult Function(String fieldName, String text)? fieldFilled,
+    TResult Function(ExperimentCardTextFields? card)? saveCard,
+    TResult Function(FieldNameType field, String text)? fieldFilled,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -80,9 +80,9 @@ abstract class _$$_SaveCardCopyWith<$Res> {
           _$_SaveCard value, $Res Function(_$_SaveCard) then) =
       __$$_SaveCardCopyWithImpl<$Res>;
   @useResult
-  $Res call({ExperimentCardTextFields card});
+  $Res call({ExperimentCardTextFields? card});
 
-  $ExperimentCardTextFieldsCopyWith<$Res> get card;
+  $ExperimentCardTextFieldsCopyWith<$Res>? get card;
 }
 
 /// @nodoc
@@ -96,20 +96,24 @@ class __$$_SaveCardCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? card = null,
+    Object? card = freezed,
   }) {
     return _then(_$_SaveCard(
-      null == card
+      freezed == card
           ? _value.card
           : card // ignore: cast_nullable_to_non_nullable
-              as ExperimentCardTextFields,
+              as ExperimentCardTextFields?,
     ));
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ExperimentCardTextFieldsCopyWith<$Res> get card {
-    return $ExperimentCardTextFieldsCopyWith<$Res>(_value.card, (value) {
+  $ExperimentCardTextFieldsCopyWith<$Res>? get card {
+    if (_value.card == null) {
+      return null;
+    }
+
+    return $ExperimentCardTextFieldsCopyWith<$Res>(_value.card!, (value) {
       return _then(_value.copyWith(card: value));
     });
   }
@@ -121,7 +125,7 @@ class _$_SaveCard with DiagnosticableTreeMixin implements _SaveCard {
   const _$_SaveCard(this.card);
 
   @override
-  final ExperimentCardTextFields card;
+  final ExperimentCardTextFields? card;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -156,8 +160,8 @@ class _$_SaveCard with DiagnosticableTreeMixin implements _SaveCard {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ExperimentCardTextFields card) saveCard,
-    required TResult Function(String fieldName, String text) fieldFilled,
+    required TResult Function(ExperimentCardTextFields? card) saveCard,
+    required TResult Function(FieldNameType field, String text) fieldFilled,
   }) {
     return saveCard(card);
   }
@@ -165,8 +169,8 @@ class _$_SaveCard with DiagnosticableTreeMixin implements _SaveCard {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ExperimentCardTextFields card)? saveCard,
-    TResult? Function(String fieldName, String text)? fieldFilled,
+    TResult? Function(ExperimentCardTextFields? card)? saveCard,
+    TResult? Function(FieldNameType field, String text)? fieldFilled,
   }) {
     return saveCard?.call(card);
   }
@@ -174,8 +178,8 @@ class _$_SaveCard with DiagnosticableTreeMixin implements _SaveCard {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ExperimentCardTextFields card)? saveCard,
-    TResult Function(String fieldName, String text)? fieldFilled,
+    TResult Function(ExperimentCardTextFields? card)? saveCard,
+    TResult Function(FieldNameType field, String text)? fieldFilled,
     required TResult orElse(),
   }) {
     if (saveCard != null) {
@@ -217,9 +221,9 @@ class _$_SaveCard with DiagnosticableTreeMixin implements _SaveCard {
 }
 
 abstract class _SaveCard implements ExperimentCardEvent {
-  const factory _SaveCard(final ExperimentCardTextFields card) = _$_SaveCard;
+  const factory _SaveCard(final ExperimentCardTextFields? card) = _$_SaveCard;
 
-  ExperimentCardTextFields get card;
+  ExperimentCardTextFields? get card;
   @JsonKey(ignore: true)
   _$$_SaveCardCopyWith<_$_SaveCard> get copyWith =>
       throw _privateConstructorUsedError;
@@ -231,7 +235,7 @@ abstract class _$$_FieldFilledCopyWith<$Res> {
           _$_FieldFilled value, $Res Function(_$_FieldFilled) then) =
       __$$_FieldFilledCopyWithImpl<$Res>;
   @useResult
-  $Res call({String fieldName, String text});
+  $Res call({FieldNameType field, String text});
 }
 
 /// @nodoc
@@ -245,14 +249,14 @@ class __$$_FieldFilledCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? fieldName = null,
+    Object? field = null,
     Object? text = null,
   }) {
     return _then(_$_FieldFilled(
-      null == fieldName
-          ? _value.fieldName
-          : fieldName // ignore: cast_nullable_to_non_nullable
-              as String,
+      null == field
+          ? _value.field
+          : field // ignore: cast_nullable_to_non_nullable
+              as FieldNameType,
       null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -264,16 +268,16 @@ class __$$_FieldFilledCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_FieldFilled with DiagnosticableTreeMixin implements _FieldFilled {
-  const _$_FieldFilled(this.fieldName, this.text);
+  const _$_FieldFilled(this.field, this.text);
 
   @override
-  final String fieldName;
+  final FieldNameType field;
   @override
   final String text;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ExperimentCardEvent.fieldFilled(fieldName: $fieldName, text: $text)';
+    return 'ExperimentCardEvent.fieldFilled(field: $field, text: $text)';
   }
 
   @override
@@ -281,7 +285,7 @@ class _$_FieldFilled with DiagnosticableTreeMixin implements _FieldFilled {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ExperimentCardEvent.fieldFilled'))
-      ..add(DiagnosticsProperty('fieldName', fieldName))
+      ..add(DiagnosticsProperty('field', field))
       ..add(DiagnosticsProperty('text', text));
   }
 
@@ -290,13 +294,12 @@ class _$_FieldFilled with DiagnosticableTreeMixin implements _FieldFilled {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_FieldFilled &&
-            (identical(other.fieldName, fieldName) ||
-                other.fieldName == fieldName) &&
+            (identical(other.field, field) || other.field == field) &&
             (identical(other.text, text) || other.text == text));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, fieldName, text);
+  int get hashCode => Object.hash(runtimeType, field, text);
 
   @JsonKey(ignore: true)
   @override
@@ -307,30 +310,30 @@ class _$_FieldFilled with DiagnosticableTreeMixin implements _FieldFilled {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ExperimentCardTextFields card) saveCard,
-    required TResult Function(String fieldName, String text) fieldFilled,
+    required TResult Function(ExperimentCardTextFields? card) saveCard,
+    required TResult Function(FieldNameType field, String text) fieldFilled,
   }) {
-    return fieldFilled(fieldName, text);
+    return fieldFilled(field, text);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ExperimentCardTextFields card)? saveCard,
-    TResult? Function(String fieldName, String text)? fieldFilled,
+    TResult? Function(ExperimentCardTextFields? card)? saveCard,
+    TResult? Function(FieldNameType field, String text)? fieldFilled,
   }) {
-    return fieldFilled?.call(fieldName, text);
+    return fieldFilled?.call(field, text);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ExperimentCardTextFields card)? saveCard,
-    TResult Function(String fieldName, String text)? fieldFilled,
+    TResult Function(ExperimentCardTextFields? card)? saveCard,
+    TResult Function(FieldNameType field, String text)? fieldFilled,
     required TResult orElse(),
   }) {
     if (fieldFilled != null) {
-      return fieldFilled(fieldName, text);
+      return fieldFilled(field, text);
     }
     return orElse();
   }
@@ -368,10 +371,10 @@ class _$_FieldFilled with DiagnosticableTreeMixin implements _FieldFilled {
 }
 
 abstract class _FieldFilled implements ExperimentCardEvent {
-  const factory _FieldFilled(final String fieldName, final String text) =
+  const factory _FieldFilled(final FieldNameType field, final String text) =
       _$_FieldFilled;
 
-  String get fieldName;
+  FieldNameType get field;
   String get text;
   @JsonKey(ignore: true)
   _$$_FieldFilledCopyWith<_$_FieldFilled> get copyWith =>
@@ -380,42 +383,43 @@ abstract class _FieldFilled implements ExperimentCardEvent {
 
 /// @nodoc
 mixin _$ExperimentCardState {
-  ExperimentCardTextFields get card => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ExperimentCardTextFields card) saved,
+    required TResult Function() initial,
+    required TResult Function(ExperimentCardTextFields? card) saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ExperimentCardTextFields card)? saved,
+    TResult? Function()? initial,
+    TResult? Function(ExperimentCardTextFields? card)? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ExperimentCardTextFields card)? saved,
+    TResult Function()? initial,
+    TResult Function(ExperimentCardTextFields? card)? saved,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Saved value) saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
     TResult? Function(_Saved value)? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Saved value)? saved,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $ExperimentCardStateCopyWith<ExperimentCardState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -424,10 +428,6 @@ abstract class $ExperimentCardStateCopyWith<$Res> {
   factory $ExperimentCardStateCopyWith(
           ExperimentCardState value, $Res Function(ExperimentCardState) then) =
       _$ExperimentCardStateCopyWithImpl<$Res, ExperimentCardState>;
-  @useResult
-  $Res call({ExperimentCardTextFields card});
-
-  $ExperimentCardTextFieldsCopyWith<$Res> get card;
 }
 
 /// @nodoc
@@ -439,40 +439,123 @@ class _$ExperimentCardStateCopyWithImpl<$Res, $Val extends ExperimentCardState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? card = null,
-  }) {
-    return _then(_value.copyWith(
-      card: null == card
-          ? _value.card
-          : card // ignore: cast_nullable_to_non_nullable
-              as ExperimentCardTextFields,
-    ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ExperimentCardTextFieldsCopyWith<$Res> get card {
-    return $ExperimentCardTextFieldsCopyWith<$Res>(_value.card, (value) {
-      return _then(_value.copyWith(card: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
-abstract class _$$_SavedCopyWith<$Res>
-    implements $ExperimentCardStateCopyWith<$Res> {
-  factory _$$_SavedCopyWith(_$_Saved value, $Res Function(_$_Saved) then) =
-      __$$_SavedCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({ExperimentCardTextFields card});
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$ExperimentCardStateCopyWithImpl<$Res, _$_Initial>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Initial with DiagnosticableTreeMixin implements _Initial {
+  const _$_Initial();
 
   @override
-  $ExperimentCardTextFieldsCopyWith<$Res> get card;
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ExperimentCardState.initial()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'ExperimentCardState.initial'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Initial);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function(ExperimentCardTextFields? card) saved,
+  }) {
+    return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function(ExperimentCardTextFields? card)? saved,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function(ExperimentCardTextFields? card)? saved,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Saved value) saved,
+  }) {
+    return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Saved value)? saved,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
+  }) {
+    if (initial != null) {
+      return initial(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Initial implements ExperimentCardState {
+  const factory _Initial() = _$_Initial;
+}
+
+/// @nodoc
+abstract class _$$_SavedCopyWith<$Res> {
+  factory _$$_SavedCopyWith(_$_Saved value, $Res Function(_$_Saved) then) =
+      __$$_SavedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({ExperimentCardTextFields? card});
+
+  $ExperimentCardTextFieldsCopyWith<$Res>? get card;
 }
 
 /// @nodoc
@@ -485,14 +568,26 @@ class __$$_SavedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? card = null,
+    Object? card = freezed,
   }) {
     return _then(_$_Saved(
-      null == card
+      freezed == card
           ? _value.card
           : card // ignore: cast_nullable_to_non_nullable
-              as ExperimentCardTextFields,
+              as ExperimentCardTextFields?,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ExperimentCardTextFieldsCopyWith<$Res>? get card {
+    if (_value.card == null) {
+      return null;
+    }
+
+    return $ExperimentCardTextFieldsCopyWith<$Res>(_value.card!, (value) {
+      return _then(_value.copyWith(card: value));
+    });
   }
 }
 
@@ -502,7 +597,7 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
   const _$_Saved(this.card);
 
   @override
-  final ExperimentCardTextFields card;
+  final ExperimentCardTextFields? card;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -537,7 +632,8 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(ExperimentCardTextFields card) saved,
+    required TResult Function() initial,
+    required TResult Function(ExperimentCardTextFields? card) saved,
   }) {
     return saved(card);
   }
@@ -545,7 +641,8 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(ExperimentCardTextFields card)? saved,
+    TResult? Function()? initial,
+    TResult? Function(ExperimentCardTextFields? card)? saved,
   }) {
     return saved?.call(card);
   }
@@ -553,7 +650,8 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(ExperimentCardTextFields card)? saved,
+    TResult Function()? initial,
+    TResult Function(ExperimentCardTextFields? card)? saved,
     required TResult orElse(),
   }) {
     if (saved != null) {
@@ -565,6 +663,7 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
     required TResult Function(_Saved value) saved,
   }) {
     return saved(this);
@@ -573,6 +672,7 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
     TResult? Function(_Saved value)? saved,
   }) {
     return saved?.call(this);
@@ -581,6 +681,7 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
     TResult Function(_Saved value)? saved,
     required TResult orElse(),
   }) {
@@ -592,11 +693,9 @@ class _$_Saved with DiagnosticableTreeMixin implements _Saved {
 }
 
 abstract class _Saved implements ExperimentCardState {
-  const factory _Saved(final ExperimentCardTextFields card) = _$_Saved;
+  const factory _Saved(final ExperimentCardTextFields? card) = _$_Saved;
 
-  @override
-  ExperimentCardTextFields get card;
-  @override
+  ExperimentCardTextFields? get card;
   @JsonKey(ignore: true)
   _$$_SavedCopyWith<_$_Saved> get copyWith =>
       throw _privateConstructorUsedError;

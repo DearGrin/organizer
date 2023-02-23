@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
-import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
+import 'package:first_approval_app/file_service/file_service.dart';
+import 'package:first_approval_app/models/attachment.dart';
+import 'package:first_approval_app/models/experiment.dart';
 import 'package:first_approval_app/models/group.dart';
 import 'package:first_approval_app/models/measurement.dart';
 import 'package:first_approval_app/models/sample.dart';
@@ -11,13 +15,10 @@ part 'experiment_scheme_bloc.freezed.dart';
 
 class ExperimentSchemeBloc
     extends Bloc<ExperimentSchemeEvent, ExperimentSchemeState> {
-  int groupId = 0;
-  final List<Group> data = [];
-  final List<Sample> ungroupedSamples = [];
-  final FileManager fileManager;
-  ExperimentSchemeBloc(this.fileManager) : super(const _EmptyState()) {
-    on<ExperimentSchemeEvent>((event, emit) {
-      event.map(
+  ExperimentSchemeBloc() : super(const _EmptyState()) {
+    on<ExperimentSchemeEvent>((event, emit) async{
+     await event.map<FutureOr<void>>(
+        init: (event) => _init(event, emit),
         addNewSample: (event) => _addNewSample(event, emit),
         editSample: (event) => _editSample(event, emit),
         addSampleToGroup: (event) => _addSampleToGroup(event, emit),
@@ -25,9 +26,36 @@ class ExperimentSchemeBloc
         addUngroupedSamplesToGroup: (event) =>
             _addUngroupedSamplesToGroup(event, emit),
         addFilesToMeasurement: (event) => _addFilesToMeasurement(event, emit),
+        addFilesToSample: (event) => _addFilesToSample(event, emit),
         createNewEmptyGroup: (event) => _createNewEmptyGroup(event, emit),
+       editMeasurementText: (event) => _editMeasurementText(event, emit),
       );
     });
+  }
+
+  int? experimentId;
+  int groupId = 0;
+  List<Group> data = [];
+  List<Sample> ungroupedSamples = [];
+
+  void _init(
+      _Init event,
+      Emitter<ExperimentSchemeState> emit,
+      ){
+    if(event.experiment!=null) {
+      experimentId = event.experiment!.id;
+      if(event.experiment!.groups.isNotEmpty){
+        groupId = event.experiment!.groups.length - 1;
+        data = event.experiment!.groups;
+      }
+      if(event.experiment!.ungroupedSamples.isNotEmpty){
+        ungroupedSamples = event.experiment!.ungroupedSamples;
+      }
+    }
+    emit(ExperimentSchemeState.loadedState(
+      data: data,
+      ungroupedSamples: ungroupedSamples,
+    ));
   }
 
   /// [id] формируется через размер списка
@@ -51,7 +79,8 @@ class ExperimentSchemeBloc
         text: event.text,
         attachments: []));
     emit(const ExperimentSchemeState.loading());
-
+    print(data);
+    print(ungroupedSamples);
     emit(ExperimentSchemeState.loadedState(
       data: data,
       ungroupedSamples: ungroupedSamples,
@@ -63,6 +92,8 @@ class ExperimentSchemeBloc
     _AddSample event,
     Emitter<ExperimentSchemeState> emit,
   ) {
+    print('_addSampleToGroup ${event.id}');
+    print(data);
     data[event.id].samples.add(
           Sample(
             id: data[event.id].samples.length,
@@ -71,7 +102,8 @@ class ExperimentSchemeBloc
             attachments: [],
           ),
         );
-
+    print(data);
+    print(ungroupedSamples);
     emit(const ExperimentSchemeState.loading());
 
     emit(ExperimentSchemeState.loadedState(
@@ -84,14 +116,12 @@ class ExperimentSchemeBloc
     _EditSample event,
     Emitter<ExperimentSchemeState> emit,
   ) {
-    // repository.editSampleInGroup(event.sample, event.idGroup);
-
-    // emit(const ExperimentSchemeState.loading());
-
-    // emit(ExperimentSchemeState.loadedState(
-    //   data: repository.getData(),
-    //   ungroupedSamples: repository.ungroupedSamples,
-    // ));
+    if(event.idGroup==-1){
+      ungroupedSamples[event.sample.id] = event.sample;
+    }
+    else{
+      data[event.idGroup].samples[event.sample.id] = event.sample;
+    }
   }
 
   /// добавляет измерение в уже существующий образец
@@ -100,17 +130,23 @@ class ExperimentSchemeBloc
     Emitter<ExperimentSchemeState> emit,
   ) {
     if (event.groupId == -1) {
-      ungroupedSamples[event.sampleId].measurements.add(event.measurment);
+      Sample sampleToModify = ungroupedSamples[event.sampleId];
+      List<Measurement> measureListCopy = [...sampleToModify.measurements];
+      measureListCopy.add(Measurement(addedFiles: []));
+      ungroupedSamples[event.sampleId] = sampleToModify.copyWith(measurements: measureListCopy);
       emit(const ExperimentSchemeState.loading());
       emit(ExperimentSchemeState.loadedState(
           data: data, ungroupedSamples: ungroupedSamples));
       return;
     }
+///TODO error for groups?
+    Sample sampleToModify =  data[event.groupId].samples[event.sampleId];
+    List<Measurement> measureListCopy = [...sampleToModify.measurements];
+    measureListCopy.add(Measurement(addedFiles: []));
 
-    data[event.groupId]
-        .samples[event.sampleId]
-        .measurements
-        .add(event.measurment);
+    data[event.groupId].samples[event.sampleId] = sampleToModify.copyWith(measurements: measureListCopy);
+        // .measurements
+        // .add(Measurement(addedFiles: []));
 
     emit(const ExperimentSchemeState.loading());
     emit(ExperimentSchemeState.loadedState(
@@ -123,14 +159,13 @@ class ExperimentSchemeBloc
     Emitter<ExperimentSchemeState> emit,
   ) {
     data.add(Group(
-      name: 'Группа_$groupId',
+      name: 'Группа_${groupId+1}',
       id: groupId,
-      samples: ungroupedSamples,
+      samples: [...ungroupedSamples],
       groupDescription: '',
     ));
-    groupId = groupId++;
+    groupId ++;
     ungroupedSamples.clear();
-
     emit(const ExperimentSchemeState.loading());
     emit(ExperimentSchemeState.loadedState(
         data: data, ungroupedSamples: ungroupedSamples));
@@ -159,7 +194,7 @@ class ExperimentSchemeBloc
     _AddFilesToMeasurement event,
     Emitter<ExperimentSchemeState> emit,
   ) async {
-    List<String> files = await fileManager.pickFiles();
+    List<Attachment> files = await FileService.instance.pickFiles();
 
     if (event.groupId == -1) {
       for (var file in files) {
@@ -177,11 +212,55 @@ class ExperimentSchemeBloc
             .add(file);
       }
     }
+    emit(const ExperimentSchemeState.loading());
     emit(
       ExperimentSchemeState.loadedState(
         data: data,
         ungroupedSamples: ungroupedSamples,
       ),
     );
+  }
+
+  /// добавляет файлы в образец
+  Future<void> _addFilesToSample(
+      _AddFilesToSample event,
+      Emitter<ExperimentSchemeState> emit,
+      ) async {
+    List<Attachment> files = await FileService.instance.pickFiles();
+
+    if (event.groupId == -1) {
+      ungroupedSamples[event.sampleId].attachments.addAll(files);
+    } else {
+      data[event.groupId].samples[event.sampleId].attachments.addAll(files);
+    }
+    emit(const ExperimentSchemeState.loading());
+    emit(
+      ExperimentSchemeState.loadedState(
+        data: data,
+        ungroupedSamples: ungroupedSamples,
+      ),
+    );
+  }
+
+  void _editMeasurementText(
+      _EditMeasurementText event,
+      Emitter<ExperimentSchemeState> emit,
+      ){
+    print('Descr changed');
+    if(event.groupId==-1){
+      Measurement m = ungroupedSamples[event.sampleId].measurements[event.measurementId].copyWith(text: event.text);
+      ungroupedSamples[event.sampleId].measurements[event.measurementId] = m;
+      print( ungroupedSamples[event.sampleId].measurements[event.measurementId].text);
+    }
+    else{
+      Measurement m = data[event.groupId].samples[event.sampleId].measurements[event.measurementId].copyWith(text: event.text);
+      data[event.groupId].samples[event.sampleId].measurements[event.measurementId] = m;
+    }
+  }
+
+  @override
+  void onEvent(ExperimentSchemeEvent event) {
+    super.onEvent(event);
+    print(event);
   }
 }

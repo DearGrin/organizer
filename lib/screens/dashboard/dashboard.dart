@@ -1,12 +1,16 @@
-import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
-import 'package:first_approval_app/custom_widgets/custom_text_widget.dart';
+import 'package:first_approval_app/bloc/dashboard_bloc/dashboard_bloc.dart';
 import 'package:first_approval_app/http_and_backend/http_class.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/screens/dashboard/add_card_widget.dart';
+import 'package:first_approval_app/screens/dashboard/create_new_card_widget.dart';
+import 'package:first_approval_app/screens/dashboard/dashboard_navigation_cards.dart';
+import 'package:first_approval_app/screens/dashboard/experiment_name.dart';
+import 'package:first_approval_app/screens/dashboard/horizontal_switcher.dart';
 import 'package:first_approval_app/screens/dashboard/navidation_cards.dart';
 import 'package:first_approval_app/screens/dashboard/navigation_widget.dart';
 import 'package:first_approval_app/screens/dashboard/recent_experiment_card.dart';
 import 'package:first_approval_app/screens/dashboard/show_all_button.dart';
+import 'package:first_approval_app/screens/experiment_card/card_page.dart';
 import 'package:first_approval_app/screens_measures/measures.dart';
 import 'package:first_approval_app/widgets_present_on_multiple_screens/project_appbar.dart';
 import 'package:first_approval_app/custom_widgets/utils.dart';
@@ -19,7 +23,28 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => DashboardBloc()..add(const DashboardEvent.started())),
+      ],
+      child: const DashboardView(),
+    );
+  }
+}
+
+class DashboardView extends StatefulWidget {
+  const DashboardView({Key? key}) : super(key: key);
+
+  @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      ///цвет вынести в стили
+      backgroundColor: const Color(0xffEAEAEA),
       appBar: ProjectAppBar(
         icon: SvgPicture.asset(IconsSvg.notification),
 
@@ -27,11 +52,8 @@ class Dashboard extends StatelessWidget {
         /// надо учитывать, какое поведение предпочтительнее
         onTap: () {},
       ),
-      body: BlocProvider<FileCubit>(
-        create: (context) => FileCubit(),
+      body: SingleChildScrollView(
         child: Container(
-          ///цвет вынести в стили
-          color: const Color(0xffEAEAEA),
           padding: EdgeInsets.only(
             left: context.navigationPagePadding,
             right: context.navigationPagePadding,
@@ -39,22 +61,39 @@ class Dashboard extends StatelessWidget {
             bottom: context.nevigationPageHeight,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Navigation(),
               const DashboardNavigationCards(),
               const ExperimentName(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  /// не забываем использовать const
-                  AddCard(
-                    text: 'Добавить карточку\n     эскперимента',
-                  ),
-                  RecentExperimentCard(),
-                  RecentExperimentCard(),
-                  RecentExperimentCard(),
-                  RecentExperimentCard(),
-                ],
+              BlocConsumer<DashboardBloc, DashboardState>(
+                listenWhen: (prev, current) =>
+                    (current == const DashboardState.archiveInProgress() ||
+                        prev == const DashboardState.archiveInProgress()),
+                listener: (context, state) {
+                  if (state == const DashboardState.archiveInProgress()) {
+                    _showArchiveLoader();
+                  } else {
+                    Navigator.of(context).pop();
+                  }
+                },
+                builder: (context, state) {
+                  List<Widget> widgets = [
+                    AddCard(
+                      text: 'Добавить карточку\n     эскперимента',
+                      onTap: _showDialog,
+                    )
+                  ];
+                  state.whenOrNull(
+                    loaded: (experiments) =>
+                        widgets.addAll(experiments.map((e) => RecentExperimentCard(e)).toList()),
+                  );
+                  return Wrap(
+                    runSpacing: 20,
+                    spacing: 20,
+                    children: widgets,
+                  );
+                },
               ),
             ],
           ),
@@ -62,118 +101,33 @@ class Dashboard extends StatelessWidget {
       ),
     );
   }
-}
 
-///вынести в отдеьлный файл - легче читать и ориентироваться
-class DashboardNavigationCards extends StatelessWidget {
-  const DashboardNavigationCards({super.key});
-
-  // Post запрос отправки данных в базу данных
-  ///Так очень плохо - у сетевых запросов часто бывают ошибки -
-  ///в такой реализации это приведет к крашам/красным экранам  и тд
-  ///обязательно эту логику выносить в блок
-  ///и оборачивать в try catch
-  void _get() async {
-    CustomHttpRequest httpRequest = CustomHttpRequest();
-
-    /// лишнее
-    var pupa;
-
-    /// смысл в этой переменной, если она никуда не передается?
-    pupa = await httpRequest.getUserById();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const NavigationPropertiesCard('Настройки', IconsSvg.setting),
-        NavigationPropertiesCard(
-          'Экспорт данных',
-          IconsSvg.dataExport,
-          onTap: () => _get,
-        ),
-        NavigationPropertiesCard(
-          'Загрузка данных',
-          IconsSvg.dataImport,
-          onTap: () => BlocProvider.of<FileCubit>(context).pickFiles,
-        ),
-        const NavigationPropertiesCard(
-          'Валидация файлов',
-          IconsSvg.validation,
-        ),
-        const NavigationPropertiesCard('Публикация', IconsSvg.menuPublication),
-      ],
-    );
-  }
-}
-
-///вынести в отдеьлный файл - легче читать и ориентироваться
-class DrakThemeSwitcher extends StatelessWidget {
-  const DrakThemeSwitcher({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SvgPicture.asset(IconsSvg.lightModeIcon),
-        const HorizontalSwitcher(),
-        SvgPicture.asset(IconsSvg.nightModeIcon),
-      ],
-    );
-  }
-}
-
-///вынести в отдеьлный файл - легче читать и ориентироваться
-class HorizontalSwitcher extends StatefulWidget {
-  const HorizontalSwitcher({Key? key}) : super(key: key);
-
-  @override
-  State<HorizontalSwitcher> createState() => _HorizontalSwitcherState();
-}
-
-class _HorizontalSwitcherState extends State<HorizontalSwitcher> {
-  bool status = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: status,
-      onChanged: (value) {
-        setState(() {
-          /// 1) явно надо куда сохранить новое значение
-          /// 2) явно надо при запуске получить это значение
-          /// 3) ну и сменить тему, соответственно
-          status = value;
-        });
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const ChooseOptionPopUp();
       },
-      activeColor: Colors.black,
-    );
+    ).then((value) {
+      if (value != null) {
+        Navigator.of(context)
+            .push(
+              MaterialPageRoute(builder: (context) => const CardPage(null)),
+            )
+            .then((value) => context.read<DashboardBloc>().add(const DashboardEvent.started()));
+      }
+    });
   }
-}
 
-///вынести в отдеьлный файл - легче читать и ориентироваться
-
-
-///вынести в отдеьлный файл - легче читать и ориентироваться
-class ExperimentName extends StatelessWidget {
-  const ExperimentName({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        top: 70.0,
-        bottom: context.nevigationPageHeight,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          HeaderText('Недавние эксперименты'),
-          ShowAll(),
-        ],
-      ),
+  void _showArchiveLoader() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }

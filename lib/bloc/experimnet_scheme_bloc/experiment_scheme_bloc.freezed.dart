@@ -18,80 +18,100 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ExperimentSchemeEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) =>
@@ -115,6 +135,213 @@ class _$ExperimentSchemeEventCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_InitCopyWith<$Res> {
+  factory _$$_InitCopyWith(_$_Init value, $Res Function(_$_Init) then) =
+      __$$_InitCopyWithImpl<$Res>;
+  @useResult
+  $Res call({Experiment? experiment});
+
+  $ExperimentCopyWith<$Res>? get experiment;
+}
+
+/// @nodoc
+class __$$_InitCopyWithImpl<$Res>
+    extends _$ExperimentSchemeEventCopyWithImpl<$Res, _$_Init>
+    implements _$$_InitCopyWith<$Res> {
+  __$$_InitCopyWithImpl(_$_Init _value, $Res Function(_$_Init) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? experiment = freezed,
+  }) {
+    return _then(_$_Init(
+      freezed == experiment
+          ? _value.experiment
+          : experiment // ignore: cast_nullable_to_non_nullable
+              as Experiment?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ExperimentCopyWith<$Res>? get experiment {
+    if (_value.experiment == null) {
+      return null;
+    }
+
+    return $ExperimentCopyWith<$Res>(_value.experiment!, (value) {
+      return _then(_value.copyWith(experiment: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$_Init implements _Init {
+  const _$_Init(this.experiment);
+
+  @override
+  final Experiment? experiment;
+
+  @override
+  String toString() {
+    return 'ExperimentSchemeEvent.init(experiment: $experiment)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Init &&
+            (identical(other.experiment, experiment) ||
+                other.experiment == experiment));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, experiment);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_InitCopyWith<_$_Init> get copyWith =>
+      __$$_InitCopyWithImpl<_$_Init>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
+    required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int groupId, int sampleId)
+        addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
+    required TResult Function() createNewEmptyGroup,
+  }) {
+    return init(experiment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
+    TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int groupId, int sampleId)?
+        addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
+    TResult? Function()? createNewEmptyGroup,
+  }) {
+    return init?.call(experiment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
+    TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int groupId, int sampleId)?
+        addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
+    TResult Function()? createNewEmptyGroup,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init(experiment);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
+    required TResult Function(_AddNewSample value) addNewSample,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
+    required TResult Function(_AddMeasurementToSample value)
+        addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
+    required TResult Function(_AddUngroupedSamplesToGroup value)
+        addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
+    required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
+  }) {
+    return init(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
+    TResult? Function(_AddNewSample value)? addNewSample,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
+    TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
+    TResult? Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
+    TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
+  }) {
+    return init?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_AddNewSample value)? addNewSample,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
+    TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
+    TResult Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
+    TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
+    required TResult orElse(),
+  }) {
+    if (init != null) {
+      return init(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Init implements ExperimentSchemeEvent {
+  const factory _Init(final Experiment? experiment) = _$_Init;
+
+  Experiment? get experiment;
+  @JsonKey(ignore: true)
+  _$$_InitCopyWith<_$_Init> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -189,15 +416,19 @@ class _$_AddNewSample implements _AddNewSample {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) {
     return addNewSample(text, title);
@@ -206,14 +437,18 @@ class _$_AddNewSample implements _AddNewSample {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) {
     return addNewSample?.call(text, title);
@@ -222,14 +457,17 @@ class _$_AddNewSample implements _AddNewSample {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -242,15 +480,18 @@ class _$_AddNewSample implements _AddNewSample {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) {
     return addNewSample(this);
@@ -259,13 +500,16 @@ class _$_AddNewSample implements _AddNewSample {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) {
     return addNewSample?.call(this);
@@ -274,13 +518,16 @@ class _$_AddNewSample implements _AddNewSample {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -384,15 +631,19 @@ class _$_AddSample implements _AddSample {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) {
     return addSampleToGroup(text, title, id);
@@ -401,14 +652,18 @@ class _$_AddSample implements _AddSample {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) {
     return addSampleToGroup?.call(text, title, id);
@@ -417,14 +672,17 @@ class _$_AddSample implements _AddSample {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -437,15 +695,18 @@ class _$_AddSample implements _AddSample {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) {
     return addSampleToGroup(this);
@@ -454,13 +715,16 @@ class _$_AddSample implements _AddSample {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) {
     return addSampleToGroup?.call(this);
@@ -469,13 +733,16 @@ class _$_AddSample implements _AddSample {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -582,15 +849,19 @@ class _$_EditSample implements _EditSample {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) {
     return editSample(sample, idGroup);
@@ -599,14 +870,18 @@ class _$_EditSample implements _EditSample {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) {
     return editSample?.call(sample, idGroup);
@@ -615,14 +890,17 @@ class _$_EditSample implements _EditSample {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -635,15 +913,18 @@ class _$_EditSample implements _EditSample {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) {
     return editSample(this);
@@ -652,13 +933,16 @@ class _$_EditSample implements _EditSample {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) {
     return editSample?.call(this);
@@ -667,13 +951,16 @@ class _$_EditSample implements _EditSample {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -702,9 +989,7 @@ abstract class _$$_AddMeasurementToSampleCopyWith<$Res> {
           $Res Function(_$_AddMeasurementToSample) then) =
       __$$_AddMeasurementToSampleCopyWithImpl<$Res>;
   @useResult
-  $Res call({int groupId, int sampleId, Measurement measurment});
-
-  $MeasurementCopyWith<$Res> get measurment;
+  $Res call({int groupId, int sampleId});
 }
 
 /// @nodoc
@@ -720,7 +1005,6 @@ class __$$_AddMeasurementToSampleCopyWithImpl<$Res>
   $Res call({
     Object? groupId = null,
     Object? sampleId = null,
-    Object? measurment = null,
   }) {
     return _then(_$_AddMeasurementToSample(
       groupId: null == groupId
@@ -731,19 +1015,7 @@ class __$$_AddMeasurementToSampleCopyWithImpl<$Res>
           ? _value.sampleId
           : sampleId // ignore: cast_nullable_to_non_nullable
               as int,
-      measurment: null == measurment
-          ? _value.measurment
-          : measurment // ignore: cast_nullable_to_non_nullable
-              as Measurement,
     ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $MeasurementCopyWith<$Res> get measurment {
-    return $MeasurementCopyWith<$Res>(_value.measurment, (value) {
-      return _then(_value.copyWith(measurment: value));
-    });
   }
 }
 
@@ -751,20 +1023,16 @@ class __$$_AddMeasurementToSampleCopyWithImpl<$Res>
 
 class _$_AddMeasurementToSample implements _AddMeasurementToSample {
   const _$_AddMeasurementToSample(
-      {required this.groupId,
-      required this.sampleId,
-      required this.measurment});
+      {required this.groupId, required this.sampleId});
 
   @override
   final int groupId;
   @override
   final int sampleId;
-  @override
-  final Measurement measurment;
 
   @override
   String toString() {
-    return 'ExperimentSchemeEvent.addMeasurementToSample(groupId: $groupId, sampleId: $sampleId, measurment: $measurment)';
+    return 'ExperimentSchemeEvent.addMeasurementToSample(groupId: $groupId, sampleId: $sampleId)';
   }
 
   @override
@@ -774,13 +1042,11 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
             other is _$_AddMeasurementToSample &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.sampleId, sampleId) ||
-                other.sampleId == sampleId) &&
-            (identical(other.measurment, measurment) ||
-                other.measurment == measurment));
+                other.sampleId == sampleId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, groupId, sampleId, measurment);
+  int get hashCode => Object.hash(runtimeType, groupId, sampleId);
 
   @JsonKey(ignore: true)
   @override
@@ -792,52 +1058,63 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) {
-    return addMeasurementToSample(groupId, sampleId, measurment);
+    return addMeasurementToSample(groupId, sampleId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) {
-    return addMeasurementToSample?.call(groupId, sampleId, measurment);
+    return addMeasurementToSample?.call(groupId, sampleId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) {
     if (addMeasurementToSample != null) {
-      return addMeasurementToSample(groupId, sampleId, measurment);
+      return addMeasurementToSample(groupId, sampleId);
     }
     return orElse();
   }
@@ -845,15 +1122,18 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) {
     return addMeasurementToSample(this);
@@ -862,13 +1142,16 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) {
     return addMeasurementToSample?.call(this);
@@ -877,13 +1160,16 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -897,14 +1183,246 @@ class _$_AddMeasurementToSample implements _AddMeasurementToSample {
 abstract class _AddMeasurementToSample implements ExperimentSchemeEvent {
   const factory _AddMeasurementToSample(
       {required final int groupId,
-      required final int sampleId,
-      required final Measurement measurment}) = _$_AddMeasurementToSample;
+      required final int sampleId}) = _$_AddMeasurementToSample;
 
   int get groupId;
   int get sampleId;
-  Measurement get measurment;
   @JsonKey(ignore: true)
   _$$_AddMeasurementToSampleCopyWith<_$_AddMeasurementToSample> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_EditMeasurementTextCopyWith<$Res> {
+  factory _$$_EditMeasurementTextCopyWith(_$_EditMeasurementText value,
+          $Res Function(_$_EditMeasurementText) then) =
+      __$$_EditMeasurementTextCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int groupId, int sampleId, int measurementId, String text});
+}
+
+/// @nodoc
+class __$$_EditMeasurementTextCopyWithImpl<$Res>
+    extends _$ExperimentSchemeEventCopyWithImpl<$Res, _$_EditMeasurementText>
+    implements _$$_EditMeasurementTextCopyWith<$Res> {
+  __$$_EditMeasurementTextCopyWithImpl(_$_EditMeasurementText _value,
+      $Res Function(_$_EditMeasurementText) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? groupId = null,
+    Object? sampleId = null,
+    Object? measurementId = null,
+    Object? text = null,
+  }) {
+    return _then(_$_EditMeasurementText(
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as int,
+      sampleId: null == sampleId
+          ? _value.sampleId
+          : sampleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      measurementId: null == measurementId
+          ? _value.measurementId
+          : measurementId // ignore: cast_nullable_to_non_nullable
+              as int,
+      text: null == text
+          ? _value.text
+          : text // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_EditMeasurementText implements _EditMeasurementText {
+  const _$_EditMeasurementText(
+      {required this.groupId,
+      required this.sampleId,
+      required this.measurementId,
+      required this.text});
+
+  @override
+  final int groupId;
+  @override
+  final int sampleId;
+  @override
+  final int measurementId;
+  @override
+  final String text;
+
+  @override
+  String toString() {
+    return 'ExperimentSchemeEvent.editMeasurementText(groupId: $groupId, sampleId: $sampleId, measurementId: $measurementId, text: $text)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_EditMeasurementText &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.sampleId, sampleId) ||
+                other.sampleId == sampleId) &&
+            (identical(other.measurementId, measurementId) ||
+                other.measurementId == measurementId) &&
+            (identical(other.text, text) || other.text == text));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, groupId, sampleId, measurementId, text);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_EditMeasurementTextCopyWith<_$_EditMeasurementText> get copyWith =>
+      __$$_EditMeasurementTextCopyWithImpl<_$_EditMeasurementText>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
+    required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int groupId, int sampleId)
+        addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
+    required TResult Function() createNewEmptyGroup,
+  }) {
+    return editMeasurementText(groupId, sampleId, measurementId, text);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
+    TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int groupId, int sampleId)?
+        addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
+    TResult? Function()? createNewEmptyGroup,
+  }) {
+    return editMeasurementText?.call(groupId, sampleId, measurementId, text);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
+    TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int groupId, int sampleId)?
+        addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
+    TResult Function()? createNewEmptyGroup,
+    required TResult orElse(),
+  }) {
+    if (editMeasurementText != null) {
+      return editMeasurementText(groupId, sampleId, measurementId, text);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
+    required TResult Function(_AddNewSample value) addNewSample,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
+    required TResult Function(_AddMeasurementToSample value)
+        addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
+    required TResult Function(_AddUngroupedSamplesToGroup value)
+        addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
+    required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
+  }) {
+    return editMeasurementText(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
+    TResult? Function(_AddNewSample value)? addNewSample,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
+    TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
+    TResult? Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
+    TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
+  }) {
+    return editMeasurementText?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_AddNewSample value)? addNewSample,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
+    TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
+    TResult Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
+    TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
+    required TResult orElse(),
+  }) {
+    if (editMeasurementText != null) {
+      return editMeasurementText(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _EditMeasurementText implements ExperimentSchemeEvent {
+  const factory _EditMeasurementText(
+      {required final int groupId,
+      required final int sampleId,
+      required final int measurementId,
+      required final String text}) = _$_EditMeasurementText;
+
+  int get groupId;
+  int get sampleId;
+  int get measurementId;
+  String get text;
+  @JsonKey(ignore: true)
+  _$$_EditMeasurementTextCopyWith<_$_EditMeasurementText> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -976,15 +1494,19 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) {
     return addUngroupedSamplesToGroup(name);
@@ -993,14 +1515,18 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) {
     return addUngroupedSamplesToGroup?.call(name);
@@ -1009,14 +1535,17 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -1029,15 +1558,18 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) {
     return addUngroupedSamplesToGroup(this);
@@ -1046,13 +1578,16 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) {
     return addUngroupedSamplesToGroup?.call(this);
@@ -1061,13 +1596,16 @@ class _$_AddUngroupedSamplesToGroup implements _AddUngroupedSamplesToGroup {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -1175,15 +1713,19 @@ class _$_AddFilesToMeasurement implements _AddFilesToMeasurement {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) {
     return addFilesToMeasurement(measurementId, groupId, sampleId);
@@ -1192,14 +1734,18 @@ class _$_AddFilesToMeasurement implements _AddFilesToMeasurement {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) {
     return addFilesToMeasurement?.call(measurementId, groupId, sampleId);
@@ -1208,14 +1754,17 @@ class _$_AddFilesToMeasurement implements _AddFilesToMeasurement {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -1228,15 +1777,18 @@ class _$_AddFilesToMeasurement implements _AddFilesToMeasurement {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) {
     return addFilesToMeasurement(this);
@@ -1245,13 +1797,16 @@ class _$_AddFilesToMeasurement implements _AddFilesToMeasurement {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) {
     return addFilesToMeasurement?.call(this);
@@ -1260,13 +1815,16 @@ class _$_AddFilesToMeasurement implements _AddFilesToMeasurement {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -1288,6 +1846,213 @@ abstract class _AddFilesToMeasurement implements ExperimentSchemeEvent {
   int get sampleId;
   @JsonKey(ignore: true)
   _$$_AddFilesToMeasurementCopyWith<_$_AddFilesToMeasurement> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_AddFilesToSampleCopyWith<$Res> {
+  factory _$$_AddFilesToSampleCopyWith(
+          _$_AddFilesToSample value, $Res Function(_$_AddFilesToSample) then) =
+      __$$_AddFilesToSampleCopyWithImpl<$Res>;
+  @useResult
+  $Res call({int groupId, int sampleId});
+}
+
+/// @nodoc
+class __$$_AddFilesToSampleCopyWithImpl<$Res>
+    extends _$ExperimentSchemeEventCopyWithImpl<$Res, _$_AddFilesToSample>
+    implements _$$_AddFilesToSampleCopyWith<$Res> {
+  __$$_AddFilesToSampleCopyWithImpl(
+      _$_AddFilesToSample _value, $Res Function(_$_AddFilesToSample) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? groupId = null,
+    Object? sampleId = null,
+  }) {
+    return _then(_$_AddFilesToSample(
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as int,
+      sampleId: null == sampleId
+          ? _value.sampleId
+          : sampleId // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_AddFilesToSample implements _AddFilesToSample {
+  const _$_AddFilesToSample({required this.groupId, required this.sampleId});
+
+  @override
+  final int groupId;
+  @override
+  final int sampleId;
+
+  @override
+  String toString() {
+    return 'ExperimentSchemeEvent.addFilesToSample(groupId: $groupId, sampleId: $sampleId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_AddFilesToSample &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.sampleId, sampleId) ||
+                other.sampleId == sampleId));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, groupId, sampleId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AddFilesToSampleCopyWith<_$_AddFilesToSample> get copyWith =>
+      __$$_AddFilesToSampleCopyWithImpl<_$_AddFilesToSample>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
+    required TResult Function(String text, String title) addNewSample,
+    required TResult Function(String text, String title, int id)
+        addSampleToGroup,
+    required TResult Function(Sample sample, int idGroup) editSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
+    required TResult Function(String? name) addUngroupedSamplesToGroup,
+    required TResult Function(int measurementId, int groupId, int sampleId)
+        addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
+    required TResult Function() createNewEmptyGroup,
+  }) {
+    return addFilesToSample(groupId, sampleId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
+    TResult? Function(String text, String title)? addNewSample,
+    TResult? Function(String text, String title, int id)? addSampleToGroup,
+    TResult? Function(Sample sample, int idGroup)? editSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
+    TResult? Function(String? name)? addUngroupedSamplesToGroup,
+    TResult? Function(int measurementId, int groupId, int sampleId)?
+        addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
+    TResult? Function()? createNewEmptyGroup,
+  }) {
+    return addFilesToSample?.call(groupId, sampleId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
+    TResult Function(String text, String title)? addNewSample,
+    TResult Function(String text, String title, int id)? addSampleToGroup,
+    TResult Function(Sample sample, int idGroup)? editSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
+    TResult Function(String? name)? addUngroupedSamplesToGroup,
+    TResult Function(int measurementId, int groupId, int sampleId)?
+        addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
+    TResult Function()? createNewEmptyGroup,
+    required TResult orElse(),
+  }) {
+    if (addFilesToSample != null) {
+      return addFilesToSample(groupId, sampleId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
+    required TResult Function(_AddNewSample value) addNewSample,
+    required TResult Function(_AddSample value) addSampleToGroup,
+    required TResult Function(_EditSample value) editSample,
+    required TResult Function(_AddMeasurementToSample value)
+        addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
+    required TResult Function(_AddUngroupedSamplesToGroup value)
+        addUngroupedSamplesToGroup,
+    required TResult Function(_AddFilesToMeasurement value)
+        addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
+    required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
+  }) {
+    return addFilesToSample(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
+    TResult? Function(_AddNewSample value)? addNewSample,
+    TResult? Function(_AddSample value)? addSampleToGroup,
+    TResult? Function(_EditSample value)? editSample,
+    TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
+    TResult? Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
+    TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
+  }) {
+    return addFilesToSample?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_AddNewSample value)? addNewSample,
+    TResult Function(_AddSample value)? addSampleToGroup,
+    TResult Function(_EditSample value)? editSample,
+    TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
+    TResult Function(_AddUngroupedSamplesToGroup value)?
+        addUngroupedSamplesToGroup,
+    TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
+    TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
+    required TResult orElse(),
+  }) {
+    if (addFilesToSample != null) {
+      return addFilesToSample(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AddFilesToSample implements ExperimentSchemeEvent {
+  const factory _AddFilesToSample(
+      {required final int groupId,
+      required final int sampleId}) = _$_AddFilesToSample;
+
+  int get groupId;
+  int get sampleId;
+  @JsonKey(ignore: true)
+  _$$_AddFilesToSampleCopyWith<_$_AddFilesToSample> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1329,15 +2094,19 @@ class _$_CreateNewEmptyGroup implements _CreateNewEmptyGroup {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(Experiment? experiment) init,
     required TResult Function(String text, String title) addNewSample,
     required TResult Function(String text, String title, int id)
         addSampleToGroup,
     required TResult Function(Sample sample, int idGroup) editSample,
-    required TResult Function(int groupId, int sampleId, Measurement measurment)
-        addMeasurementToSample,
+    required TResult Function(int groupId, int sampleId) addMeasurementToSample,
+    required TResult Function(
+            int groupId, int sampleId, int measurementId, String text)
+        editMeasurementText,
     required TResult Function(String? name) addUngroupedSamplesToGroup,
     required TResult Function(int measurementId, int groupId, int sampleId)
         addFilesToMeasurement,
+    required TResult Function(int groupId, int sampleId) addFilesToSample,
     required TResult Function() createNewEmptyGroup,
   }) {
     return createNewEmptyGroup();
@@ -1346,14 +2115,18 @@ class _$_CreateNewEmptyGroup implements _CreateNewEmptyGroup {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Experiment? experiment)? init,
     TResult? Function(String text, String title)? addNewSample,
     TResult? Function(String text, String title, int id)? addSampleToGroup,
     TResult? Function(Sample sample, int idGroup)? editSample,
-    TResult? Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult? Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult? Function(
+            int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult? Function(String? name)? addUngroupedSamplesToGroup,
     TResult? Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult? Function(int groupId, int sampleId)? addFilesToSample,
     TResult? Function()? createNewEmptyGroup,
   }) {
     return createNewEmptyGroup?.call();
@@ -1362,14 +2135,17 @@ class _$_CreateNewEmptyGroup implements _CreateNewEmptyGroup {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Experiment? experiment)? init,
     TResult Function(String text, String title)? addNewSample,
     TResult Function(String text, String title, int id)? addSampleToGroup,
     TResult Function(Sample sample, int idGroup)? editSample,
-    TResult Function(int groupId, int sampleId, Measurement measurment)?
-        addMeasurementToSample,
+    TResult Function(int groupId, int sampleId)? addMeasurementToSample,
+    TResult Function(int groupId, int sampleId, int measurementId, String text)?
+        editMeasurementText,
     TResult Function(String? name)? addUngroupedSamplesToGroup,
     TResult Function(int measurementId, int groupId, int sampleId)?
         addFilesToMeasurement,
+    TResult Function(int groupId, int sampleId)? addFilesToSample,
     TResult Function()? createNewEmptyGroup,
     required TResult orElse(),
   }) {
@@ -1382,15 +2158,18 @@ class _$_CreateNewEmptyGroup implements _CreateNewEmptyGroup {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
     required TResult Function(_AddNewSample value) addNewSample,
     required TResult Function(_AddSample value) addSampleToGroup,
     required TResult Function(_EditSample value) editSample,
     required TResult Function(_AddMeasurementToSample value)
         addMeasurementToSample,
+    required TResult Function(_EditMeasurementText value) editMeasurementText,
     required TResult Function(_AddUngroupedSamplesToGroup value)
         addUngroupedSamplesToGroup,
     required TResult Function(_AddFilesToMeasurement value)
         addFilesToMeasurement,
+    required TResult Function(_AddFilesToSample value) addFilesToSample,
     required TResult Function(_CreateNewEmptyGroup value) createNewEmptyGroup,
   }) {
     return createNewEmptyGroup(this);
@@ -1399,13 +2178,16 @@ class _$_CreateNewEmptyGroup implements _CreateNewEmptyGroup {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
     TResult? Function(_AddNewSample value)? addNewSample,
     TResult? Function(_AddSample value)? addSampleToGroup,
     TResult? Function(_EditSample value)? editSample,
     TResult? Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult? Function(_EditMeasurementText value)? editMeasurementText,
     TResult? Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult? Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult? Function(_AddFilesToSample value)? addFilesToSample,
     TResult? Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
   }) {
     return createNewEmptyGroup?.call(this);
@@ -1414,13 +2196,16 @@ class _$_CreateNewEmptyGroup implements _CreateNewEmptyGroup {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
     TResult Function(_AddNewSample value)? addNewSample,
     TResult Function(_AddSample value)? addSampleToGroup,
     TResult Function(_EditSample value)? editSample,
     TResult Function(_AddMeasurementToSample value)? addMeasurementToSample,
+    TResult Function(_EditMeasurementText value)? editMeasurementText,
     TResult Function(_AddUngroupedSamplesToGroup value)?
         addUngroupedSamplesToGroup,
     TResult Function(_AddFilesToMeasurement value)? addFilesToMeasurement,
+    TResult Function(_AddFilesToSample value)? addFilesToSample,
     TResult Function(_CreateNewEmptyGroup value)? createNewEmptyGroup,
     required TResult orElse(),
   }) {

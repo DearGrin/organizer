@@ -20,9 +20,13 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Group {
+  @HiveField(0)
   String get name => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get groupDescription => throw _privateConstructorUsedError;
+  @HiveField(2)
   int get id => throw _privateConstructorUsedError;
+  @HiveField(3)
   List<Sample> get samples => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +40,10 @@ abstract class $GroupCopyWith<$Res> {
       _$GroupCopyWithImpl<$Res, Group>;
   @useResult
   $Res call(
-      {String name, String groupDescription, int id, List<Sample> samples});
+      {@HiveField(0) String name,
+      @HiveField(1) String groupDescription,
+      @HiveField(2) int id,
+      @HiveField(3) List<Sample> samples});
 }
 
 /// @nodoc
@@ -85,7 +92,10 @@ abstract class _$$_GroupCopyWith<$Res> implements $GroupCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String name, String groupDescription, int id, List<Sample> samples});
+      {@HiveField(0) String name,
+      @HiveField(1) String groupDescription,
+      @HiveField(2) int id,
+      @HiveField(3) List<Sample> samples});
 }
 
 /// @nodoc
@@ -125,23 +135,29 @@ class __$$_GroupCopyWithImpl<$Res> extends _$GroupCopyWithImpl<$Res, _$_Group>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Group implements _Group {
+@HiveType(typeId: HiveTypes.group, adapterName: HiveAdapterNames.group)
+class _$_Group extends _Group {
   _$_Group(
-      {required this.name,
-      required this.groupDescription,
-      required this.id,
-      required this.samples});
+      {@HiveField(0) required this.name,
+      @HiveField(1) required this.groupDescription,
+      @HiveField(2) required this.id,
+      @HiveField(3) required this.samples})
+      : super._();
 
   factory _$_Group.fromJson(Map<String, dynamic> json) =>
       _$$_GroupFromJson(json);
 
   @override
+  @HiveField(0)
   final String name;
   @override
+  @HiveField(1)
   final String groupDescription;
   @override
+  @HiveField(2)
   final int id;
   @override
+  @HiveField(3)
   final List<Sample> samples;
 
   @override
@@ -180,22 +196,27 @@ class _$_Group implements _Group {
   }
 }
 
-abstract class _Group implements Group {
+abstract class _Group extends Group {
   factory _Group(
-      {required final String name,
-      required final String groupDescription,
-      required final int id,
-      required final List<Sample> samples}) = _$_Group;
+      {@HiveField(0) required final String name,
+      @HiveField(1) required final String groupDescription,
+      @HiveField(2) required final int id,
+      @HiveField(3) required final List<Sample> samples}) = _$_Group;
+  _Group._() : super._();
 
   factory _Group.fromJson(Map<String, dynamic> json) = _$_Group.fromJson;
 
   @override
+  @HiveField(0)
   String get name;
   @override
+  @HiveField(1)
   String get groupDescription;
   @override
+  @HiveField(2)
   int get id;
   @override
+  @HiveField(3)
   List<Sample> get samples;
   @override
   @JsonKey(ignore: true)

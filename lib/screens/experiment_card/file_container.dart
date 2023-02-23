@@ -1,4 +1,4 @@
-import 'package:first_approval_app/cubit/FileCubit/file_cubit.dart';
+import 'package:first_approval_app/bloc/experiment_common_files_bloc/experiment_common_files_bloc.dart';
 import 'package:first_approval_app/custom_widgets/custom_no_border_button.dart';
 import 'package:first_approval_app/custom_widgets/custom_text_widget.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
@@ -7,9 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MyFiles extends StatefulWidget {
-  const MyFiles(this.fileName, {super.key});
-
   final String fileName;
+  final int index;
+  const MyFiles(this.fileName, this.index, {super.key});
 
   @override
   State<MyFiles> createState() => _MyFilesState();
@@ -40,12 +40,7 @@ class _MyFilesState extends State<MyFiles> {
             trailing: mouseInArea
                 ? CustomNoBordersButton(
                     IconsSvg.trashIcon,
-                    onPressed: () =>
-
-                        /// для читаемости лучше вынести функцию отдельно
-                        context
-                            .read<FileCubit>()
-                            .deleteFileName(widget.fileName),
+                    onPressed: _onDeleteTap,
                   )
                 : null,
             leading: SvgPicture.asset(IconsSvg.file),
@@ -59,5 +54,8 @@ class _MyFilesState extends State<MyFiles> {
         ),
       ),
     );
+  }
+  _onDeleteTap(){
+    context.read<ExperimentCommonFilesBloc>().add(ExperimentCommonFilesEvent.deleteFile(widget.index));
   }
 }

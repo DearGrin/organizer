@@ -1,14 +1,18 @@
 import 'package:dotted_border/dotted_border.dart';
+import 'package:first_approval_app/bloc/dashboard_bloc/dashboard_bloc.dart';
 import 'package:first_approval_app/custom_widgets/custom_text_widget.dart';
 import 'package:first_approval_app/icons/icons_paths.dart';
 import 'package:first_approval_app/main.dart';
 import 'package:first_approval_app/screens/dashboard/create_new_card_widget.dart';
+import 'package:first_approval_app/screens/experiment_card/card_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AddCard extends StatelessWidget {
-  const AddCard({required this.text, super.key, this.byDefault = true});
+  const AddCard({required this.text, required this.onTap, super.key, this.byDefault = true});
   final String text;
+  final VoidCallback onTap;
   final bool byDefault;
 
   @override
@@ -38,29 +42,7 @@ class AddCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkWell(
-                  /// для читаемости вынес бы в отдельную функцию
-                  /// _onTap(){
-                  /// if(bydefault){...}else{..}
-                  /// }
-                  /// onTap: _onTap,
-                  onTap: (byDefault == true)
-
-                      ///можно просто bydefault? вместо (bydefault == true)?
-                      ? () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return const ChooseOptionPopUp();
-                            },
-                          );
-                        }
-                      : () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyApp()),
-                          );
-                        },
+                  onTap: onTap,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [

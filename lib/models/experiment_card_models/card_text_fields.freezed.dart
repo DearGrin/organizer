@@ -21,13 +21,22 @@ ExperimentCardTextFields _$ExperimentCardTextFieldsFromJson(
 
 /// @nodoc
 mixin _$ExperimentCardTextFields {
+  @HiveField(0)
   String get goal => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get description => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get date => throw _privateConstructorUsedError;
+  @HiveField(3)
   String get method => throw _privateConstructorUsedError;
+  @HiveField(4)
   String get object => throw _privateConstructorUsedError;
+  @HiveField(5)
   String get device => throw _privateConstructorUsedError;
+  @HiveField(6)
   String get soft => throw _privateConstructorUsedError;
+  @HiveField(7)
+  String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,13 +51,14 @@ abstract class $ExperimentCardTextFieldsCopyWith<$Res> {
       _$ExperimentCardTextFieldsCopyWithImpl<$Res, ExperimentCardTextFields>;
   @useResult
   $Res call(
-      {String goal,
-      String description,
-      String date,
-      String method,
-      String object,
-      String device,
-      String soft});
+      {@HiveField(0) String goal,
+      @HiveField(1) String description,
+      @HiveField(2) String date,
+      @HiveField(3) String method,
+      @HiveField(4) String object,
+      @HiveField(5) String device,
+      @HiveField(6) String soft,
+      @HiveField(7) String name});
 }
 
 /// @nodoc
@@ -72,6 +82,7 @@ class _$ExperimentCardTextFieldsCopyWithImpl<$Res,
     Object? object = null,
     Object? device = null,
     Object? soft = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
       goal: null == goal
@@ -102,6 +113,10 @@ class _$ExperimentCardTextFieldsCopyWithImpl<$Res,
           ? _value.soft
           : soft // ignore: cast_nullable_to_non_nullable
               as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -116,13 +131,14 @@ abstract class _$$_ExperimentCardTextFieldsCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String goal,
-      String description,
-      String date,
-      String method,
-      String object,
-      String device,
-      String soft});
+      {@HiveField(0) String goal,
+      @HiveField(1) String description,
+      @HiveField(2) String date,
+      @HiveField(3) String method,
+      @HiveField(4) String object,
+      @HiveField(5) String device,
+      @HiveField(6) String soft,
+      @HiveField(7) String name});
 }
 
 /// @nodoc
@@ -144,6 +160,7 @@ class __$$_ExperimentCardTextFieldsCopyWithImpl<$Res>
     Object? object = null,
     Object? device = null,
     Object? soft = null,
+    Object? name = null,
   }) {
     return _then(_$_ExperimentCardTextFields(
       goal: null == goal
@@ -174,50 +191,69 @@ class __$$_ExperimentCardTextFieldsCopyWithImpl<$Res>
           ? _value.soft
           : soft // ignore: cast_nullable_to_non_nullable
               as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(
+    typeId: HiveTypes.experimentInfo,
+    adapterName: HiveAdapterNames.experimentInfo)
 class _$_ExperimentCardTextFields implements _ExperimentCardTextFields {
   _$_ExperimentCardTextFields(
-      {this.goal = '',
-      this.description = '',
-      this.date = '',
-      this.method = '',
-      this.object = '',
-      this.device = '',
-      this.soft = ''});
+      {@HiveField(0) this.goal = '',
+      @HiveField(1) this.description = '',
+      @HiveField(2) this.date = '',
+      @HiveField(3) this.method = '',
+      @HiveField(4) this.object = '',
+      @HiveField(5) this.device = '',
+      @HiveField(6) this.soft = '',
+      @HiveField(7) this.name = ''});
 
   factory _$_ExperimentCardTextFields.fromJson(Map<String, dynamic> json) =>
       _$$_ExperimentCardTextFieldsFromJson(json);
 
   @override
   @JsonKey()
+  @HiveField(0)
   final String goal;
   @override
   @JsonKey()
+  @HiveField(1)
   final String description;
   @override
   @JsonKey()
+  @HiveField(2)
   final String date;
   @override
   @JsonKey()
+  @HiveField(3)
   final String method;
   @override
   @JsonKey()
+  @HiveField(4)
   final String object;
   @override
   @JsonKey()
+  @HiveField(5)
   final String device;
   @override
   @JsonKey()
+  @HiveField(6)
   final String soft;
+  @override
+  @JsonKey()
+  @HiveField(7)
+  final String name;
 
   @override
   String toString() {
-    return 'ExperimentCardTextFields(goal: $goal, description: $description, date: $date, method: $method, object: $object, device: $device, soft: $soft)';
+    return 'ExperimentCardTextFields(goal: $goal, description: $description, date: $date, method: $method, object: $object, device: $device, soft: $soft, name: $name)';
   }
 
   @override
@@ -232,13 +268,14 @@ class _$_ExperimentCardTextFields implements _ExperimentCardTextFields {
             (identical(other.method, method) || other.method == method) &&
             (identical(other.object, object) || other.object == object) &&
             (identical(other.device, device) || other.device == device) &&
-            (identical(other.soft, soft) || other.soft == soft));
+            (identical(other.soft, soft) || other.soft == soft) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, goal, description, date, method, object, device, soft);
+      runtimeType, goal, description, date, method, object, device, soft, name);
 
   @JsonKey(ignore: true)
   @override
@@ -257,31 +294,42 @@ class _$_ExperimentCardTextFields implements _ExperimentCardTextFields {
 
 abstract class _ExperimentCardTextFields implements ExperimentCardTextFields {
   factory _ExperimentCardTextFields(
-      {final String goal,
-      final String description,
-      final String date,
-      final String method,
-      final String object,
-      final String device,
-      final String soft}) = _$_ExperimentCardTextFields;
+      {@HiveField(0) final String goal,
+      @HiveField(1) final String description,
+      @HiveField(2) final String date,
+      @HiveField(3) final String method,
+      @HiveField(4) final String object,
+      @HiveField(5) final String device,
+      @HiveField(6) final String soft,
+      @HiveField(7) final String name}) = _$_ExperimentCardTextFields;
 
   factory _ExperimentCardTextFields.fromJson(Map<String, dynamic> json) =
       _$_ExperimentCardTextFields.fromJson;
 
   @override
+  @HiveField(0)
   String get goal;
   @override
+  @HiveField(1)
   String get description;
   @override
+  @HiveField(2)
   String get date;
   @override
+  @HiveField(3)
   String get method;
   @override
+  @HiveField(4)
   String get object;
   @override
+  @HiveField(5)
   String get device;
   @override
+  @HiveField(6)
   String get soft;
+  @override
+  @HiveField(7)
+  String get name;
   @override
   @JsonKey(ignore: true)
   _$$_ExperimentCardTextFieldsCopyWith<_$_ExperimentCardTextFields>

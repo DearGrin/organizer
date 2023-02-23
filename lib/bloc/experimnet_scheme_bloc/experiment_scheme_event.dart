@@ -2,6 +2,8 @@ part of 'experiment_scheme_bloc.dart';
 
 @freezed
 class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
+  const factory ExperimentSchemeEvent.init(Experiment? experiment) = _Init;
+
   const factory ExperimentSchemeEvent.addNewSample({
     required String text,
     required String title,
@@ -21,8 +23,15 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
   const factory ExperimentSchemeEvent.addMeasurementToSample({
     required int groupId,
     required int sampleId,
-    required Measurement measurment,
+    // required Measurement measurment,
   }) = _AddMeasurementToSample;
+
+  const factory ExperimentSchemeEvent.editMeasurementText({
+    required int groupId,
+    required int sampleId,
+    required int measurementId,
+    required String text,
+  }) = _EditMeasurementText;
 
   const factory ExperimentSchemeEvent.addUngroupedSamplesToGroup({
     String? name,
@@ -33,6 +42,11 @@ class ExperimentSchemeEvent with _$ExperimentSchemeEvent {
     required int groupId,
     required int sampleId,
   }) = _AddFilesToMeasurement;
+
+  const factory ExperimentSchemeEvent.addFilesToSample({
+    required int groupId,
+    required int sampleId,
+  }) = _AddFilesToSample;
 
   const factory ExperimentSchemeEvent.createNewEmptyGroup() =
       _CreateNewEmptyGroup;

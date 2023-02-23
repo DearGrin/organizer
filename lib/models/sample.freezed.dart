@@ -20,11 +20,16 @@ Sample _$SampleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Sample {
+  @HiveField(0)
   int get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get title => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get text => throw _privateConstructorUsedError;
+  @HiveField(3)
   List<Measurement> get measurements => throw _privateConstructorUsedError;
-  List<String> get attachments => throw _privateConstructorUsedError;
+  @HiveField(4)
+  List<Attachment> get attachments => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,11 +42,11 @@ abstract class $SampleCopyWith<$Res> {
       _$SampleCopyWithImpl<$Res, Sample>;
   @useResult
   $Res call(
-      {int id,
-      String title,
-      String text,
-      List<Measurement> measurements,
-      List<String> attachments});
+      {@HiveField(0) int id,
+      @HiveField(1) String title,
+      @HiveField(2) String text,
+      @HiveField(3) List<Measurement> measurements,
+      @HiveField(4) List<Attachment> attachments});
 }
 
 /// @nodoc
@@ -83,7 +88,7 @@ class _$SampleCopyWithImpl<$Res, $Val extends Sample>
       attachments: null == attachments
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Attachment>,
     ) as $Val);
   }
 }
@@ -95,11 +100,11 @@ abstract class _$$_SampleCopyWith<$Res> implements $SampleCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      String title,
-      String text,
-      List<Measurement> measurements,
-      List<String> attachments});
+      {@HiveField(0) int id,
+      @HiveField(1) String title,
+      @HiveField(2) String text,
+      @HiveField(3) List<Measurement> measurements,
+      @HiveField(4) List<Attachment> attachments});
 }
 
 /// @nodoc
@@ -138,35 +143,42 @@ class __$$_SampleCopyWithImpl<$Res>
       attachments: null == attachments
           ? _value.attachments
           : attachments // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Attachment>,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_Sample implements _Sample {
+@HiveType(typeId: HiveTypes.sample, adapterName: HiveAdapterNames.sample)
+class _$_Sample extends _Sample {
   _$_Sample(
-      {required this.id,
-      required this.title,
-      required this.text,
-      this.measurements = const [],
-      required this.attachments});
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.title,
+      @HiveField(2) required this.text,
+      @HiveField(3) this.measurements = const [],
+      @HiveField(4) required this.attachments})
+      : super._();
 
   factory _$_Sample.fromJson(Map<String, dynamic> json) =>
       _$$_SampleFromJson(json);
 
   @override
+  @HiveField(0)
   final int id;
   @override
+  @HiveField(1)
   final String title;
   @override
+  @HiveField(2)
   final String text;
   @override
   @JsonKey()
+  @HiveField(3)
   final List<Measurement> measurements;
   @override
-  final List<String> attachments;
+  @HiveField(4)
+  final List<Attachment> attachments;
 
   @override
   String toString() {
@@ -211,26 +223,32 @@ class _$_Sample implements _Sample {
   }
 }
 
-abstract class _Sample implements Sample {
+abstract class _Sample extends Sample {
   factory _Sample(
-      {required final int id,
-      required final String title,
-      required final String text,
-      final List<Measurement> measurements,
-      required final List<String> attachments}) = _$_Sample;
+      {@HiveField(0) required final int id,
+      @HiveField(1) required final String title,
+      @HiveField(2) required final String text,
+      @HiveField(3) final List<Measurement> measurements,
+      @HiveField(4) required final List<Attachment> attachments}) = _$_Sample;
+  _Sample._() : super._();
 
   factory _Sample.fromJson(Map<String, dynamic> json) = _$_Sample.fromJson;
 
   @override
+  @HiveField(0)
   int get id;
   @override
+  @HiveField(1)
   String get title;
   @override
+  @HiveField(2)
   String get text;
   @override
+  @HiveField(3)
   List<Measurement> get measurements;
   @override
-  List<String> get attachments;
+  @HiveField(4)
+  List<Attachment> get attachments;
   @override
   @JsonKey(ignore: true)
   _$$_SampleCopyWith<_$_Sample> get copyWith =>

@@ -20,7 +20,9 @@ Measurement _$MeasurementFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Measurement {
-  List<String> get addedFiles => throw _privateConstructorUsedError;
+  @HiveField(0)
+  List<Attachment> get addedFiles => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get text => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +37,8 @@ abstract class $MeasurementCopyWith<$Res> {
           Measurement value, $Res Function(Measurement) then) =
       _$MeasurementCopyWithImpl<$Res, Measurement>;
   @useResult
-  $Res call({List<String> addedFiles, String text});
+  $Res call(
+      {@HiveField(0) List<Attachment> addedFiles, @HiveField(1) String text});
 }
 
 /// @nodoc
@@ -58,7 +61,7 @@ class _$MeasurementCopyWithImpl<$Res, $Val extends Measurement>
       addedFiles: null == addedFiles
           ? _value.addedFiles
           : addedFiles // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Attachment>,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -75,7 +78,8 @@ abstract class _$$_MeasurementCopyWith<$Res>
       __$$_MeasurementCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> addedFiles, String text});
+  $Res call(
+      {@HiveField(0) List<Attachment> addedFiles, @HiveField(1) String text});
 }
 
 /// @nodoc
@@ -96,7 +100,7 @@ class __$$_MeasurementCopyWithImpl<$Res>
       addedFiles: null == addedFiles
           ? _value.addedFiles
           : addedFiles // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<Attachment>,
       text: null == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -107,16 +111,21 @@ class __$$_MeasurementCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
+@HiveType(
+    typeId: HiveTypes.measurement, adapterName: HiveAdapterNames.measurement)
 class _$_Measurement implements _Measurement {
-  _$_Measurement({required this.addedFiles, this.text = ""});
+  _$_Measurement(
+      {@HiveField(0) required this.addedFiles, @HiveField(1) this.text = ""});
 
   factory _$_Measurement.fromJson(Map<String, dynamic> json) =>
       _$$_MeasurementFromJson(json);
 
   @override
-  final List<String> addedFiles;
+  @HiveField(0)
+  final List<Attachment> addedFiles;
   @override
   @JsonKey()
+  @HiveField(1)
   final String text;
 
   @override
@@ -155,15 +164,17 @@ class _$_Measurement implements _Measurement {
 
 abstract class _Measurement implements Measurement {
   factory _Measurement(
-      {required final List<String> addedFiles,
-      final String text}) = _$_Measurement;
+      {@HiveField(0) required final List<Attachment> addedFiles,
+      @HiveField(1) final String text}) = _$_Measurement;
 
   factory _Measurement.fromJson(Map<String, dynamic> json) =
       _$_Measurement.fromJson;
 
   @override
-  List<String> get addedFiles;
+  @HiveField(0)
+  List<Attachment> get addedFiles;
   @override
+  @HiveField(1)
   String get text;
   @override
   @JsonKey(ignore: true)
