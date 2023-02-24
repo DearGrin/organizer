@@ -7,7 +7,7 @@ import 'package:first_approval_app/models/attachment.dart';
 import 'package:first_approval_app/models/experiment.dart';
 import 'package:path_provider/path_provider.dart';
 
-class FileService{
+class FileService {
   static FileService? _instance;
 
   FileService._();
@@ -22,13 +22,12 @@ class FileService{
 
     List<Attachment> files = [];
     for (PlatformFile file in results.files) {
-      files.add(Attachment(fileName: file.name, filePath: file.path??''));
+      files.add(Attachment(fileName: file.name, filePath: file.path ?? ''));
     }
-    print('files $files');
     return files;
   }
 
-  Future<void> archiveExperiment(Experiment experiment) async{
+  Future<void> archiveExperiment(Experiment experiment) async {
     String? path = await _getDirectory();
     if (path == null) return;
     var encoder = ZipFileEncoder();
@@ -36,37 +35,43 @@ class FileService{
     File file = File('$path/Scheme.txt');
     await file.writeAsString(jsonEncode(experiment.toJson()));
     encoder.addFile(file);
-    for (Attachment attachment in experiment.allAttachments){
+    for (Attachment attachment in experiment.allAttachments) {
       encoder.addFile(File(attachment.filePath));
     }
     encoder.close();
   }
 
-  Future<Experiment?> exportExperiment() async{
+  Future<Experiment?> exportExperiment() async {
     FilePickerResult? results = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
-      type: FileType.custom,
-      allowedExtensions: ['zip']
-    );
+        allowMultiple: false,
+        type: FileType.custom,
+        allowedExtensions: ['zip']);
     if (results == null) return null;
     final String subDir = DateTime.now().millisecondsSinceEpoch.toString();
     final bytes = File(results.files.first.path!).readAsBytesSync();
     final archive = ZipDecoder().decodeBytes(bytes);
+
     for (final file in archive) {
       final filename = file.name;
+      final filePath = Platform.isWindows
+          ? '${await _localPath}\\$subDir\\$filename'
+          : '${await _localPath}/$subDir/$filename';
       if (file.isFile) {
         final data = file.content as List<int>;
-        File('$_localPath/$subDir/$filename')
+        File(filePath)
           ..createSync(recursive: true)
           ..writeAsBytesSync(data);
       } else {
-        Directory('$_localPath/$subDir/$filename').create(recursive: true);
+        Directory(filePath).create(recursive: true);
       }
     }
-    final String scheme = await File('$_localPath/$subDir/Scheme.txt').readAsString();
+    final filePath = Platform.isWindows
+        ? '${await _localPath}\\$subDir\\Scheme.txt'
+        : '${await _localPath}/$subDir/Scheme.txt';
+    final String scheme = await File(filePath).readAsString();
     Experiment experiment = Experiment.fromJson(jsonDecode(scheme));
-    for(Attachment a in experiment.allAttachments){
-     a = a.copyWith(filePath: '$_localPath/$subDir/${a.fileName}');
+    for (Attachment a in experiment.allAttachments) {
+      a = a.copyWith(filePath: '$_localPath/$subDir/${a.fileName}');
     }
     return experiment;
   }
